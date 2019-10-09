@@ -1,0 +1,17 @@
+.profile-page-container {
+  .profile-details-wrapper {
+    width: 500px;
+    display: flex;
+    margin: 0 auto;
+
+    .image-wrapper {
+      width: 250px;
+      height: 200px;
+      background-image: url('./../../data/images/profile-picture-template.jpeg');
+      background-size: cover;
+    }
+    .details-wrapper {
+      padding: 20px;
+    }
+  }
+}

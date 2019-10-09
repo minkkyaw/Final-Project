@@ -1,11 +1,10 @@
-.book-button-groups {
+.nav-items-button-groups {
   display: flex;
-  width: 200px;
-  min-width: 20%;
-  justify-content: space-around;
+  width: fit-content;
+  justify-content: space-between;
   align-items: center;
 
-  .book-btn {
+  .nav-item-btn {
     font-family: inherit;
     font-size: inherit;
     text-decoration: none;
@@ -14,6 +13,7 @@
     color : inherit;
     cursor: pointer;
     transition: all .5s ease-in;
+    width: 100px;
 
     &:hover {
       color: rgb(194, 222, 255);

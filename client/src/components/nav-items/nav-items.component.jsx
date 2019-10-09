@@ -4,26 +4,18 @@ import './nav-items.styles.scss';
 
 const NavItems = ({ handleFunction, navItems, action, book, view}) => {
   return (
-    <div className="book-button-groups">
+    <div className="nav-items-button-groups">
       { navItems.map((navItem, i) => (
           <a
             key={i}
-            className="book-btn"
-            href={`${navItem.href}`}
-            target={view ? "_blank" : ""}
+            className="nav-item-btn"
+            href={`${navItem.href ? navItem.href: ""}`}
             rel="noopener noreferrer"
           >
             {navItem.name}
           </a> 
         ))
-        
-      }
-      {action === 'save' ? (
-          <button data-data={book} onClick={handleFunction} className="book-save-btn book-btn">Save</button>
-        ) : 
-        action === 'delete' ? (<button data-data={JSON.parse(book)._id} onClick={handleFunction} className="book-save-btn book-btn">Delete</button>) : 
-        null
-      }       
+      }   
       </div>
   )
 }

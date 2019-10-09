@@ -13,10 +13,34 @@ import LogIn from "./pages/log-in/log-in.component";
 import NavBar from "./components/nav-bar/nav-bar-component";
 
 function App() {
+  const navItems = [
+    {
+      name: "Home",
+      href: "/home"
+    },
+    {
+      name: "Tournament",
+      href: "/tournament"
+    },
+    {
+      name: "Shop",
+      href: "/Shop"
+    },
+    {
+      name: "Profile",
+      href: "/profile"
+    },
+    {
+      name: "Log In",
+      href: "/login/signin"
+    }
+  ];
   return (
     <Router>
       <div>
-        <NavBar />
+        <NavBar className="nav-bar" navItems={navItems}>
+          Quattour
+        </NavBar>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/login/:action" component={LogIn} />
