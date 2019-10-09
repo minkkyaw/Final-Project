@@ -1,0 +1,49 @@
+.inherit {
+  font-size: inherit;
+  font-family: inherit;
+  background-color: inherit;
+  color: inherit;
+}
+
+.search-input-label {
+  position: relative;
+}
+
+.search-label-logo {
+  width: 30px;
+  height: 30px;
+  background-image: url('./../../data/images/searchlogo.svg');
+  background-size: cover;
+  position: absolute;
+  top: 0px;
+}
+
+.search-input {
+  margin: 0 20px 0 40px;
+  padding: 5px;
+  border: none;
+  border-bottom: 1px solid black;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.btn {
+  padding: 5px 15px;
+  border: none;
+  box-shadow: 0 0 3px rgba(112, 112, 112, 0.5);
+  border-radius: 5px;
+  transition: all .5s ease-in;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(251, 149, 31);
+    color: #fff;
+  }
+
+  &:focus{
+    outline: none;
+    transform: scale(1.1);
+  }
+}

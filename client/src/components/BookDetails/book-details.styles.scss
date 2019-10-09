@@ -1,0 +1,28 @@
+.book-wrapper {
+  width: 1000px;
+  margin: 0 auto 20px;
+  box-shadow: 0 0 3px rgb(73, 73, 73);
+  
+  .book-navbar {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    background-color: #464545;
+  }
+  .details-wrapper {
+    padding: 15px;
+    
+    .description-img-wrapper {
+      padding: 15px 0;
+      display: flex;
+
+      .book-image {
+        display: block;
+        margin-right: 20px;
+        height: fit-content;
+      }
+    }
+  }
+}
