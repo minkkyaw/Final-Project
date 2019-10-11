@@ -7,16 +7,17 @@ const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const hpp = require("hpp");
 
-// const AppError = require("./utils/appError");
-// const globalErrorHandler = require("./controllers/errorController");
 // const tourRouter = require("./routes/tourRoutes");
 // const userRouter = require("./routes/userRoutes");
 // const reviewRouter = require("./routes/reviewRoutes");
 // const itemRouter = require("./routes/itemRoutes");
 // const viewRouter = require("./routes/viewRoutes");
 
+const AppError = require("./utils/appError");
+const globalErrorHandler = require("./controllers/errorController");
 const viewRouter = require("./routes/viewRoutes");
 const userRouter = require("./routes/userRoutes");
+const postRouter = require("./routes/postRoutes");
 
 const app = express();
 
@@ -75,8 +76,10 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/users/", userRouter);
+app.use("/api/posts/", postRouter);
 app.use(viewRouter);
 
+app.use(globalErrorHandler);
 // // 3) ROUTES
 // app.use("/", viewRouter);
 
@@ -85,14 +88,12 @@ app.use(viewRouter);
 // app.use("/api/v1/reviews", reviewRouter);
 // app.use("/api/v1/items", itemRouter);
 
-// app.all("*", (req, res, next) => {
-//   // const err = new Error(`Can't find ${req.originalUrl} on this server`);
-//   // err.status = 'fail';
-//   // err.statusCode = 404;
+app.all("*", (req, res, next) => {
+  const err = new Error(`Can't find ${req.originalUrl} on this server`);
+  err.status = "fail";
+  err.statusCode = 404;
 
-//   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
-// });
-
-// app.use(globalErrorHandler);
+  next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
+});
 
 module.exports = app;
