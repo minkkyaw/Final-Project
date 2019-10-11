@@ -9,11 +9,12 @@
     font-size: inherit;
     text-decoration: none;
     background-color: inherit;
+    text-align: center;
     border: none;
     color : inherit;
     cursor: pointer;
     transition: all .5s ease-in;
-    width: 100px;
+    width: 150px;
 
     &:hover {
       color: rgb(194, 222, 255);
