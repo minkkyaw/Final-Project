@@ -1,6 +1,9 @@
-const User = require("./../models/userModel");
+const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
+
+const User = require("./../models/userModel");
 const AppError = require("./../utils/appError");
+const catchAsync = require("./../utils/catchAsync");
 
 const signToken = id =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -15,7 +18,9 @@ const createSendToken = (user, statusCode, res) => {
     ),
     httpOnly: true
   };
+
   if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
+
   res.cookie("jwt", token, cookieOptions);
 
   user.password = undefined;
@@ -29,30 +34,46 @@ const createSendToken = (user, statusCode, res) => {
   });
 };
 
-exports.signup = async (req, res, next) => {
-  try {
-    const newUser = await User.create(req.body);
-    createSendToken(newUser, 201, res);
-  } catch (error) {
-    res.status(400).json({
-      status: "fail",
-      message: error
-    });
+exports.signup = catchAsync(async (req, res, next) => {
+  const newUser = await User.create(req.body);
+  createSendToken(newUser, 201, res);
+});
+
+exports.signin = catchAsync(async (req, res, next) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email }).select("+password");
+  if (!user || !(await user.comparePasswords(password, user.password))) {
+    return next(new AppError("Incorrect email or password", 401));
   }
+  createSendToken(user, 200, res);
+});
+
+exports.signout = (req, res) => {
+  res.cookie("jwt", "signout", {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true
+  });
+  res.status(200).json({
+    status: "success"
+  });
 };
 
-exports.login = async (req, res, next) => {
-  try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
-    if (!user || !(await user.correctPassword(password, user.password))) {
-      return next(new AppError("Incorrect email or password", 401));
-    }
-    createSendToken(user, 200, res);
-  } catch (error) {
-    res.status(400).json({
-      status: "fail",
-      message: error
-    });
-  }
-};
+exports.protect = catchAsync(async (req, res, next) => {
+  let token;
+  if (req.headers.authorization)
+    token = req.headers.authorization.split(" ")[1];
+  else if (req.cookie.jwt) token = req.cookie.jwt;
+
+  if (!token) return next(new AppError("You are not signed in!", 401));
+
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+  const currentUser = await User.findById(decoded.id);
+
+  if (!currentUser) return next(new AppError("User does not exit", 401));
+
+  res.locals.user = currentUser;
+  req.user = currentUser;
+
+  next();
+});

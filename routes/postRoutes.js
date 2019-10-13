@@ -1,11 +1,20 @@
 const router = require("express").Router();
 
 const postController = require("./../controllers/postController");
+const authController = require("./../controllers/authController");
+const commentController = require("./../controllers/commentController");
+const commentRouter = require("./../routes/commentRoutes");
+
+router.use("/:postId/comments/", commentController.addedPostIds, commentRouter);
 
 router
   .route("/")
   .get(postController.getAllPosts)
-  .post(postController.createPost);
+  .post(
+    authController.protect,
+    postController.addedUser,
+    postController.createPost
+  );
 
 router
   .route("/:id")

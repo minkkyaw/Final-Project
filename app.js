@@ -18,6 +18,7 @@ const globalErrorHandler = require("./controllers/errorController");
 const viewRouter = require("./routes/viewRoutes");
 const userRouter = require("./routes/userRoutes");
 const postRouter = require("./routes/postRoutes");
+const commentRouter = require("./routes/commentRoutes");
 
 const app = express();
 
@@ -75,8 +76,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api/users/", userRouter);
-app.use("/api/posts/", postRouter);
+app.use("/api/users", userRouter);
+app.use("/api/posts", postRouter);
+// app.use("/api/comments", commentRouter);
 app.use(viewRouter);
 
 app.use(globalErrorHandler);

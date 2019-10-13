@@ -17,10 +17,13 @@ exports.getOne = Model =>
 
 exports.getAll = Model =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.find();
+    let filter = {};
+    if (req.body.postId) filter = { postId: req.body.postId };
+    const doc = await Model.find(filter);
 
     res.status(200).json({
       status: "success",
+      results: doc.length,
       data: {
         data: doc
       }
