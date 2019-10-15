@@ -1,10 +1,12 @@
 const AppError = require("./../utils/appError");
 const catchAsync = require("./../utils/catchAsync");
 
-exports.getOne = Model =>
+exports.getOne = (Model, populateObj) =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.findById(req.params.id);
+    let query = Model.findById(req.params.id);
+    if (populateObj) query = query.populate(populateObj);
 
+    const doc = await query;
     if (!doc) return next(new AppError("No doc is found with that ID!", 404));
 
     res.status(200).json({
@@ -32,6 +34,8 @@ exports.getAll = Model =>
 
 exports.createOne = Model =>
   catchAsync(async (req, res, next) => {
+    console.log(Date.now());
+    req.body.createdAt = new Date(Date.now());
     const doc = await Model.create(req.body);
 
     res.status(201).json({

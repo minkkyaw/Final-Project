@@ -56,20 +56,6 @@ app.use(mongoSanitize());
 // Data sanitization against XSS
 app.use(xss());
 
-// Prevent parameter pollution
-app.use(
-  hpp({
-    whitelist: [
-      "duration",
-      "ratingsQuantity",
-      "ratingsAverage",
-      "difficulty",
-      "maxGroupSize",
-      "price"
-    ]
-  })
-);
-
 // Test middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();

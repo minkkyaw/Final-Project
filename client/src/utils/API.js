@@ -1,20 +1,48 @@
 import axios from "axios";
 
+const signIn = (email, password) => {
+  return axios.post("/api/users/signin", {
+    email,
+    password
+  });
+};
+
+const signUp = input => {
+  return axios.post("/api/users/signup", input);
+};
+
+const signOut = () => {
+  return axios.get("/api/users/signout");
+};
+
+const postPost = post => {
+  return axios.post("/api/posts/", { post });
+};
+
+const getAllPosts = () => {
+  return axios.get("/api/posts/");
+};
+
+const postComment = (comment, postId) => {
+  console.log(comment);
+  return axios.post(`/api/posts/${postId}/comments`, { comment });
+};
+
+const getAllCommentsByPost = postId => {
+  return axios.get(`/api/posts/${postId}/comments`);
+};
+
+const getRecentCommentsByPost = postId => {
+  return axios.get(`/api/posts/${postId}/comments/recent`);
+};
+
 export default {
-  // Gets all books
-  getBooks: function() {
-    return axios.get("/api/books");
-  },
-  // Gets the book with the given id
-  getBook: function(id) {
-    return axios.get("/api/books/" + id);
-  },
-  // Deletes the book with the given id
-  deleteBook: function(id) {
-    return axios.delete("/api/books/" + id);
-  },
-  // Saves a book to the database
-  saveBook: function(bookData) {
-    return axios.post("/api/books", bookData);
-  }
+  signIn,
+  signUp,
+  signOut,
+  postPost,
+  getAllPosts,
+  postComment,
+  getAllCommentsByPost,
+  getRecentCommentsByPost
 };

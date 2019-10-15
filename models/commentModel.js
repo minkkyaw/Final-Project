@@ -5,7 +5,7 @@ const ObjectId = Schema.Types.ObjectId;
 const commentSchema = new Schema({
   comment: {
     type: String,
-    require: [true, "Comment must have a content"]
+    required: [true, "Comment must have a content"]
   },
   user: {
     _id: {
@@ -24,6 +24,14 @@ const commentSchema = new Schema({
     default: Date.now()
   }
 });
+
+// commentSchema.pre(/^find/, function(next) {
+//   this.populate({
+//     path: "postId",
+//     select: "post"
+//   });
+//   next();
+// });
 
 const Comment = mongoose.model("Comment", commentSchema);
 

@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+import "./App.scss";
 // import Books from "./pages/Books";
 // import Detail from "./pages/Detail";
 // import NoMatch from "./pages/NoMatch";
@@ -39,7 +41,7 @@ function App() {
     <Router>
       <div>
         <NavBar className="nav-bar" navItems={navItems}>
-          Quattour
+          Quattuor
         </NavBar>
         <Switch>
           <Route exact path="/" component={Home} />

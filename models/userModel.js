@@ -30,7 +30,11 @@ const userSchema = new Schema({
       message: "Passwords are not the same"
     }
   },
-  name: {
+  firstName: {
+    type: String,
+    required: true
+  },
+  lastName: {
     type: String,
     required: true
   },
@@ -38,7 +42,7 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  zipcode: {
+  zipCode: {
     type: Number,
     required: true
   },
