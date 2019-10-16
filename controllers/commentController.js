@@ -8,6 +8,7 @@ exports.addedPostIds = (req, res, next) => {
 
 exports.addedUser = (req, res, next) => {
   req.body.user = { _id: req.user._id, firstName: req.user.firstName };
+  console.log(req.body.user);
   next();
 };
 

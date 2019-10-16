@@ -22,8 +22,8 @@ const commentRouter = require("./routes/commentRoutes");
 
 const app = express();
 
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Serving static files
 if (process.env.NODE_ENV === "production") {

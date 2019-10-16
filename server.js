@@ -12,7 +12,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/quattour", {
   useFindAndModify: false,
   useUnifiedTopology: true
 });
-
+console.log(process.env.NODE_ENV);
 // Start the API server
 app.listen(PORT, function() {
   console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
