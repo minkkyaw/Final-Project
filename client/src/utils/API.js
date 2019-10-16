@@ -22,7 +22,7 @@ const postPost = post => {
 };
 
 const getAllPosts = () => {
-  return axios.get("/api/posts/");
+  return transport.get("/api/posts/");
 };
 
 const postComment = (comment, postId) => {
@@ -30,11 +30,24 @@ const postComment = (comment, postId) => {
 };
 
 const getAllCommentsByPost = postId => {
-  return axios.get(`/api/posts/${postId}/comments`);
+  return transport.get(`/api/posts/${postId}/comments`);
 };
 
 const getRecentCommentsByPost = postId => {
-  return axios.get(`/api/posts/${postId}/comments/recent`);
+  return transport.get(`/api/posts/${postId}/comments/recent`);
+};
+
+const searchPosts = searchInput => {
+  return transport.get(`/api/posts?search=${searchInput}`);
+};
+
+const likePost = (postId, likeOrDislike) => {
+  return transport.patch(`api/posts/${postId}?like=${likeOrDislike}`);
+};
+
+const setPost = async setPosts => {
+  let response = await getAllPosts();
+  setPosts(response.data.data.data);
 };
 
 export default {
@@ -45,5 +58,8 @@ export default {
   getAllPosts,
   postComment,
   getAllCommentsByPost,
-  getRecentCommentsByPost
+  getRecentCommentsByPost,
+  searchPosts,
+  likePost,
+  setPost
 };

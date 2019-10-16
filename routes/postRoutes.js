@@ -9,7 +9,11 @@ router.use("/:postId/comments/", commentController.addedPostIds, commentRouter);
 
 router
   .route("/")
-  .get(postController.getAllPosts)
+  .get(
+    authController.protect,
+    postController.addedUser,
+    postController.getAllPosts
+  )
   .post(
     authController.protect,
     postController.addedUser,

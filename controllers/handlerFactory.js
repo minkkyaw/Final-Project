@@ -20,6 +20,14 @@ exports.getOne = (Model, populateObj) =>
 exports.getAll = (Model, populateObj) =>
   catchAsync(async (req, res, next) => {
     let filter = {};
+    if (req.query.search)
+      filter = {
+        $text: {
+          $search: req.query.search,
+          $language: "en",
+          $caseSensitive: false
+        }
+      };
     if (req.body.postId) filter = { postId: req.body.postId };
     let query = Model.find(filter);
     if (populateObj) query = query.populate(populateObj);
@@ -37,7 +45,6 @@ exports.getAll = (Model, populateObj) =>
 
 exports.createOne = Model =>
   catchAsync(async (req, res, next) => {
-    console.log(Date.now());
     req.body.createdAt = new Date(Date.now());
     const doc = await Model.create(req.body);
 
@@ -51,6 +58,7 @@ exports.createOne = Model =>
 
 exports.updateOne = Model =>
   catchAsync(async (req, res, next) => {
+    if (req.query.like) req.body.$inc = { noOfLike: req.query.like };
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true

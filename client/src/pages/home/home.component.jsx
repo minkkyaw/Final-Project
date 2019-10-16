@@ -7,38 +7,53 @@ import './home.styles.scss';
 import API from '../../utils/API';
 import utilsFunc from '../../utils/utilsFunc.js'
 
+
+
 const Home = () => {
   const [postToPost, setPostToPost] = useState('');
-  const [posts, setPosts] = useState();
-  const [postComment, setPostComment] = useState('Say a comment');
+  const [posts, setPosts] = useState([]);
+  const [postComment, setPostComment] = useState('');
+  const [search, setSearch] = useState('');
 
   const handleInputChange = event => {
     switch(event.target.name) {
       case ('post'): 
         return setPostToPost(event.target.value);
+      case ('search'): 
+        return setSearch(event.target.value);
       default: 
         return setPostComment(event.target.textContent);
     }
   }
 
-  useEffect(async () => {
-    let response = await API.getAllPosts()
-    setPosts(response.data.data.data)
+  useEffect(() => {
+    API.setPost(setPosts);
   },[])
 
   useEffect(() => {
-    if(posts) console.log(posts);
+    if(posts) console.log(posts.length === 0);
   },[posts])
-  
-  
   
   const handleFormSubmit = (event, postId) => {
     event.preventDefault();
     switch(event.target.name) {
       case('post'): 
-        return API.postPost(postToPost).then(res=> console.log(res)).catch(err => console.log(err));
+        return API.postPost(postToPost).then(res=> setPostToPost('')).then(() => API.setPost(setPosts)).catch(err => console.log(err));
       case('comment'): 
-        return API.postComment(postComment, event.target.getAttribute('data-postId')).then(res=> console.log(res));
+        return API.postComment(postComment, event.target.getAttribute('data-postId'))
+        .then(res=> {
+          setPostComment('');
+          document.querySelector('.comment-input').textContent = 'Say a comment';
+        })
+        .then(() => API.setPost(setPosts));
+      case('like'): 
+        return API.likePost(event.target.getAttribute('data-postId'), 1)
+          .then(res=> setPostComment(''))
+          .then(() => API.setPost(setPosts))
+          .catch(err => console.log(err));
+      case('search'): 
+        return API.searchPosts(search)
+          .then(res=> setPosts(res.data.data.data))
       default:
         return null;
     }
@@ -47,25 +62,33 @@ const Home = () => {
     <div className="home-page-container">
       <form className="home-search-form">
         <Label className="search-input-label" />
-        <Input className="search-input form-input form-inherit"
+        <Input 
+          className="search-input form-input form-inherit"
+          onChange={handleInputChange}
           name="search"
           type="text"
-          placeholder="Search"/>
-        <Input className="form-btn form-inherit"
+          value={search ? search: undefined}
+          placeholder="What is your plan?"
+        />
+        <Input 
+          className="form-btn form-inherit"
           name="search"
           type="submit"
           value="Search"
+          onClick={handleFormSubmit}
         />
       </form>
       <form className="home-search-form">
-        <Input className="post-input form-input form-inherit"
+        <Input 
+          className="post-input form-input form-inherit"
           onChange={handleInputChange}
           name="post"
           type="text"
           value={postToPost ? postToPost: undefined}
           placeholder="What is your plan?"
           />
-        <Input className="form-btn form-inherit"
+        <Input 
+          className="form-btn form-inherit"
           onClick={handleFormSubmit}
           name="post"
           type="submit"
@@ -73,7 +96,7 @@ const Home = () => {
         />
       </form>
       <div className="post-container">
-      {posts ? posts.map((post, i) => {
+      {posts.length !== 0 ? posts.map((post, i) => {
         const postedTime = utilsFunc.getDuration(post.createdAt);
         return (
         <div key={i} className="post-wrapper">
@@ -84,9 +107,16 @@ const Home = () => {
           <div className="post-body">
             <p className="post">{post.post}</p>
             <div className="post-likes-comments-wrapper">
-              <div>
-                <span className="post-likes-logo">Like </span>
-                <span className="post-likes likes-comment">1000 </span>
+              <div className="like-wrapper">
+                  <Input 
+                    className="like-btn form-inherit"
+                    onClick={handleFormSubmit}
+                    name="like"
+                    type="submit"
+                    value='Like'
+                    data-postId={post._id}
+                  />
+                <span className="post-likes likes-comment">{post.noOfLike} </span>
               </div>
               <div>
                 <span className="post-comments-logo">All Comments </span>
@@ -94,9 +124,9 @@ const Home = () => {
               </div>
             </div>
             <div className="comments-wrapper">
-            {post.comments? post.comments.map(comment => {
+            {post.comments? post.comments.map((comment,i) => {
               return (
-                <div className="comment-wrapper">
+                <div key={i} className="comment-wrapper">
                   <div className="comment">
                     <span className="user-commented">{comment.user.firstName}</span>
                     <span className="post-comment">{comment.comment}</span>
@@ -111,9 +141,10 @@ const Home = () => {
             </div>
             <form className="home-comment-form">
               <div className="input-wrapper">
-                <div className="comment-input" onInput={handleInputChange} contentEditable="true"></div>
+                <div className="comment-input" onInput={handleInputChange} contentEditable="true">Say a comment</div>
               </div>
-              <Input className="form-btn form-inherit"
+              <Input 
+                className="form-btn form-inherit"
                 onClick={handleFormSubmit}
                 name="comment"
                 type="submit"
@@ -128,7 +159,7 @@ const Home = () => {
       } 
         )
       : 
-      null  
+      <h1>No Posts Found</h1>  
       }
       </div>
     </div>

@@ -17,6 +17,11 @@ const postSchema = new Schema(
       photoUrl: String
     },
     zipCode: Number,
+    noOfLike: {
+      type: Number,
+      default: 0
+    },
+    userlikedIds: [ObjectId],
     createdAt: {
       type: Date,
       default: Date.now()
@@ -33,6 +38,9 @@ postSchema.virtual("comments", {
   foreignField: "postId",
   localField: "_id"
 });
+
+postSchema.index({ createdAt: 1 });
+postSchema.index({ "$**": "text" });
 
 const Post = mongoose.model("Post", postSchema);
 
