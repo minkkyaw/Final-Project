@@ -8,13 +8,11 @@ import API from '../../utils/API';
 import utilsFunc from '../../utils/utilsFunc.js'
 
 const Home = () => {
-  const [postToPost, setPostToPost] = useState();
+  const [postToPost, setPostToPost] = useState('');
   const [posts, setPosts] = useState();
-  const [comments, setComments] = useState();
-  const [postComment, setPostComment] = useState('Write a comment');
+  const [postComment, setPostComment] = useState('Say a comment');
 
   const handleInputChange = event => {
-    API.getAllCommentsByPost('5da0ce4b514e5c1e941b252b').then(res => console.log(res.data.data))
     switch(event.target.name) {
       case ('post'): 
         return setPostToPost(event.target.value);
@@ -40,7 +38,7 @@ const Home = () => {
       case('post'): 
         return API.postPost(postToPost).then(res=> console.log(res)).catch(err => console.log(err));
       case('comment'): 
-        return API.postComment(postComment, '5da0ce4b514e5c1e941b252b').then(res=> console.log(res));
+        return API.postComment(postComment, event.target.getAttribute('data-postId')).then(res=> console.log(res));
       default:
         return null;
     }
@@ -64,7 +62,9 @@ const Home = () => {
           onChange={handleInputChange}
           name="post"
           type="text"
-          placeholder="What's your plan"/>
+          value={postToPost ? postToPost: undefined}
+          placeholder="What is your plan?"
+          />
         <Input className="form-btn form-inherit"
           onClick={handleFormSubmit}
           name="post"
@@ -72,10 +72,11 @@ const Home = () => {
           value="Post"
         />
       </form>
+      <div className="post-container">
       {posts ? posts.map((post, i) => {
         const postedTime = utilsFunc.getDuration(post.createdAt);
-        return (<div className="post-container">
-        <div className="post-wrapper">
+        return (
+        <div key={i} className="post-wrapper">
           <div className="post-header">
             <a className="post-owner-name" href="/">{post.user.firstName}</a>
             <p className="posted-time">{postedTime}</p>
@@ -89,19 +90,25 @@ const Home = () => {
               </div>
               <div>
                 <span className="post-comments-logo">All Comments </span>
-                <span className="post-comments">10</span>
+                <span className="post-comments">{post.comments.length}</span>
               </div>
             </div>
-            {/* <div className="comments-wrapper">
-                <div className="comment-wrapper"><span className="user-commented">User</span><span className="post-comment">This is a comment!</span></div>
-                <div className="comment-wrapper"><span className="user-commented">User</span><span className="post-comment">This is a comment!</span></div>
-                <div className="comment-wrapper"><span className="user-commented">User</span><span className="post-comment">This is a comment!</span></div>
-                <div className="comment-wrapper"><span className="user-commented">User</span><span className="post-comment">This is a comment!</span></div>
-                <div className="comment-wrapper"><span className="user-commented">User</span><span className="post-comment">This is a comment!</span></div>
-                <div className="comment-wrapper"><span className="user-commented">User</span><span className="post-comment">This is a comment!</span></div>
-                <div className="comment-wrapper"><span className="user-commented">User</span><span className="post-comment">This is a comment!</span></div>
-                <div className="comment-wrapper"><span className="user-commented">User</span><span className="post-comment">This is a comment!</span></div>
-            </div> */}
+            <div className="comments-wrapper">
+            {post.comments? post.comments.map(comment => {
+              return (
+                <div className="comment-wrapper">
+                  <div className="comment">
+                    <span className="user-commented">{comment.user.firstName}</span>
+                    <span className="post-comment">{comment.comment}</span>
+                  </div>
+                  <p>{utilsFunc.getDuration(comment.createdAt)}</p>
+                </div>);
+            }
+            )
+            :
+            null
+            }
+            </div>
             <form className="home-comment-form">
               <div className="input-wrapper">
                 <div className="comment-input" onInput={handleInputChange} contentEditable="true"></div>
@@ -111,17 +118,19 @@ const Home = () => {
                 name="comment"
                 type="submit"
                 value="Comment"
+                data-postId={post._id}
               />
             </form>
           </div>
         </div>
         
-      </div>)
+      )
       } 
         )
       : 
       null  
       }
+      </div>
     </div>
   );
 }

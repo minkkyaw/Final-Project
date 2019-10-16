@@ -12,7 +12,7 @@ const commentSchema = new Schema({
       type: ObjectId,
       ref: "User"
     },
-    name: String,
+    firstName: String,
     photoUrl: String
   },
   postId: {

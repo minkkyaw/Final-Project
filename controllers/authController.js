@@ -61,9 +61,10 @@ exports.signout = (req, res) => {
 
 exports.protect = catchAsync(async (req, res, next) => {
   let token;
+  console.log;
   if (req.headers.authorization)
     token = req.headers.authorization.split(" ")[1];
-  else if (req.cookie.jwt) token = req.cookie.jwt;
+  else if (req.headers.cookie) token = req.headers.cookie.replace("jwt=", "");
 
   if (!token) return next(new AppError("You are not signed in!", 401));
 
@@ -73,7 +74,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   if (!currentUser) return next(new AppError("User does not exit", 401));
 
-  res.locals.user = currentUser;
+  // res.locals.user = currentUser;
   req.user = currentUser;
 
   next();

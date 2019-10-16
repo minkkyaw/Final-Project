@@ -3,7 +3,7 @@ const router = require("express").Router();
 const commentController = require("./../controllers/commentController");
 const authController = require("./../controllers/authController");
 
-// router.use(authController.protect);
+router.use(authController.protect);
 
 router
   .route("/")

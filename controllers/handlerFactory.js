@@ -17,11 +17,14 @@ exports.getOne = (Model, populateObj) =>
     });
   });
 
-exports.getAll = Model =>
+exports.getAll = (Model, populateObj) =>
   catchAsync(async (req, res, next) => {
     let filter = {};
     if (req.body.postId) filter = { postId: req.body.postId };
-    const doc = await Model.find(filter);
+    let query = Model.find(filter);
+    if (populateObj) query = query.populate(populateObj);
+
+    const doc = await query;
 
     res.status(200).json({
       status: "success",

@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const transport = axios.create({ withCredentials: true });
+
 const signIn = (email, password) => {
   return axios.post("/api/users/signin", {
     email,
@@ -16,7 +18,7 @@ const signOut = () => {
 };
 
 const postPost = post => {
-  return axios.post("/api/posts/", { post });
+  return transport.post("/api/posts/", { post });
 };
 
 const getAllPosts = () => {
@@ -24,8 +26,7 @@ const getAllPosts = () => {
 };
 
 const postComment = (comment, postId) => {
-  console.log(comment);
-  return axios.post(`/api/posts/${postId}/comments`, { comment });
+  return transport.post(`/api/posts/${postId}/comments`, { comment });
 };
 
 const getAllCommentsByPost = postId => {
