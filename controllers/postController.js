@@ -21,7 +21,7 @@ exports.deletePost = factory.deleteOne(Post);
 
 exports.getGooglePlaces = (req, res) => {
   let zip = 19106;
-  let api = "AIzaSyCTA_YDf1KfYOlXtBvHgo0n5S0iXRrBpHw";
+  let api = process.env.GOOGLE_API_KEY;
   let keyword = "bowling";
   axios
     .get(
