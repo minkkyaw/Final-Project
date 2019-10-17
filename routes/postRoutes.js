@@ -6,6 +6,7 @@ const commentController = require("./../controllers/commentController");
 const commentRouter = require("./../routes/commentRoutes");
 
 router.use("/:postId/comments/", commentController.addedPostIds, commentRouter);
+router.route("/googlePlace").get(postController.getGooglePlaces);
 
 router
   .route("/")

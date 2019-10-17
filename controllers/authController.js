@@ -12,7 +12,6 @@ const signToken = id =>
 
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
-  console.log(token);
   const cookieOptions = {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
@@ -23,7 +22,6 @@ const createSendToken = (user, statusCode, res) => {
   if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
 
   res.cookie("jwt", token, cookieOptions);
-  console.log(cookieOptions);
 
   user.password = undefined;
 
@@ -43,11 +41,13 @@ exports.signup = catchAsync(async (req, res, next) => {
 
 exports.signin = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
+  console.log(req.body);
 
   const user = await User.findOne({ email }).select("+password");
   if (!user || !(await user.comparePasswords(password, user.password))) {
     return next(new AppError("Incorrect email or password", 401));
   }
+
   createSendToken(user, 200, res);
 });
 
