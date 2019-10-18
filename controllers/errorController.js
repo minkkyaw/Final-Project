@@ -17,7 +17,7 @@ const sendErrorProd = (err, res) => {
     });
   else {
     console.error("Error", err);
-
+    console.log(process.env.JWT_SECRET);
     res.status(500).json({
       status: "Error",
       message: "Something is wrong!"

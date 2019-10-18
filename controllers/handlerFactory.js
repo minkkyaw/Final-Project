@@ -8,6 +8,12 @@ exports.getOne = (Model, populateObj) =>
 
     const doc = await query;
     if (!doc) return next(new AppError("No doc is found with that ID!", 404));
+    if (req.user && doc.userlikedIds.includes(req.user._id))
+      doc.userLiked = true;
+    doc.forEach(data => {
+      if (data.userlikedIds.includes(req.user._id)) data.userLiked = true;
+      data.noOfLike = data.userlikedIds.length;
+    });
 
     res.status(200).json({
       status: "success",
@@ -17,7 +23,7 @@ exports.getOne = (Model, populateObj) =>
     });
   });
 
-exports.getAll = (Model, populateObj) =>
+exports.getAll = (Model, populateObj, sort, likedCheck) =>
   catchAsync(async (req, res, next) => {
     let filter = {};
     if (req.query.search)
@@ -30,9 +36,15 @@ exports.getAll = (Model, populateObj) =>
       };
     if (req.body.postId) filter = { postId: req.body.postId };
     let query = Model.find(filter);
+    if (sort) query = query.sort({ [sort]: -1 });
     if (populateObj) query = query.populate(populateObj);
 
     const doc = await query;
+
+    doc.forEach(data => {
+      if (data.userlikedIds.includes(req.user._id)) data.userLiked = true;
+      data.noOfLike = data.userlikedIds.length;
+    });
 
     res.status(200).json({
       status: "success",
@@ -58,11 +70,20 @@ exports.createOne = Model =>
 
 exports.updateOne = Model =>
   catchAsync(async (req, res, next) => {
-    if (req.query.like) req.body.$inc = { noOfLike: req.query.like };
+    if (req.query.like) {
+      delete req.body.user;
+      if (req.query.like === "-1")
+        req.body.$push = { userlikedIds: req.user._id };
+      if (req.query.like === "1")
+        req.body.$pull = { userlikedIds: req.user._id };
+    }
+
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true
     });
+
+    doc.noOfLike = doc.userlikedIds.length;
 
     if (!doc) return next(new AppError("No doc is found with that ID!", 404));
 

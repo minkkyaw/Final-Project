@@ -14,6 +14,15 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
   const [postComment, setPostComment] = useState('');
   const [search, setSearch] = useState('');
+  const [currentSearch, setCurrentSearch] = useState('');
+
+  useEffect(() => {
+    API.setPost(setPosts);
+  },[]);
+
+  useEffect(() => {
+    if(posts) console.log(posts);
+  },[posts]);
 
   const handleInputChange = event => {
     switch(event.target.name) {
@@ -26,34 +35,38 @@ const Home = () => {
     }
   }
 
-  useEffect(() => {
-    API.setPost(setPosts);
-  },[])
-
-  useEffect(() => {
-    if(posts) console.log(posts.length === 0);
-  },[posts])
+  const handleInputFocus = event => {
+    event.target.textContent = '';
+  }
   
   const handleFormSubmit = (event, postId) => {
     event.preventDefault();
     switch(event.target.name) {
       case('post'): 
-        return API.postPost(postToPost).then(res=> setPostToPost('')).then(() => API.setPost(setPosts)).catch(err => console.log(err));
+        return API.postPost(postToPost)
+          .then(res=> setPostToPost(''))
+          .then(() => API.setPost(setPosts, currentSearch? currentSearch: null))
+          .catch(err => console.log(err));
       case('comment'): 
         return API.postComment(postComment, event.target.getAttribute('data-postId'))
         .then(res=> {
           setPostComment('');
           document.querySelector('.comment-input').textContent = 'Say a comment';
         })
-        .then(() => API.setPost(setPosts));
+        .then(() => API.setPost(setPosts, currentSearch? currentSearch: null))
+        .catch(err => console.log(err));
       case('like'): 
-        return API.likePost(event.target.getAttribute('data-postId'), 1)
+        return API.likePost(event.target.getAttribute('data-postId'), event.target.getAttribute('data-userLiked'))
           .then(res=> setPostComment(''))
-          .then(() => API.setPost(setPosts))
+          .then(() => API.setPost(setPosts, currentSearch? currentSearch: null))
           .catch(err => console.log(err));
       case('search'): 
         return API.searchPosts(search)
-          .then(res=> setPosts(res.data.data.data))
+          .then(res=> {
+            setCurrentSearch(search);
+            setPosts(res.data.data.data);
+          })
+          .catch(err => console.log(err));
       default:
         return null;
     }
@@ -115,6 +128,8 @@ const Home = () => {
                     type="submit"
                     value='Like'
                     data-postId={post._id}
+                    data-userId={post.user._id}
+                    data-userLiked={ post.userLiked? 1: -1}
                   />
                 <span className="post-likes likes-comment">{post.noOfLike} </span>
               </div>
@@ -141,7 +156,7 @@ const Home = () => {
             </div>
             <form className="home-comment-form">
               <div className="input-wrapper">
-                <div className="comment-input" onInput={handleInputChange} contentEditable="true">Say a comment</div>
+                <div className="comment-input" onInput={handleInputChange} contentEditable="true" onBlur={(event) => event.target.textContent="Say a comment"} onFocus={handleInputFocus} >Say a comment</div>
               </div>
               <Input 
                 className="form-btn form-inherit"

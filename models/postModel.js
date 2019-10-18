@@ -16,6 +16,15 @@ const postSchema = new Schema(
       firstName: String,
       photoUrl: String
     },
+    userLiked: {
+      type: Boolean,
+      default: false
+    },
+    userIdsLiked: [
+      {
+        userId: ObjectId
+      }
+    ],
     zipCode: Number,
     noOfLike: {
       type: Number,

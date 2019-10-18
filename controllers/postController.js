@@ -13,7 +13,7 @@ exports.addedUser = (req, res, next) => {
   next();
 };
 
-exports.getAllPosts = factory.getAll(Post, { path: "comments" });
+exports.getAllPosts = factory.getAll(Post, { path: "comments" }, "createdAt");
 exports.getPost = factory.getOne(Post, { path: "comments" });
 exports.createPost = factory.createOne(Post);
 exports.updatePost = factory.updateOne(Post);

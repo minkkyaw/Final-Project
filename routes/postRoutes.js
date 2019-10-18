@@ -24,7 +24,15 @@ router
 router
   .route("/:id")
   .get(postController.getPost)
-  .patch(postController.updatePost)
-  .delete(postController.deletePost);
+  .patch(
+    authController.protect,
+    postController.addedUser,
+    postController.updatePost
+  )
+  .delete(
+    authController.protect,
+    postController.addedUser,
+    postController.deletePost
+  );
 
 module.exports = router;
