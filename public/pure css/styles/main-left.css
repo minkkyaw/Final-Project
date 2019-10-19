@@ -1,6 +1,6 @@
 .main-left-container {
     width: 25vw;
-    height: 100vh;
+    /* min-height: 50vh; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -33,3 +33,14 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+@media screen and (max-width: 700px) {
+    .main-left-container {
+        width: 100vw;
+    }
+
+    .favorites-container,
+    .reviews-container {
+        width: 100vw;
+        height: auto;
+    }
+}
