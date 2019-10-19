@@ -59,7 +59,22 @@
 }
 
 #comment-box {
-    width: 500px;
+    width: 85%;
     height: 50px;
     border-radius: 5px;
+}
+
+@media screen and (max-width: 700px) {
+    .main-center-container {
+        width: 100vw;
+        height: auto;
+    }
+
+    .search-container,
+    .global-feed-container {
+        width: 100vw;
+        height: auto;
+        margin: 0;
+        margin-top: 5%;
+    }
 }
