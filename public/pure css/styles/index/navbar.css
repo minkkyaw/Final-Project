@@ -5,6 +5,10 @@
   body {
     margin: 0px;
   }
+
+  .material-icons {
+    color: rgb(255, 0, 0);
+}
   
   .nav {
     height: 80px;

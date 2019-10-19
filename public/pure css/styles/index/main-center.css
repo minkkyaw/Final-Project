@@ -2,6 +2,10 @@
     color: red;
 }
 
+.main-center-container {
+
+}
+
 .search-container {
     width: 50vw;
     height: 25vh; /* change to auto when backend is implemented */

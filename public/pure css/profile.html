@@ -7,16 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/index/index.css">
     <link rel="stylesheet" href="styles/index/navbar.css">
-    <link rel="stylesheet" href="styles/index/main-left.css">
+    <link rel="stylesheet" href="styles/index/index.css">
+    <link rel="stylesheet" href="styles/profile/main-left.css">
     <link rel="stylesheet" href="styles/index/main-center.css">
-    <title>Quattuor</title>
+
+    <title>Profile</title>
 </head>
 
 <body>
-
     <div class="nav">
         <input type="checkbox" id="nav-check">
         <div class="nav-header">
@@ -39,7 +38,7 @@
         </div>
 
         <div class="nav-links">
-            <a href="global-feed / home-page" target="_blank"><i class="material-icons">public</i></a>
+            <a href="index.html" target="_blank"><i class="material-icons">public</i></a>
             <a href="profile" target="_blank"><i class="material-icons">person</i></a>
             <a href="tournaments" target="_blank"><i class="material-icons">sports_kabaddi</i></a>
             <a href="contact" target="_blank"><i class="material-icons">contact_support</i></a>
@@ -47,20 +46,47 @@
     </div>
 
     <div class="container">
-
         <!-- MAIN LEFT -->
-
         <div class="main-left-container">
-            <div class="favorites-container">
-                <h4><i class="material-icons">star</i> Favorites</h4>
-            </div>
-            <div class="reviews-container">
-                <h4><i class="material-icons">thumb_up</i> Tournament Reviews</h4>
+            <div class="user-container">
+                <div class="user-image">
+                    <!-- insert image of user/profile picture -->
+                    <img class="profile-pic" src="images/download.jpeg">
+                </div>
+                <div class="user-info-container">
+                    <h2>Lebron James</h2>
+                    <div class="user-info">
+                        <p><i class="material-icons">sports</i> Basketball, Golf</p>
+                        <p><i class="material-icons">home</i> 19152</p>
+                        <p><i class="material-icons">smartphone</i> 123-456-7890</p>
+                    </div>
+                    <hr>
+                    <div class="skills-container">
+                        <h3>Skills</h3>
+                        <p>Shooting</p>
+                        <div class="skills-bar">
+                            <div class="skill one">90%</div>
+                        </div>
 
-            </div>
+                        <p>Dunking</p>
+                        <div class="skills-bar">
+                            <div class="skill two">80%</div>
+                        </div>
 
+                        <p>Long Range Golf</p>
+                        <div class="skills-bar">
+                            <div class="skill three">65%</div>
+                        </div>
+
+                        <p>Driving</p>
+                        <div class="skills-bar">
+                            <div class="skill four">60%</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
-
         <!-- MAIN CENTER -->
 
         <div class="main-center-container">
@@ -157,7 +183,10 @@
                 </div>
             </div>
         </div>
+
     </div>
+
+
 
 </body>
 
