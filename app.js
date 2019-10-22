@@ -7,18 +7,12 @@ const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const hpp = require("hpp");
 
-// const tourRouter = require("./routes/tourRoutes");
-// const userRouter = require("./routes/userRoutes");
-// const reviewRouter = require("./routes/reviewRoutes");
-// const itemRouter = require("./routes/itemRoutes");
-// const viewRouter = require("./routes/viewRoutes");
-
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 const viewRouter = require("./routes/viewRoutes");
 const userRouter = require("./routes/userRoutes");
 const postRouter = require("./routes/postRoutes");
-const commentRouter = require("./routes/commentRoutes");
+const tournamentRouter = require("./routes/tournamentRoutes");
 
 const app = express();
 
@@ -64,7 +58,7 @@ app.use((req, res, next) => {
 
 app.use("/api/users", userRouter);
 app.use("/api/posts", postRouter);
-// app.use("/api/comments", commentRouter);
+app.use("/api/tournaments", tournamentRouter);
 app.use(viewRouter);
 
 app.use(globalErrorHandler);

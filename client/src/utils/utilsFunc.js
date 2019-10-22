@@ -3,7 +3,7 @@ const getDuration = input => {
   let roundTimeDiff = Math.round(timeDiff);
 
   return timeDiff < 1
-    ? `${Math.round(timeDiff * 60)} seconds ago`
+    ? `${Math.round(timeDiff < 0 ? 0 : timeDiff * 60)} sec ago`
     : timeDiff === 1
     ? `1 min ago`
     : timeDiff < 60
