@@ -10,10 +10,8 @@ exports.getOne = (Model, populateObj) =>
     if (!doc) return next(new AppError("No doc is found with that ID!", 404));
     if (req.user && doc.userlikedIds.includes(req.user._id))
       doc.userLiked = true;
-    doc.forEach(data => {
-      if (data.userlikedIds.includes(req.user._id)) data.userLiked = true;
-      data.noOfLike = data.userlikedIds.length;
-    });
+    if (doc.userlikedIds.includes(req.user._id)) doc.userLiked = true;
+    doc.noOfLike = doc.userlikedIds.length;
 
     res.status(200).json({
       status: "success",
@@ -40,10 +38,10 @@ exports.getAll = (Model, populateObj, sort, likedCheck) =>
     if (populateObj) query = query.populate(populateObj);
 
     const doc = await query;
-
     doc.forEach(data => {
-      if (data.userlikedIds.includes(req.user._id)) data.userLiked = true;
-      data.noOfLike = data.userlikedIds.length;
+      if (req.user && data.userlikedIds.includes(req.user._id))
+        data.userLiked = true;
+      if (data.noOfLike) data.noOfLike = data.userlikedIds.length;
     });
 
     res.status(200).json({
@@ -78,6 +76,8 @@ exports.updateOne = Model =>
         req.body.$pull = { userlikedIds: req.user._id };
     }
 
+    if (req.query.competitor)
+      req.body.$push = { competitors: req.query.competitor };
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true
