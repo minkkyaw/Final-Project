@@ -1,0 +1,81 @@
+.main-left-container {
+    width: 25vw;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    /* background-color: grey; */
+    align-items: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding-bottom: 20px;
+
+}
+
+.profile-pic {
+    width: 20vw;
+    height: 30vh;
+    border-radius: 50%;
+    margin: auto;
+    /* border: 5px solid rgba(247, 5, 5, 0.788); */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.274), 0 6px 20px 0 rgba(0, 0, 0, 0.329);
+}
+
+.user-image {
+    /* width: 22vw;
+    height: 30vh;  */
+    margin: 25px; 
+    margin-bottom: 15px;
+    /* background-color: white;
+    border-radius: 1000px; */
+    display: flex;
+    /* border-top-left-radius: 5px;
+    border-top-right-radius: 5px; */
+}
+
+.user-info-container {
+    width: 20vw;
+    height: auto; /* change to auto when backend is implemented */
+    margin: 0 25px; 
+    padding: 10px;
+    background-color: white;
+    border: .5px solid rgba(212, 210, 210, 0.788);
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+    /* border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px; */
+}
+
+.user-info p {
+    font-size: .8em;
+    display: flex;
+    align-items: center;
+
+}
+
+.skills-container {
+    width: 100%;
+}
+
+.skills-container p {
+    font-size: .8em;
+}
+
+.skills-bar {
+    border-radius: 25px;
+    background-color: rgb(214, 214, 214);
+}
+  
+.skill {
+    text-align: right;
+    /* padding-top: 10px; */
+    /* padding-bottom: 10px; */
+    color: white;
+    font-size: .8em;
+    border-radius: 20px;
+    /* height: 2px; */
+}
+  
+  .one {width: 90%; background-color: red;}
+  .two {width: 80%; background-color: red;}
+  .three {width: 65%; background-color: red;}
+  .four {width: 60%; background-color: red;}
