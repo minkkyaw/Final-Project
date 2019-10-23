@@ -10,7 +10,6 @@ exports.getOne = (Model, populateObj) =>
     if (!doc) return next(new AppError("No doc is found with that ID!", 404));
     if (req.user && doc.userlikedIds.includes(req.user._id))
       doc.userLiked = true;
-    if (doc.userlikedIds.includes(req.user._id)) doc.userLiked = true;
     doc.noOfLike = doc.userlikedIds.length;
 
     res.status(200).json({

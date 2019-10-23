@@ -73,25 +73,15 @@ const Home = () => {
   }
   return (
     <div className="home-page-container">
-      <form className="home-search-form">
-        <Label className="search-input-label" />
-        <Input 
-          className="search-input form-input form-inherit"
-          onChange={handleInputChange}
-          name="search"
-          type="text"
-          value={search ? search: undefined}
-          placeholder="What is your plan?"
-        />
-        <Input 
-          className="form-btn form-inherit"
-          name="search"
-          type="submit"
-          value="Search"
-          onClick={handleFormSubmit}
-        />
-      </form>
-      <form className="home-search-form">
+      <div class="main-left-container">
+        <div class="favorites-container">
+          <h4><i class="material-icons">star</i> Favorites</h4>
+        </div>
+        <div class="reviews-container">
+          <h4><i class="material-icons">thumb_up</i> Tournament Reviews</h4>
+        </div>
+      </div>
+      {/* <form className="home-search-form">
         <Input 
           className="post-input form-input form-inherit"
           onChange={handleInputChange}
@@ -107,74 +97,46 @@ const Home = () => {
           type="submit"
           value="Post"
         />
-      </form>
+      </form> */}
       <div className="post-container">
-      {posts.length !== 0 ? posts.map((post, i) => {
-        const postedTime = utilsFunc.getDuration(post.createdAt);
+      <h4>Recent Activity</h4>
+      <hr />
+      {posts.length !== 0 ? posts.map((currPost, i) => {
+        const {user: {firstName}, zipCode, post,createdAt}= currPost;
+        const postedTime = utilsFunc.getDuration(createdAt);
         return (
-        <div key={i} className="post-wrapper">
-          <div className="post-header">
-            <a className="post-owner-name" href="/">{post.user.firstName}</a>
-            <p className="posted-time">{postedTime}</p>
-          </div>
-          <div className="post-body">
-            <p className="post">{post.post}</p>
-            <div className="post-likes-comments-wrapper">
-              <div className="like-wrapper">
-                  <Input 
-                    className="like-btn form-inherit"
-                    onClick={handleFormSubmit}
-                    name="like"
-                    type="submit"
-                    value='Like'
-                    data-postId={post._id}
-                    data-userId={post.user._id}
-                    data-userLiked={ post.userLiked? 1: -1}
-                  />
-                <span className="post-likes likes-comment">{post.noOfLike} </span>
-              </div>
-              <div>
-                <span className="post-comments-logo">All Comments </span>
-                <span className="post-comments">{post.comments.length}</span>
-              </div>
+          <div className="activity-card">
+            <div className="user">
+              <div className="profile-img"></div>
+              <h3>{firstName}</h3>
             </div>
-            <div className="comments-wrapper">
-            {post.comments? post.comments.map((comment,i) => {
-              return (
-                <div key={i} className="comment-wrapper">
-                  <div className="comment">
-                    <span className="user-commented">{comment.user.firstName}</span>
-                    <span className="post-comment">{comment.comment}</span>
-                  </div>
-                  <p>{utilsFunc.getDuration(comment.createdAt)}</p>
-                </div>);
-            }
-            )
-            :
-            null
-            }
+            <p>{postedTime}</p>
+            <div className="activity-description">
+              <p className="activity-zipcode">"Activity" / {zipCode}</p>
+              <p className="date-time">"Date / Time"</p>
             </div>
-            <form className="home-comment-form">
-              <div className="input-wrapper">
-                <div className="comment-input" onInput={handleInputChange} contentEditable="true" onBlur={(event) => event.target.textContent="Say a comment"} onFocus={handleInputFocus} >Say a comment</div>
+            <p className="post">{post}</p>
+            <form className="action-form">
+              <input className="home-user-action-btn" type="submit" value="COUNT ME IN" />
+              <input className="home-user-action-btn" type="submit" value="MAYBE" />
+              <input className="home-user-action-btn"type="submit" value="JOIN WAITLIST" />
+            </form>
+            <form className="comment-form">
+              <label for="comment" className="comment-label">
+                Start a chat:
+              </label>
+              <div className="comment-input-btn-wrapper">
+                <div className="input-wrapper">
+                  <div className="comment-input" onInput={handleInputChange} contentEditable="true" onBlur={(event) => event.target.textContent="Say a comment"} onFocus={handleInputFocus} >Say a comment</div>
+                </div>
+                <button className="comment-btn"><i className="material-icons">send</i></button>
               </div>
-              <Input 
-                className="form-btn form-inherit"
-                onClick={handleFormSubmit}
-                name="comment"
-                type="submit"
-                value="Comment"
-                data-postId={post._id}
-              />
             </form>
           </div>
-        </div>
-        
-      )
-      } 
         )
-      : 
-      <h1>No Posts Found</h1>  
+        } 
+      ) : 
+      (<h1>No Posts Found</h1>)  
       }
       </div>
     </div>

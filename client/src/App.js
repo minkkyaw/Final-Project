@@ -40,9 +40,7 @@ function App() {
   return (
     <Router>
       <div>
-        <NavBar className="nav-bar" navItems={navItems}>
-          Quattuor
-        </NavBar>
+        <NavBar className="nav-bar" navItems={navItems} />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/login/:action" component={LogIn} />
@@ -50,7 +48,6 @@ function App() {
           <Route exact path="/tournament" component={Tournament} />
           <Route exact path="/shop" component={Shop} />
           <Route exact path="/profile" component={Profile} />
-          {/* <Route exact path="/books" component={Books} /> */}
           {/* <Route component={NoMatch} /> */}
         </Switch>
       </div>
