@@ -5,59 +5,73 @@ const bcrypt = require("bcrypt");
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    lowercase: true,
-    validate: [validator.isEmail, "Please provide a valid email"]
-  },
-  password: {
-    type: String,
-    min: 8,
-    required: true,
-    select: false
-  },
-  confirmPassword: {
-    type: String,
-    min: 8,
-    required: true,
-    validate: {
-      validator: function(val) {
-        return this.password === val;
-      },
-      message: "Passwords are not the same"
+const userSchema = new Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      validate: [validator.isEmail, "Please provide a valid email"]
+    },
+    password: {
+      type: String,
+      min: 8,
+      required: true,
+      select: false
+    },
+    confirmPassword: {
+      type: String,
+      min: 8,
+      required: true,
+      validate: {
+        validator: function(val) {
+          return this.password === val;
+        },
+        message: "Passwords are not the same"
+      }
+    },
+    firstName: {
+      type: String,
+      required: true
+    },
+    lastName: {
+      type: String,
+      required: true
+    },
+    city: {
+      type: String,
+      required: true
+    },
+    zipCode: {
+      type: Number,
+      required: true
+    },
+    interest: {
+      type: [String]
+    },
+    photoUrl: String,
+    passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
+    active: {
+      type: Boolean,
+      default: true,
+      select: false
     }
   },
-  firstName: {
-    type: String,
-    required: true
-  },
-  lastName: {
-    type: String,
-    required: true
-  },
-  city: {
-    type: String,
-    required: true
-  },
-  zipCode: {
-    type: Number,
-    required: true
-  },
-  interest: {
-    type: [String]
-  },
-  photoUrl: String,
-  passwordChangedAt: Date,
-  passwordResetToken: String,
-  passwordResetExpires: Date,
-  active: {
-    type: Boolean,
-    default: true,
-    select: false
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
   }
+);
+
+userSchema.index({ createdAt: 1 });
+
+userSchema.virtual("posts", {
+  ref: "Post",
+  foreignField: "user._id",
+  localField: "_id"
 });
 
 userSchema.pre("save", async function(next) {

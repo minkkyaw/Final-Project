@@ -1,5 +1,3 @@
-const AppError = require("./../utils/appError");
-const catchAsync = require("./../utils/catchAsync");
 const axios = require("axios");
 
 const Post = require("./../models/postModel");
