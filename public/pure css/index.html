@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="styles/index/navbar.css">
     <link rel="stylesheet" href="styles/index/main-left.css">
     <link rel="stylesheet" href="styles/index/main-center.css">
+    <link rel="stylesheet" href="styles/index/main-right.css">
     <title>Quattuor</title>
 </head>
 
@@ -39,8 +40,8 @@
         </div>
 
         <div class="nav-links">
-            <a href="global-feed / home-page" target="_blank"><i class="material-icons">public</i></a>
-            <a href="profile" target="_blank"><i class="material-icons">person</i></a>
+            <a href="index.html" target="_blank"><i class="material-icons">public</i></a>
+            <a href="profile.html" target="_blank"><i class="material-icons">person</i></a>
             <a href="tournaments" target="_blank"><i class="material-icons">sports_kabaddi</i></a>
             <a href="contact" target="_blank"><i class="material-icons">contact_support</i></a>
         </div>
@@ -68,10 +69,10 @@
                 <h4>Find out what's going on in your area</h4>
                 <form class="search">
                     <label for="location" class="search-item">Location:</label>
-                    <input type="text" id="location" name="location" placeholder="Enter your zip code">
+                    <input type="text" class="input" id="location" name="location" placeholder="Enter your zip code">
 
                     <label for="location" class="search-item">When:</label>
-                    <input type="text" id="when" name="when" placeholder="mm/dd/yyyy">
+                    <input type="text" class="input" id="when" name="when" placeholder="mm/dd/yyyy">
 
                     <label for="activity" class="search-item">Activity:</label>
                     <select id="activity" name="activity">
@@ -156,6 +157,22 @@
 
                 </div>
             </div>
+        </div>
+
+        <!-- MAIN RIGHT -->
+        <div class="main-right-container">
+            <div class="ad-container">
+                <img id="ad-1" src="../pure css/images/ad-1.jpeg">
+                <div class="caption" id="caption1">
+                    <p>Ad</p>
+                </div>
+            </div>
+            <div class="ad-container">
+                    <img id="ad-2" src="../pure css/images/ad-2.jpg">
+                    <div class="caption" id="caption2">
+                        <p>Ad</p>
+                    </div>
+                </div>
         </div>
     </div>
 
