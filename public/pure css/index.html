@@ -1,34 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles/index/index.css" />
-    <link rel="stylesheet" href="styles/index/navbar.css" />
-    <link rel="stylesheet" href="styles/index/main-left.css" />
-    <link rel="stylesheet" href="styles/index/main-center.css" />
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/index/index.css">
+    <link rel="stylesheet" href="styles/index/navbar.css">
+    <link rel="stylesheet" href="styles/index/main-left.css">
+    <link rel="stylesheet" href="styles/index/main-center.css">
+    <link rel="stylesheet" href="styles/index/main-right.css">
     <title>Quattuor</title>
   </head>
 
   <body>
     <div class="nav">
-      <input type="checkbox" id="nav-check" />
-      <div class="nav-header">
-        <div class="nav-title">
-          <img src="images/Quattuor-logo.png" />
+        <input type="checkbox" id="nav-check">
+        <div class="nav-header">
+            <div class="nav-title">
+                <img src="images/Quattuor-logo.png">
+            </div>
+        </div>
+        <div class="nav-search-container">
+            <form action="/action_page.php">
+                <input id="input" type="text" placeholder="Search.." name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+        <div class="nav-btn">
+            <label for="nav-check">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+        </div>
+
+        <div class="nav-links">
+            <a href="index.html" target="_blank"><i class="material-icons">public</i></a>
+            <a href="profile.html" target="_blank"><i class="material-icons">person</i></a>
+            <a href="tournaments" target="_blank"><i class="material-icons">sports_kabaddi</i></a>
+            <a href="contact" target="_blank"><i class="material-icons">contact_support</i></a>
+
+
         </div>
       </div>
       <div class="nav-search-container">
@@ -68,49 +84,32 @@
         <div class="favorites-container">
           <h4><i class="material-icons">star</i> Favorites</h4>
         </div>
-        <div class="reviews-container">
-          <h4><i class="material-icons">thumb_up</i> Tournament Reviews</h4>
-        </div>
-      </div>
 
-      <!-- MAIN CENTER -->
+        <!-- MAIN CENTER -->
 
-      <div class="main-center-container">
-        <div class="search-container">
-          <h4>Find out what's going on in your area</h4>
-          <form class="search">
-            <label for="location" class="search-item">Location:</label>
-            <input
-              type="text"
-              id="location"
-              name="location"
-              placeholder="Enter your zip code"
-            />
+        <div class="main-center-container">
+            <div class="search-container">
+                <h4>Find out what's going on in your area</h4>
+                <form class="search">
+                    <label for="location" class="search-item">Location:</label>
+                    <input type="text" class="input" id="location" name="location" placeholder="Enter your zip code">
 
-            <label for="location" class="search-item">When:</label>
-            <input type="text" id="when" name="when" placeholder="mm/dd/yyyy" />
+                    <label for="location" class="search-item">When:</label>
+                    <input type="text" class="input" id="when" name="when" placeholder="mm/dd/yyyy">
 
-            <label for="activity" class="search-item">Activity:</label>
-            <select id="activity" name="activity">
-              <option value="australia">Basketball</option>
-              <option value="canada">Football</option>
-              <option value="usa">Tennis</option>
-              <option value="usa">Soccer</option>
-              <option value="usa">Golf</option>
-              <option value="usa">Bowling</option>
-              <option value="usa">Baseball</option>
-            </select>
+                    <label for="activity" class="search-item">Activity:</label>
+                    <select id="activity" name="activity">
+                        <option value="australia">Basketball</option>
+                        <option value="canada">Football</option>
+                        <option value="usa">Tennis</option>
+                        <option value="usa">Soccer</option>
+                        <option value="usa">Golf</option>
+                        <option value="usa">Bowling</option>
+                        <option value="usa">Baseball</option>
+                    </select>
 
-            <input type="submit" value="Submit" />
-          </form>
-        </div>
-        <div class="global-feed-container">
-          <h4>Recent Activity</h4>
-          <div class="activity-card">
-            <hr />
-            <div class="user">
-              <div class="profile-img"></div>
-              <h5>User Name</h5>
+                    <input type="submit" value="Submit">
+                </form>
             </div>
             <div class="activity-description">
               <p>Activity / Zip Code</p>
@@ -141,7 +140,22 @@
           
           
         </div>
-      </div>
+
+        <!-- MAIN RIGHT -->
+        <div class="main-right-container">
+            <div class="ad-container">
+                <img id="ad-1" src="../pure css/images/ad-1.jpeg">
+                <div class="caption" id="caption1">
+                    <p>Ad</p>
+                </div>
+            </div>
+            <div class="ad-container">
+                    <img id="ad-2" src="../pure css/images/ad-2.jpg">
+                    <div class="caption" id="caption2">
+                        <p>Ad</p>
+                    </div>
+                </div>
+        </div>
     </div>
   </body>
 </html>
