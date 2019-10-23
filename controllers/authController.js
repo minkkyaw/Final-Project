@@ -64,7 +64,8 @@ exports.protect = catchAsync(async (req, res, next) => {
   let token;
   if (req.headers.authorization)
     token = req.headers.authorization.split(" ")[1];
-  else if (req.headers.cookie) token = req.headers.cookie.replace("jwt=", "");
+  else if (req.headers.cookie)
+    token = req.headers.cookie.split("jwt=")[1].split(",")[0];
 
   if (!token) return next(new AppError("You are not signed in!", 401));
 
@@ -79,3 +80,26 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   next();
 });
+
+exports.isLoggedIn = async (req, res, next) => {
+  if (req.headers.cookie) {
+    try {
+      const decoded = await promisify(jwt.verify)(
+        req.headers.cookie.split("jwt=")[1].split(",")[0],
+        process.env.JWT_SECRET
+      );
+      const currentUser = await User.findById(decoded.id);
+      if (!currentUser) {
+        return next();
+      }
+      if (currentUser.changedPasswordCheck(decoded.iat)) {
+        return next();
+      }
+      req.user = currentUser;
+      return next();
+    } catch (err) {
+      return next();
+    }
+  }
+  next();
+};

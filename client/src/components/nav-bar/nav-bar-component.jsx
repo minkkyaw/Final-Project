@@ -4,7 +4,9 @@ import NavItems from './../nav-items/nav-items.component';
 
 import './nav-bar.styles.scss';
 
-const NavBar = (props) => (
+const NavBar = (props) => {
+  const {user} = props
+  return (
   <div className="nav">
     <div className="nav-header">
       <div className="nav-title">
@@ -18,11 +20,11 @@ const NavBar = (props) => (
     <div className="nav-links">
       <a href="/home" className="nav-link"><i className="material-icons">home</i></a>
       <a href="global-feed / home" className="nav-link"><i className="material-icons">public</i></a>
-      <a href="profile" className="nav-link"><i className="material-icons">person</i></a>
+      <a href={`profile/${user ? user.user._id : null}`} className="nav-link"><i className="material-icons">person</i></a>
       <a href="tournaments" className="nav-link"><i className="material-icons">sports_kabaddi</i></a>
       <a href="contact" className="nav-link"><i className="material-icons">contact_support</i></a>
     </div>
   </div>
-)
+)}
 
 export default NavBar;

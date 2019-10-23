@@ -10,15 +10,27 @@ import utilsFunc from '../../utils/utilsFunc.js'
 
 
 
-const Profile = () => {
+const Profile = props => {
   const [postToPost, setPostToPost] = useState('');
   const [posts, setPosts] = useState([]);
   const [postComment, setPostComment] = useState('');
   const [search, setSearch] = useState('');
   const [currentSearch, setCurrentSearch] = useState('');
-
+  const [firstName, setFirstName] = useState('First');
+  const [lastName, setLastName] = useState('Last');
+  const [city, setCity] = useState('city');
+  const [zipCode, setZipCode] = useState('zipcode');
+  const [phone, setPhone] = useState('123-456-7890');
   useEffect(() => {
-    API.setPost(setPosts);
+    API.getUserWithPosts(props.match.params.id)
+      .then(response => {
+        const {firstName, lastName, city, zipCode, posts} = response.data.data.data;
+        setFirstName(firstName);
+        setLastName(lastName);
+        setCity(city);
+        setZipCode(zipCode);
+        setPosts(posts);
+      })
   },[]);
 
   useEffect(() => {
@@ -74,39 +86,39 @@ const Profile = () => {
   }
   return (
     <div className="profile-page-container">
-      <div class="main-left-container">
-            <div class="user-container">
-                <div class="user-image">
-                    <img class="profile-pic" src="images/download.jpeg" />
+      <div className="main-left-container">
+            <div className="user-container">
+                <div className="user-image">
+                    <img className="profile-pic" src="./images/download.jpeg" />
                 </div>
-                <div class="user-info-container">
-                    <h2>Lebron James</h2>
-                    <div class="user-info">
-                        <p><i class="material-icons">sports</i> Basketball, Golf</p>
-                        <p><i class="material-icons">home</i> 19152</p>
-                        <p><i class="material-icons">smartphone</i> 123-456-7890</p>
+                <div className="user-info-container">
+                    <h2>{`${firstName} ${lastName}`}</h2>
+                    <div className="user-info">
+                        <p><i className="material-icons">sports</i> Basketball, Golf</p>
+                        <p><i className="material-icons">home</i>{`${city} ${zipCode}`}</p>
+                        <p><i className="material-icons">smartphone</i>{phone}</p>
                     </div>
                     <hr />
-                    <div class="skills-container">
+                    <div className="skills-container">
                         <h3>Skills</h3>
                         <p>Shooting</p>
-                        <div class="skills-bar">
-                            <div class="skill one">90%</div>
+                        <div className="skills-bar">
+                            <div className="skill one">90%</div>
                         </div>
 
                         <p>Dunking</p>
-                        <div class="skills-bar">
-                            <div class="skill two">80%</div>
+                        <div className="skills-bar">
+                            <div className="skill two">80%</div>
                         </div>
 
                         <p>Long Range Golf</p>
-                        <div class="skills-bar">
-                            <div class="skill three">65%</div>
+                        <div className="skills-bar">
+                            <div className="skill three">65%</div>
                         </div>
 
                         <p>Driving</p>
-                        <div class="skills-bar">
-                            <div class="skill four">60%</div>
+                        <div className="skills-bar">
+                            <div className="skill four">60%</div>
                         </div>
                     </div>
                 </div>

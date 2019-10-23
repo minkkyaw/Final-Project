@@ -1,17 +1,18 @@
 const AppError = require("./../utils/appError");
 const catchAsync = require("./../utils/catchAsync");
 
-exports.getOne = (Model, populateObj) =>
+exports.getOne = (Model, populateObj, sort) =>
   catchAsync(async (req, res, next) => {
     let query = Model.findById(req.params.id);
+    if (sort) query = query.sort({ [sort]: -1 });
     if (populateObj) query = query.populate(populateObj);
-
     const doc = await query;
     if (!doc) return next(new AppError("No doc is found with that ID!", 404));
-    if (req.user && doc.userlikedIds.includes(req.user._id))
-      doc.userLiked = true;
-    doc.noOfLike = doc.userlikedIds.length;
-
+    if (doc.userlikedIds) {
+      if (req.user && doc.userlikedIds.includes(req.user._id))
+        doc.userLiked = true;
+      doc.noOfLike = doc.userlikedIds.length;
+    }
     res.status(200).json({
       status: "success",
       data: {
