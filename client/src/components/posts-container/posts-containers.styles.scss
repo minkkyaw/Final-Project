@@ -1,0 +1,139 @@
+
+.post-container {
+  padding: 20px;
+  width: 700px;
+  border: .5px solid rgba(212, 210, 210, 0.788);
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(144, 144, 144, 0.2), 0 6px 20px 0 rgba(144, 144, 144, 0.2);
+
+}
+
+
+.main-center-container h4 {
+    color: red;
+}
+
+.activity-card {
+    padding: 10px;
+}
+
+.activity-description p {
+    font-size: 12px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+}
+
+.activity-description {
+  display:flex;
+}
+
+.activity-zipcode {
+  width: 200px;
+}
+
+.profile-img {
+  width: 25px;
+  height: 25px;
+  border: 1px solid;
+  margin-right: 10px;
+}
+
+.action-form {
+
+}
+
+.home-user-action-btn {
+  color: #fff;
+  font-size: 11px;
+  font-family: inherit;
+  padding: 5px;
+  background-color: rgb(243, 112, 112);
+}
+
+.comment-label {
+  display: block;
+}
+
+.comment-input-btn-wrapper {
+  display: flex;
+}
+
+.input-wrapper {
+  padding: 10px;
+  width: 75%;
+  border-radius: 10px;
+  box-shadow: 0 0 3px #aaa;
+}
+
+@media screen and (max-width: 700px) {
+    .main-center-container {
+        width: 100vw;
+        height: auto;
+    }
+
+    .search-container,
+    .global-feed-container {
+        width: 100vw;
+        height: auto;
+        margin: 0;
+        margin-top: 5%;
+    }
+}
+
+
+.post-wrapper {
+  box-shadow: 0 0 3px rgb(126, 126, 126);
+  margin-bottom: 20px;
+
+  .post-header {
+    padding: 10px;
+    background-color: #ddd;
+    display: flex;
+    justify-content: space-between;
+
+    .post-owner-name {
+      margin: 0;
+    }
+
+    .posted-time {
+      width: 200px;
+      margin: 0;
+    }
+  }
+}
+
+.post-body {
+  padding: 15px;
+}
+
+.post {
+  margin: 0 0 15px;
+}
+
+.post-likes-comments-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 10px;
+}
+
+.post-comments-logo {
+
+}
+
+.like-wrapper {
+  display: flex;
+}
+
+.post-likes {
+ 
+}
+
+.user-commented {
+  display: inline-block;
+  color: #5e6eff;
+  margin-right: 10px;
+}
+

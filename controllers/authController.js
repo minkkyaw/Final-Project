@@ -12,7 +12,6 @@ const signToken = id =>
 
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
-  console.log(token);
   const cookieOptions = {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
@@ -23,7 +22,6 @@ const createSendToken = (user, statusCode, res) => {
   if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
 
   res.cookie("jwt", token, cookieOptions);
-  console.log(cookieOptions);
 
   user.password = undefined;
 
@@ -48,6 +46,7 @@ exports.signin = catchAsync(async (req, res, next) => {
   if (!user || !(await user.comparePasswords(password, user.password))) {
     return next(new AppError("Incorrect email or password", 401));
   }
+
   createSendToken(user, 200, res);
 });
 
@@ -65,7 +64,8 @@ exports.protect = catchAsync(async (req, res, next) => {
   let token;
   if (req.headers.authorization)
     token = req.headers.authorization.split(" ")[1];
-  else if (req.headers.cookie) token = req.headers.cookie.replace("jwt=", "");
+  else if (req.headers.cookie)
+    token = req.headers.cookie.split("jwt=")[1].split(",")[0];
 
   if (!token) return next(new AppError("You are not signed in!", 401));
 
@@ -80,3 +80,26 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   next();
 });
+
+exports.isLoggedIn = async (req, res, next) => {
+  if (req.headers.cookie) {
+    try {
+      const decoded = await promisify(jwt.verify)(
+        req.headers.cookie.split("jwt=")[1].split(",")[0],
+        process.env.JWT_SECRET
+      );
+      const currentUser = await User.findById(decoded.id);
+      if (!currentUser) {
+        return next();
+      }
+      if (currentUser.changedPasswordCheck(decoded.iat)) {
+        return next();
+      }
+      req.user = currentUser;
+      return next();
+    } catch (err) {
+      return next();
+    }
+  }
+  next();
+};

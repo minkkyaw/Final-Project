@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { Redirect } from 'react-router-dom';
 
 import Input from './../../components/Form/form-input.component';
 import API from './../../utils/API';
@@ -14,6 +15,7 @@ const LogIn = (props) => {
   const [city, setCity] = useState();
   const [zipCode, setZipCode] = useState();
   const [interest, setInterest] = useState([]);
+  const [redirect, setRedirect] = useState(false);
 
   const handleInputChange = event => {
     switch(event.target.name) {
@@ -37,13 +39,23 @@ const LogIn = (props) => {
 
     if(event.target.name === "sign-in")
       API.signIn(email, password)
-        .then(() => alert("Successfully sign in"))
+        .then(response => localStorage.setItem('user', JSON.stringify(response.data.data)))
+        .then(() => {
+          setTimeout(() => setRedirect(true), 1000)
+        })
         .catch(err => alert(err.response.data.message));
+  }
+
+  const renderRedirect = () => {
+    if (redirect) {
+      return <Redirect to='/' />
+    }
   }
 
   const action = props.match.params.action;
   return (
     <div className="log-in-container">
+      {renderRedirect()}
       <h1>{action === "signup" ? "Sign Up" : "Sign In"}</h1>
       <form>
         <Input 

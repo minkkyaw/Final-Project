@@ -2,11 +2,15 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
 
-const postSchema = new Schema(
+const tournamentSchema = new Schema(
   {
-    post: {
+    tournamentName: {
       type: String,
-      require: [true, "Post must have a content."]
+      require: [true, "Tournament must have a name."]
+    },
+    category: {
+      type: String,
+      required: [true, "Tournament must have a category."]
     },
     user: {
       _id: {
@@ -16,15 +20,8 @@ const postSchema = new Schema(
       firstName: String,
       photoUrl: String
     },
-    userLiked: {
-      type: Boolean,
-      default: false
-    },
-    userIdsLiked: [
-      {
-        userId: ObjectId
-      }
-    ],
+    competitors: [ObjectId],
+    location: String,
     zipCode: Number,
     noOfLike: {
       type: Number,
@@ -42,15 +39,9 @@ const postSchema = new Schema(
   }
 );
 
-postSchema.virtual("comments", {
-  ref: "Comment",
-  foreignField: "postId",
-  localField: "_id"
-});
+tournamentSchema.index({ createdAt: 1 });
+tournamentSchema.index({ "$**": "text" });
 
-postSchema.index({ createdAt: 1 });
-postSchema.index({ "$**": "text" });
+const Tournament = mongoose.model("Tournament", tournamentSchema);
 
-const Post = mongoose.model("Post", postSchema);
-
-module.exports = Post;
+module.exports = Tournament;

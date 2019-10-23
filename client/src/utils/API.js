@@ -42,12 +42,18 @@ const searchPosts = searchInput => {
 };
 
 const likePost = (postId, likeOrDislike) => {
-  return transport.patch(`api/posts/${postId}?like=${likeOrDislike}`);
+  return transport.patch(`/api/posts/${postId}?like=${likeOrDislike}`);
 };
 
-const setPost = async setPosts => {
-  let response = await getAllPosts();
+const setPost = async (setPosts, data) => {
+  let response;
+  if (data) response = await searchPosts(data);
+  else response = await getAllPosts();
   setPosts(response.data.data.data);
+};
+
+const getUserWithPosts = userId => {
+  return transport.get(`/api/users/${userId}/posts`);
 };
 
 export default {
@@ -61,5 +67,6 @@ export default {
   getRecentCommentsByPost,
   searchPosts,
   likePost,
-  setPost
+  setPost,
+  getUserWithPosts
 };

@@ -6,6 +6,7 @@ const commentController = require("./../controllers/commentController");
 const commentRouter = require("./../routes/commentRoutes");
 
 router.use("/:postId/comments/", commentController.addedPostIds, commentRouter);
+router.route("/googlePlace").get(postController.getGooglePlaces);
 
 router
   .route("/")
@@ -23,7 +24,15 @@ router
 router
   .route("/:id")
   .get(postController.getPost)
-  .patch(postController.updatePost)
-  .delete(postController.deletePost);
+  .patch(
+    authController.protect,
+    postController.addedUser,
+    postController.updatePost
+  )
+  .delete(
+    authController.protect,
+    postController.addedUser,
+    postController.deletePost
+  );
 
 module.exports = router;
