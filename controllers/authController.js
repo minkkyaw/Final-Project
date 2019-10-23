@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require("./../models/userModel");
 const AppError = require("./../utils/appError");
 const catchAsync = require("./../utils/catchAsync");
+const mailer = require('../utils/mailer');
 
 const signToken = id =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -24,6 +25,16 @@ const createSendToken = (user, statusCode, res) => {
   res.cookie("jwt", token, cookieOptions);
 
   user.password = undefined;
+
+  mailObj = {
+    type: "new account",
+    email: user.email,
+    name: user.firstName,
+    subject: 'Welcome To Quattuor',
+    text: 'new Account'
+  }
+  
+  mailer(mailObj);
 
   res.status(statusCode).json({
     status: "success",

@@ -25,7 +25,7 @@ const App = () => {
       <React.Fragment>
         <NavBar user={user ? user : null} />
         {!user ? (
-          <Route component={LogIn} />
+          <Route path="/login/:action" component={LogIn} />
         ) : (
           <React.Fragment>
             <Switch>
