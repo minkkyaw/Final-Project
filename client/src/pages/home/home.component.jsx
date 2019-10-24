@@ -33,6 +33,9 @@ const Home = (props) => {
         return ;
     }
   }
+  const handleInputFocus = event => {
+    event.target.textContent = '';
+  }
   
   const handleFormSubmit = (event, postId) => {
     event.preventDefault();
@@ -80,12 +83,25 @@ const Home = (props) => {
           value="Post"
         />
       </form> */}
-      <PostsContainer 
-        posts={posts}
-        user={props.user}
-        handleFormSubmit={handleFormSubmit}
-        handleInputChange={handleInputChange}
-      />
+      <div className="main-center-container">
+        <div className="post-container">
+          <h4>Create Post</h4>
+          <hr />
+          <form className="comment-input-btn-wrapper">
+            <div className="input-wrapper">
+              <div className="comment-input" onInput={handleInputChange} contentEditable="true" onBlur={(event) => event.target.textContent="Add a comment"} onFocus={handleInputFocus} >Create a post</div>
+            </div>
+            <button className="comment-btn">Post</button>
+          </form>
+        </div>
+        <PostsContainer 
+          posts={posts} 
+          user={props.user ? props.user : null}
+          handleInputChange={handleInputChange} 
+          handleFormSubmit={handleFormSubmit} 
+          handleInputFocus={handleInputFocus}
+        />
+      </div>
     </div>
   );
 }

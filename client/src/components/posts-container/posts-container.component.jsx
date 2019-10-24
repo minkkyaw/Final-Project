@@ -5,7 +5,6 @@ import utilsFunc from '../../utils/utilsFunc.js';
 
 const PostsContainer = (props) => {
   const {user, posts, handleInputChange, handleInputFocus} = props;
-  console.log(user);
   return(
     <div className="post-container">
       <h4>Recent Activity</h4>
@@ -57,14 +56,12 @@ const PostsContainer = (props) => {
               }
             </div>
             {
-              user ? (
-                <form className="comment-form">
-                  <div className="comment-input-btn-wrapper">
-                    <div className="input-wrapper">
-                      <div className="comment-input" onInput={handleInputChange} contentEditable="true" onBlur={(event) => event.target.textContent="Add a comment"} onFocus={handleInputFocus} >Add a comment</div>
-                    </div>
-                    <button className="comment-btn"><i className="material-icons">send</i></button>
+              !user ? (
+                <form className="comment-input-btn-wrapper">
+                  <div className="input-wrapper">
+                    <div className="comment-input" onInput={handleInputChange} contentEditable="true" onBlur={(event) => event.target.textContent="Add a comment"} onFocus={handleInputFocus} >Add a comment</div>
                   </div>
+                  <button className="comment-btn"><i className="material-icons">send</i></button>
                 </form>
               ) : (
                 null

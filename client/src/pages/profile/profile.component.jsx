@@ -141,13 +141,32 @@ const Profile = props => {
           value="Post"
         />
       </form> */}
-      <PostsContainer 
-        posts={posts} 
-        user={props.user ? props.user : null}
-        handleInputChange={handleInputChange} 
-        handleFormSubmit={handleFormSubmit} 
-        handleInputFocus={handleInputFocus}
-      />
+      <div className="main-center-container">
+        <form className="home-search-form">
+          <Input 
+            className="post-input form-input form-inherit"
+            onChange={handleInputChange}
+            name="post"
+            type="text"
+            value={postToPost ? postToPost: undefined}
+            placeholder="What is your plan?"
+            />
+          <Input 
+            className="form-btn form-inherit"
+            onClick={handleFormSubmit}
+            name="post"
+            type="submit"
+            value="Post"
+          />
+        </form>
+        <PostsContainer 
+          posts={posts} 
+          user={props.user ? props.user : null}
+          handleInputChange={handleInputChange} 
+          handleFormSubmit={handleFormSubmit} 
+          handleInputFocus={handleInputFocus}
+        />
+      </div>
     </div>
   );
 }

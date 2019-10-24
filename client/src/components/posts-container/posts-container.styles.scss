@@ -58,10 +58,17 @@
   margin-right: 10px;
 }
 
-.home-comment-form {
+.comment-input-btn-wrapper {
   margin: 20px 0 0;
   display: flex;
-  justify-content: space-between;
+}
+
+.input-wrapper {
+  padding: 10px;
+  width: 75%;
+  border-radius: 10px;
+  box-shadow: 0 0 3px #aaa;
+  margin-right: 20px;
 }
 
 .comment-btn {
