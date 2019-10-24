@@ -41,18 +41,21 @@ const LogIn = (props) => {
       API.signIn(email, password)
         .then(response => localStorage.setItem('user', JSON.stringify(response.data.data)))
         .then(() => {
-          setTimeout(() => setRedirect(true), 1000)
+          setTimeout(() => setRedirect(true), 2000)
         })
         .catch(err => alert(err.response.data.message));
   }
 
   const renderRedirect = () => {
     if (redirect) {
+      if(props.match.url === '/')
+        return window.location.reload();
       return <Redirect to='/' />
     }
   }
 
   const action = props.match.params.action;
+  console.log(props.match);
   return (
     <div className="log-in-container">
       {renderRedirect()}
