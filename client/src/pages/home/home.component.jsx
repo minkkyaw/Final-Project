@@ -6,14 +6,12 @@ import PostsContainer from '../../components/posts-container/posts-container.com
 
 import './home.styles.scss';
 import API from '../../utils/API';
-import utilsFunc from '../../utils/utilsFunc.js'
 
 
 
-const Home = () => {
+const Home = (props) => {
   const [postToPost, setPostToPost] = useState('');
   const [posts, setPosts] = useState([]);
-  const [postComment, setPostComment] = useState('');
   const [search, setSearch] = useState('');
   const [currentSearch, setCurrentSearch] = useState('');
 
@@ -32,41 +30,24 @@ const Home = () => {
       case ('search'): 
         return setSearch(event.target.value);
       default: 
-        return setPostComment(event.target.textContent);
+        return ;
     }
-  }
-
-  const handleInputFocus = event => {
-    event.target.textContent = '';
   }
   
   const handleFormSubmit = (event, postId) => {
     event.preventDefault();
     switch(event.target.name) {
-      case('post'): 
-        return API.postPost(postToPost)
-          .then(res=> setPostToPost(''))
-          .then(() => API.setPost(setPosts, currentSearch? currentSearch: null))
-          .catch(err => console.log(err));
-      case('comment'): 
-        return API.postComment(postComment, event.target.getAttribute('data-postId'))
-        .then(res=> {
-          setPostComment('');
-          document.querySelector('.comment-input').textContent = 'Say a comment';
-        })
-        .then(() => API.setPost(setPosts, currentSearch? currentSearch: null))
-        .catch(err => console.log(err));
-      case('like'): 
-        return API.likePost(event.target.getAttribute('data-postId'), event.target.getAttribute('data-userLiked'))
-          .then(res=> setPostComment(''))
-          .then(() => API.setPost(setPosts, currentSearch? currentSearch: null))
-          .catch(err => console.log(err));
       case('search'): 
         return API.searchPosts(search)
           .then(res=> {
             setCurrentSearch(search);
             setPosts(res.data.data.data);
           })
+          .catch(err => console.log(err));
+      case('post'): 
+        return API.postPost(postToPost)
+          .then(res=> setPostToPost(''))
+          .then(() => API.setPost(setPosts, currentSearch? currentSearch: null))
           .catch(err => console.log(err));
       default:
         return null;
@@ -100,10 +81,10 @@ const Home = () => {
         />
       </form> */}
       <PostsContainer 
-        posts={posts} 
-        handleInputChange={handleInputChange} 
-        handleFormSubmit={handleFormSubmit} 
-        handleInputFocus={handleInputFocus}
+        posts={posts}
+        user={props.user}
+        handleFormSubmit={handleFormSubmit}
+        handleInputChange={handleInputChange}
       />
     </div>
   );

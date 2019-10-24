@@ -1,11 +1,20 @@
 import React from 'react';
 
 import NavItems from './../nav-items/nav-items.component';
+import API from '../../utils/API';
 
 import './nav-bar.styles.scss';
 
 const NavBar = (props) => {
-  const {user} = props
+  const {user} = props;
+
+  const handleSignOut = () => {
+    API.signOut().then(() => {
+      alert('Successfully Signed out!');
+      setTimeout(() => window.location.reload(), 1000);
+      localStorage.setItem('user', null);
+    });
+  }
   return (
   <div className="nav">
     <div className="nav-header">
@@ -18,11 +27,19 @@ const NavBar = (props) => {
       </form>
     </div>
     <div className="nav-links">
-      <a href="/home" className="nav-link"><i className="material-icons">home</i></a>
-      <a href="global-feed / home" className="nav-link"><i className="material-icons">public</i></a>
-      <a href={`profile/${user ? user.user._id : null}`} className="nav-link"><i className="material-icons">person</i></a>
-      <a href="tournaments" className="nav-link"><i className="material-icons">sports_kabaddi</i></a>
-      <a href="contact" className="nav-link"><i className="material-icons">contact_support</i></a>
+      {
+        user ? (
+          <React.Fragment>
+            <a href="/home" className="nav-link"><i className="material-icons">home</i></a>
+            <a href="global-feed / home" className="nav-link"><i className="material-icons">public</i></a>
+            <a href={`profile/${user ? user.user._id : null}`} className="nav-link"><i className="material-icons">person</i></a>
+            <a href="tournaments" className="nav-link"><i className="material-icons">sports_kabaddi</i></a>
+            <a href="/" className="nav-link" onClick={handleSignOut}>SIGN OUT</a>
+          </React.Fragment>
+        )
+        :
+          <a href="/login/signin" className="nav-link">SIGN IN</a>
+      }
     </div>
   </div>
 )}

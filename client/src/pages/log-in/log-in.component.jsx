@@ -40,9 +40,7 @@ const LogIn = (props) => {
     if(event.target.name === "sign-in")
       API.signIn(email, password)
         .then(response => localStorage.setItem('user', JSON.stringify(response.data.data)))
-        .then(() => {
-          setTimeout(() => setRedirect(true), 2000)
-        })
+        .then(() => setRedirect(true))
         .catch(err => alert(err.response.data.message));
   }
 

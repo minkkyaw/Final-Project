@@ -20,6 +20,8 @@ const App = () => {
       setUser(JSON.parse(localStorage.getItem("user")));
   }, []);
 
+  useEffect(() => console.log(user));
+
   return (
     <Router>
       <React.Fragment>
@@ -27,17 +29,42 @@ const App = () => {
         {!user ? (
           <Switch>
             <Route exact path="/login/:action" component={LogIn} />
+            <Route
+              exact
+              path="/profile/:id"
+              user={user ? user : null}
+              component={Profile}
+            />
             <Route path="/" component={LogIn} />
           </Switch>
         ) : (
           <React.Fragment>
             <Switch>
-              <Route exact path="/" component={Home} />
+              <Route
+                exact
+                path="/"
+                user={user ? user : null}
+                component={Home}
+              />
               <Route exact path="/login/:action" component={LogIn} />
-              <Route exact path="/home" component={Home} />
-              <Route exact path="/tournament" component={Tournament} />
-              <Route exact path="/shop" component={Shop} />
-              <Route exact path="/profile/:id" component={Profile} />
+              <Route
+                exact
+                path="/home"
+                user={user ? user : null}
+                component={Home}
+              />
+              <Route
+                exact
+                path="/tournament"
+                user={user ? user : null}
+                component={Tournament}
+              />
+              <Route
+                exact
+                path="/profile/:id"
+                user={user ? user : null}
+                component={Profile}
+              />
               {/* <Route component={NoMatch} /> */}
             </Switch>
           </React.Fragment>

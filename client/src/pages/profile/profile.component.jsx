@@ -143,6 +143,7 @@ const Profile = props => {
       </form> */}
       <PostsContainer 
         posts={posts} 
+        user={props.user ? props.user : null}
         handleInputChange={handleInputChange} 
         handleFormSubmit={handleFormSubmit} 
         handleInputFocus={handleInputFocus}
