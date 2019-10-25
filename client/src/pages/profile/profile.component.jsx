@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-import Input from './../../components/Form/form-input.component';
-import Label from './../../components/Form/form-label.component';
 import PostsContainer from '../../components/posts-container/posts-container.component';
+import PostFormContainer from '../../components/post-form-container/post-form-container.component'
 
 import './profile.styles.scss';
 import API from '../../utils/API';
-import utilsFunc from '../../utils/utilsFunc.js'
-
-
 
 const Profile = props => {
   const [postToPost, setPostToPost] = useState('');
@@ -89,7 +85,7 @@ const Profile = props => {
       <div className="main-left-container">
             <div className="user-container">
                 <div className="user-image">
-                    <img className="profile-pic" src="./images/download.jpeg" />
+                    <img className="profile-pic" src="/images/download.jpeg" />
                 </div>
                 <div className="user-info-container">
                     <h2>{`${firstName} ${lastName}`}</h2>
@@ -141,12 +137,16 @@ const Profile = props => {
           value="Post"
         />
       </form> */}
-      <PostsContainer 
-        posts={posts} 
-        handleInputChange={handleInputChange} 
-        handleFormSubmit={handleFormSubmit} 
-        handleInputFocus={handleInputFocus}
-      />
+      <div className="main-center-container">
+        <PostFormContainer handleInputChange={handleInputChange} handleInputFocus={handleInputFocus} />
+        <PostsContainer 
+          posts={posts} 
+          user={props.user ? props.user : null}
+          handleInputChange={handleInputChange} 
+          handleFormSubmit={handleFormSubmit} 
+          handleInputFocus={handleInputFocus}
+        />
+      </div>
     </div>
   );
 }

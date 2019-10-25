@@ -1,0 +1,44 @@
+
+.activity-card {
+  padding: 10px;
+}
+
+.activity-description {
+  font-size: 1rem;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+}
+
+.activity-description {
+  display:flex;
+}
+
+.activity-zipcode {
+  width: 200px;
+}
+
+.profile-img {
+  width: 25px;
+  height: 25px;
+  border: 1px solid;
+  margin-right: 10px;
+}
+
+.comments-wrapper {
+  border-top: 1px solid #333;
+}
+.comment-wrapper {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 3px #aaa;
+}
+
+.user-commented {
+  display: inline-block;
+  color: #5e6eff;
+  margin-right: 10px;
+}

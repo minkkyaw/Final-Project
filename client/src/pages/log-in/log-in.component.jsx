@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Redirect } from 'react-router-dom';
 
-import Input from './../../components/Form/form-input.component';
+import { Input } from '../../components/form/form.component';
 import API from './../../utils/API';
 
 import './log-in.styles.scss';
@@ -40,14 +40,14 @@ const LogIn = (props) => {
     if(event.target.name === "sign-in")
       API.signIn(email, password)
         .then(response => localStorage.setItem('user', JSON.stringify(response.data.data)))
-        .then(() => {
-          setTimeout(() => setRedirect(true), 1000)
-        })
+        .then(() => setRedirect(true))
         .catch(err => alert(err.response.data.message));
   }
 
   const renderRedirect = () => {
     if (redirect) {
+      if(props.match.url === '/')
+        return window.location.reload();
       return <Redirect to='/' />
     }
   }

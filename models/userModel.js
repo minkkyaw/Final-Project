@@ -67,6 +67,7 @@ const userSchema = new Schema(
 );
 
 userSchema.index({ createdAt: 1 });
+userSchema.index({ "$**": "text" });
 
 userSchema.virtual("posts", {
   ref: "Post",
