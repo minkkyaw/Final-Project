@@ -5,7 +5,6 @@ import "./App.scss";
 
 import Home from "./pages/home/home.component";
 import Tournament from "./pages/tournament/tournament.component";
-import Shop from "./pages/shop/shop.component";
 import Profile from "./pages/profile/profile.component";
 import LogIn from "./pages/log-in/log-in.component";
 import NavBar from "./components/nav-bar/nav-bar-component";
@@ -18,6 +17,7 @@ const App = () => {
   useEffect(() => {
     if (localStorage.getItem("user"))
       setUser(JSON.parse(localStorage.getItem("user")));
+    return () => setUser(JSON.parse(localStorage.getItem("user")));
   }, []);
 
   useEffect(() => console.log(user));
@@ -35,7 +35,7 @@ const App = () => {
               user={user ? user : null}
               component={Profile}
             />
-            <Route path="/" component={LogIn} />
+            <Route component={LogIn} />
           </Switch>
         ) : (
           <React.Fragment>

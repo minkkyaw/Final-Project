@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Redirect } from 'react-router-dom';
 
-import Input from './../../components/Form/form-input.component';
+import { Input } from '../../components/form/form.component';
 import API from './../../utils/API';
 
 import './log-in.styles.scss';
@@ -53,7 +53,6 @@ const LogIn = (props) => {
   }
 
   const action = props.match.params.action;
-  console.log(props.match);
   return (
     <div className="log-in-container">
       {renderRedirect()}

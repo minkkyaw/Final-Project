@@ -1,0 +1,30 @@
+.label-amount-wrapper {
+  display: flex;
+  width: 20%;
+}
+
+.post-label {
+  margin-right: 10%;
+}
+
+.post-body {
+  padding: 15px;
+}
+
+.post {
+  margin: 0 0 15px;
+}
+
+.like-participants-comment {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 10px;
+}
+
+
+
+.user-commented {
+  display: inline-block;
+  color: #5e6eff;
+  margin-right: 10px;
+}

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import Input from './../../components/Form/form-input.component';
-import Label from './../../components/Form/form-label.component';
 import PostsContainer from '../../components/posts-container/posts-container.component';
+import PostFormContainer from '../../components/post-form-container/post-form-container.component';
 
 import './home.styles.scss';
 import API from '../../utils/API';
@@ -58,12 +57,12 @@ const Home = (props) => {
   }
   return (
     <div className="home-page-container">
-      <div class="main-left-container">
-        <div class="favorites-container">
-          <h4><i class="material-icons">star</i> Favorites</h4>
+      <div className="main-left-container">
+        <div className="favorites-container">
+          <h4><i className="material-icons">star</i> Favorites</h4>
         </div>
-        <div class="reviews-container">
-          <h4><i class="material-icons">thumb_up</i> Tournament Reviews</h4>
+        <div className="reviews-container">
+          <h4><i className="material-icons">thumb_up</i> Tournament Reviews</h4>
         </div>
       </div>
       {/* <form className="home-search-form">
@@ -84,16 +83,7 @@ const Home = (props) => {
         />
       </form> */}
       <div className="main-center-container">
-        <div className="post-container">
-          <h4>Create Post</h4>
-          <hr />
-          <form className="comment-input-btn-wrapper">
-            <div className="input-wrapper">
-              <div className="comment-input" onInput={handleInputChange} contentEditable="true" onBlur={(event) => event.target.textContent="Add a comment"} onFocus={handleInputFocus} >Create a post</div>
-            </div>
-            <button className="comment-btn">Post</button>
-          </form>
-        </div>
+        <PostFormContainer handleInputChange={handleInputChange} handleInputFocus={handleInputFocus} />
         <PostsContainer 
           posts={posts} 
           user={props.user ? props.user : null}

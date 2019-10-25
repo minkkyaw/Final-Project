@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 
+import CurrentUserContext from '../../';
 import NavItems from './../nav-items/nav-items.component';
 import API from '../../utils/API';
 
@@ -19,12 +20,18 @@ const NavBar = (props) => {
   <div className="nav">
     <div className="nav-header">
       <div className="nav-title">
-        <img src="./images/Quattuor-logo.png" />
+        <img src="/images/Quattuor-logo.png" />
       </div>
-      <form className="search-form">
-        <input className="search-input" type="text" placeholder="Search.." name="search" />
-        <button className="search-btn"><i className="fa fa-search"></i></button>
-      </form>
+      {
+        user ? (
+          <form className="search-form">
+            <input className="search-input" type="text" placeholder="Search.." name="search" />
+            <button className="search-btn"><i className="fa fa-search"></i></button>
+          </form>
+        )
+        :
+          null
+      }
     </div>
     <div className="nav-links">
       {

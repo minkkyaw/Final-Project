@@ -29,6 +29,34 @@
   }
 }
 
+.input-wrapper {
+  padding: 10px;
+  width: 75%;
+  border-radius: 10px;
+  box-shadow: 0 0 3px #aaa;
+  margin-right: 20px;
+}
+
+.contentEditable-input:hover {
+  outline: none;
+}
+
+.contentEditable-input:focus {
+  outline: none;
+}
+
+.form-submit-btn {
+  padding: 5px 10px;
+  background: rgb(226, 226, 226);
+  color: rgb(0, 131, 253);
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
 .form-btn {
   padding: 5px 15px;
   border: none;
