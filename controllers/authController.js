@@ -26,16 +26,6 @@ const createSendToken = (user, statusCode, res) => {
 
   user.password = undefined;
 
-  mailObj = {
-    type: "new account",
-    email: user.email,
-    name: user.firstName,
-    subject: "Welcome To Quattuor",
-    text: "new Account"
-  };
-
-  mailer(mailObj);
-
   res.status(statusCode).json({
     status: "success",
     token,
@@ -47,6 +37,15 @@ const createSendToken = (user, statusCode, res) => {
 
 exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create(req.body);
+  mailObj = {
+    type: "new account",
+    email: newUser.email,
+    name: newUser.firstName,
+    subject: "Welcome To Quattuor",
+    text: "new Account"
+  };
+
+  mailer(mailObj);
   createSendToken(newUser, 201, res);
 });
 
@@ -114,3 +113,69 @@ exports.isLoggedIn = async (req, res, next) => {
   }
   next();
 };
+
+exports.forgotPassword = catchAsync(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return next(new AppError("There is no user with email address.", 404));
+  }
+
+  const resetToken = user.createPasswordResetToken();
+  await user.save({ validateBeforeSave: false });
+
+  const resetURL = `${req.protocol}://${req.get(
+    "host"
+  )}/api/v1/users/resetPassword/${resetToken}`;
+
+  const message = `Forgot your password?  your new password and passwordConfirm to: ${resetURL}.`;
+
+  mailObj = {
+    type: "new account",
+    email: newUser.email,
+    name: newUser.firstName,
+    subject: "Welcome To Quattuor",
+    text: message
+  };
+
+  mailer(mailObj);
+
+  res.status(200).json({
+    status: "success",
+    message: "Token sent to email!"
+  });
+});
+
+exports.resetPassword = catchAsync(async (req, res, next) => {
+  const hashedToken = crypto
+    .createHash("sha256")
+    .update(req.params.token)
+    .digest("hex");
+
+  const user = await User.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetExpires: { $gt: Date.now() }
+  });
+
+  if (!user) {
+    return next(new AppError("Token is invalid or has expired", 400));
+  }
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
+  user.passwordResetToken = undefined;
+  user.passwordResetExpires = undefined;
+  await user.save();
+
+  createSendToken(user, 200, res);
+});
+
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user.id).select("+password");
+
+  if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
+    return next(new AppError("Your current password is wrong.", 401));
+  }
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
+  await user.save();
+  createSendToken(user, 200, res);
+});

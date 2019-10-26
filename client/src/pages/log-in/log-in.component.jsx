@@ -19,14 +19,24 @@ const LogIn = (props) => {
 
   const handleInputChange = event => {
     switch(event.target.name) {
-      case('email'): return setEmail(event.target.value);
-      case('password'): return setPassword(event.target.value);
-      case('confirmPassword'): return setConfirmPassword(event.target.value);
-      case('firstName'): return setFirstName(event.target.value);
-      case('lastName'): return setLastName(event.target.value);
-      case('city'): return setCity(event.target.value);
-      case('zipCode'): return setZipCode(event.target.value);
-      case('interest'): return setInterest(event.target.value);
+      case('email'): 
+        return setEmail(event.target.value);
+      case('password'): 
+        return setPassword(event.target.value);
+      case('confirmPassword'): 
+        return setConfirmPassword(event.target.value);
+      case('firstName'): 
+        return setFirstName(event.target.value);
+      case('lastName'): 
+        return setLastName(event.target.value);
+      case('city'): 
+        return setCity(event.target.value);
+      case('zipCode'): 
+        return setZipCode(event.target.value);
+      case('interest'): 
+        return setInterest(event.target.value);
+      default: 
+        return null;
     }
   };
 
@@ -56,88 +66,128 @@ const LogIn = (props) => {
   return (
     <div className="log-in-container">
       {renderRedirect()}
-      <h1>{action === "signup" ? "Sign Up" : "Sign In"}</h1>
+
+      <h1>{action === "signup" ? "Sign Up" : action === "forgotpassword" ? "Forget Password" : "Sign In"}</h1>
       <form>
-        <Input 
-          className="email-input form-input form-inherit"
-          onChange = {handleInputChange}
-          name="email"
-          type="text"
-          placeholder="Username"
-          required
-        />
-        <Input 
-          className="password-input form-input form-inherit"
-          onChange = {handleInputChange}
-          name="password"
-          type="password"
-          placeholder="Password"
-          required
-        />
         {
-          action === 'signup' ? 
-          (
-          <>
-          <Input 
-            onChange = {handleInputChange}
-            className="confirm-password-input form-input form-inherit"
-            name="confirmPassword"
-            type="password"
-            placeholder="Confirm Password"
-            required
-          />
-          <Input 
-            onChange = {handleInputChange}
-            className="confirm-password-input form-input form-inherit"
-            name="firstName"
-            type="text"
-            placeholder="First Name"
-            required
-          />
-          <Input 
-            onChange = {handleInputChange}
-            className="confirm-password-input form-input form-inherit"
-            name="lastName"
-            type="text"
-            placeholder="Last Name"
-            required
-          />
-          <Input 
-            onChange = {handleInputChange}
-            className="confirm-password-input form-input form-inherit"
-            name="city"
-            type="text"
-            placeholder="City"
-            required
-          />
-          <Input 
-            onChange = {handleInputChange}
-            className="confirm-password-input form-input form-inherit"
-            name="zipCode"
-            type="text"
-            placeholder="Zip Code"
-            required
-          />
-          <Input 
-            onClick={handleFormSubmit}
-            className="form-btn form-inherit"
-            name="sign-up"
-            type="submit"
-            value="Sign up"
-          />
-          or <a href="/login/signin">Log in</a>
-          </>)
-          :
-          <>
-          <Input 
-            onClick={handleFormSubmit}
-            className="form-btn form-inherit"
-            name="sign-in"
-            type="submit"
-            value="Sign in"
-          />
-          or <a href="/login/signup">Create new account</a>
-          </>
+          action === "forgotpassword" ? (
+            <React.Fragment>
+              <Input 
+                onChange = {handleInputChange}
+                className="form-input form-inherit"
+                name="email"
+                type="text"
+                placeholder="Email"
+                required
+              />
+              <Input 
+                onClick={handleFormSubmit}
+                className="form-btn form-inherit"
+                name="get-one-time-password"
+                type="submit"
+                value="Get One Time Password"
+              />
+              or <a href="/login/signin">Sign in</a>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <Input 
+              className="form-input form-inherit"
+              onChange = {handleInputChange}
+              name="email"
+              type="text"
+              placeholder="Username"
+              required
+            />
+            <Input 
+              className="form-input form-inherit"
+              onChange = {handleInputChange}
+              name="password"
+              type="password"
+              placeholder="Password"
+              required
+            />
+            {
+              action === 'signup' ? 
+              (
+                <React.Fragment>
+                  <Input 
+                    onChange = {handleInputChange}
+                    className="form-input form-inherit"
+                    name="confirmPassword"
+                    type="password"
+                    placeholder="Confirm Password"
+                    required
+                  />
+                  <Input 
+                    onChange = {handleInputChange}
+                    className="form-input form-inherit"
+                    name="firstName"
+                    type="text"
+                    placeholder="First Name"
+                    required
+                  />
+                  <Input 
+                    onChange = {handleInputChange}
+                    className="form-input form-inherit"
+                    name="lastName"
+                    type="text"
+                    placeholder="Last Name"
+                    required
+                  />
+                  <Input 
+                    onChange = {handleInputChange}
+                    className="form-input form-inherit"
+                    name="city"
+                    type="text"
+                    placeholder="City"
+                    required
+                  />
+                  <Input 
+                    onChange = {handleInputChange}
+                    className="form-input form-inherit"
+                    name="zipCode"
+                    type="text"
+                    placeholder="Zip Code"
+                    required
+                  />
+                  <Input 
+                    onClick={handleFormSubmit}
+                    className="form-btn form-inherit"
+                    name="sign-up"
+                    type="submit"
+                    value="Sign up"
+                  />
+                  or <a href="/login/signin">Sign in</a>
+                </React.Fragment>
+              ) : action === "forgotpassword" ? (
+                <React.Fragment>
+                  <Input 
+                    onClick={handleFormSubmit}
+                    className="form-btn form-inherit"
+                    name="sign-in"
+                    type="submit"
+                    value="Sign in"
+                  />
+                  or <a href="/login/signup">Create new account</a>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <Input 
+                    onClick={handleFormSubmit}
+                    className="form-btn form-inherit"
+                    name="sign-in"
+                    type="submit"
+                    value="Sign in"
+                  />
+                  or <a href="/login/signup">Create new account</a>
+                </React.Fragment>
+              )
+            } 
+            <br/>
+            <a href="/login/forgotpassword">Forgot Password?</a>
+          </React.Fragment>
+          )
         }
       </form>
     </div>
