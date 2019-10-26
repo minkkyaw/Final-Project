@@ -23,9 +23,9 @@ const PostContainer = () => {
                 <div className="profile-img">
                   <img className="profile-pic" src="/images/profile-picture-template.jpeg" alt="Profile Image" />
                 </div>
-                <h3>{firstName}</h3>
+                <h3>{firstName}</h3> <p id="postedTime">{postedTime}</p>
               </div>
-              <p>{postedTime}</p>
+              {/* <p id="postedTime">{postedTime}</p> */}
               <div className="activity-description">
                 <p className="activity-zipcode">"Activity" / {zipCode}</p>
                 <p className="date-time">"Date / Time"</p>
@@ -36,13 +36,15 @@ const PostContainer = () => {
                 {
                   currentPost.comments? currentPost.comments.map((comment,i) => {
                     return (
-                      <div key={i} className="comment-wrapper">
-                        <div className="comment">
-                          <span className="user-commented">{comment.user.firstName}</span>
-                          <span className="post-comment">{comment.comment}</span>
+                      <React.Fragment>
+                        <div key={i} className="comment-wrapper">
+                          <div className="comment">
+                            <span className="user-commented">{comment.user.firstName}</span>
+                            <span className="post-comment">{comment.comment}</span>
+                          </div>
+                          <p id="postedTime">{utilsFunc.getDuration(comment.createdAt)}</p>
                         </div>
-                        <p>{utilsFunc.getDuration(comment.createdAt)}</p>
-                      </div>
+                      </React.Fragment>
                       );
                   })
                   :

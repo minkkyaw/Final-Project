@@ -12,7 +12,7 @@ const PostsContainer = () => {
   return(
     <div className="post-container">
       <h4>Recent Activity</h4>
-      <hr />
+      <hr style={{"margin-bottom": "20px"}}/>
       {posts.length !== 0 ? posts.map((currentPost, i) => (
           <CurrentPostContext.Provider value={currentPost}>
             <PostContainer 
