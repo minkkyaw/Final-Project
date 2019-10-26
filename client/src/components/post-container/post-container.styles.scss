@@ -1,10 +1,22 @@
 
 .activity-card {
   padding: 10px;
+  box-shadow: 0px 0px 3px rgb(150, 150, 150);
+  margin-bottom: 20px;
 }
 
 .activity-description {
-  font-size: 1rem;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: .8rem;
+  color: rgb(255, 97, 97);
+}
+
+#postedTime {
+  color: grey;
+  font-size: .5rem;
+  padding-left: 10px;
+  margin: auto 0;
 }
 
 .user {
@@ -27,13 +39,18 @@
 }
 
 .comments-wrapper {
-  border-top: 1px solid #333;
+
 }
 .comment-wrapper {
-  margin: 10px 0;
+  display: flex;
+}
+
+.comment {
+  margin: 10px 10px 10px 0;
   padding: 10px;
   border-radius: 10px;
   box-shadow: 0 0 3px #aaa;
+  width: 85%;
 }
 
 .user-commented {
