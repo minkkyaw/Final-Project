@@ -9,7 +9,6 @@ const PostFormContainer = () => {
   const [content, setContent] = useState('');
   const handleInputChange = event => {
     setContent(event.target.textContent);
-    console.log(event.target.textContent);
   };
 
   return (
@@ -19,6 +18,7 @@ const PostFormContainer = () => {
       <form className="contentEditable-input-btn-wrapper">
         <ContentEditableInput handleInputChange={handleInputChange}>Create a post</ContentEditableInput>
         <SubmitButton content={content}>Post</SubmitButton>
+        <SubmitButton content={content}>Add a place</SubmitButton>
       </form>
     </div>
   )

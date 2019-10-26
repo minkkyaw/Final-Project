@@ -18,9 +18,9 @@ exports.updatePost = factory.updateOne(Post);
 exports.deletePost = factory.deleteOne(Post);
 
 exports.getGooglePlaces = (req, res) => {
-  let zip = 19106;
-  let api = process.env.GOOGLE_API_KEY;
-  let keyword = "bowling";
+  let zip = req.query.zip;
+  let apiKey = process.env.GOOGLE_API_KEY;
+  let keyword = req.query.keyword;
   axios
     .get(
       "https://maps.googleapis.com/maps/api/place/textsearch/json?query=" +
@@ -28,7 +28,7 @@ exports.getGooglePlaces = (req, res) => {
         "&input=" +
         zip +
         "&radius=10000&key=" +
-        api
+        apiKey
     )
     .then(results => {
       return res.json({

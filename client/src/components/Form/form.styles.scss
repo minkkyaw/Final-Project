@@ -55,6 +55,16 @@
   border-radius: 5px;
   display: flex;
   align-items: center;
+
+  &:hover {
+    color: rgb(226, 226, 226);
+    background: rgb(0, 131, 253);
+  }
+
+  &:focus {
+    outline: none;
+    transform: scale(1.1);
+  }
 }
 
 .form-btn {
@@ -66,7 +76,7 @@
   cursor: pointer;
 
   &:hover {
-    background-color: rgb(251, 149, 31);
+    background-color: rgb(255, 68, 68);
     color: #fff;
   }
 
