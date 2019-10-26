@@ -26,16 +26,6 @@ const postSchema = new Schema(
         name: String
       }
     ],
-    participants: [
-      {
-        userId: ObjectId,
-        name: String
-      }
-    ],
-    alreadyParticipated: {
-      type: Boolean,
-      default: false
-    },
     zipCode: Number,
     userlikedIds: [ObjectId],
     createdAt: {
