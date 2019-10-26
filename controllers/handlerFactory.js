@@ -8,9 +8,17 @@ exports.getOne = (Model, populateObj, sort) =>
     if (populateObj) query = query.populate(populateObj);
     const doc = await query;
     if (!doc) return next(new AppError("No doc is found with that ID!", 404));
-    if (req.user && doc.userlikedIds.userId.includes(req.user._id))
+    if (
+      req.user &&
+      doc.userlikedIds.userId &&
+      doc.userlikedIds.userId.includes(req.user._id)
+    )
       doc.userLiked = true;
-    if (req.user && doc.participants.userId.includes(req.user._id))
+    if (
+      req.user &&
+      doc.participants.userId &&
+      doc.participants.userId.includes(req.user._id)
+    )
       doc.alreadyParticipated = true;
     res.status(200).json({
       status: "success",
@@ -38,9 +46,17 @@ exports.getAll = (Model, populateObj, sort, likedCheck) =>
 
     const doc = await query;
     doc.forEach(data => {
-      if (req.user && data.userlikedIds.userId.includes(req.user._id))
+      if (
+        req.user &&
+        data.userlikedIds.userId &&
+        data.userlikedIds.userId.includes(req.user._id)
+      )
         data.userLiked = true;
-      if (req.user && data.participants.userId.includes(req.user._id))
+      if (
+        req.user &&
+        data.participants.userId &&
+        data.participants.userId.includes(req.user._id)
+      )
         data.alreadyParticipated = true;
     });
 
