@@ -8,11 +8,10 @@ exports.getOne = (Model, populateObj, sort) =>
     if (populateObj) query = query.populate(populateObj);
     const doc = await query;
     if (!doc) return next(new AppError("No doc is found with that ID!", 404));
-    if (doc.userlikedIds) {
-      if (req.user && doc.userlikedIds.includes(req.user._id))
-        doc.userLiked = true;
-      doc.noOfLike = doc.userlikedIds.length;
-    }
+    if (req.user && doc.userlikedIds.userId.includes(req.user._id))
+      doc.userLiked = true;
+    if (req.user && doc.participants.userId.includes(req.user._id))
+      doc.alreadyParticipated = true;
     res.status(200).json({
       status: "success",
       data: {
@@ -39,9 +38,10 @@ exports.getAll = (Model, populateObj, sort, likedCheck) =>
 
     const doc = await query;
     doc.forEach(data => {
-      if (req.user && data.userlikedIds.includes(req.user._id))
+      if (req.user && data.userlikedIds.userId.includes(req.user._id))
         data.userLiked = true;
-      if (data.noOfLike) data.noOfLike = data.userlikedIds.length;
+      if (req.user && data.participants.userId.includes(req.user._id))
+        data.alreadyParticipated = true;
     });
 
     res.status(200).json({
@@ -71,9 +71,25 @@ exports.updateOne = Model =>
     if (req.query.like) {
       delete req.body.user;
       if (req.query.like === "-1")
-        req.body.$push = { userlikedIds: req.user._id };
+        req.body.$push = {
+          userlikedIds: { userId: req.user._id, name: req.user.firstName }
+        };
       if (req.query.like === "1")
-        req.body.$pull = { userlikedIds: req.user._id };
+        req.body.$pull = {
+          userlikedIds: { userId: req.user._id, name: req.user.firstName }
+        };
+    }
+
+    if (req.query.participants) {
+      delete req.body.user;
+      if (req.query.participants === "-1")
+        req.body.$push = {
+          participants: { userId: req.user._id, name: req.user.firstName }
+        };
+      if (req.query.participants === "1")
+        req.body.$pull = {
+          participants: { userId: req.user._id, name: req.user.firstName }
+        };
     }
 
     if (req.query.competitor)

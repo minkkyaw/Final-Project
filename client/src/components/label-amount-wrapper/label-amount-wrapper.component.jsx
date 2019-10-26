@@ -6,7 +6,7 @@ const LabelAmountWrapper = props => {
   const {label, amount} = props;
   return (
     <div className="label-amount-wrapper">
-      <p className="post-label">{label}</p>
+      <p data-action="whatever" onClick={(event) => console.log(event.target.getAttribute('data-action'))} className="post-label">{label}</p>
       <p className="post-amount">{amount}</p>
     </div>
   );

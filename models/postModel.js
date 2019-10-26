@@ -22,14 +22,21 @@ const postSchema = new Schema(
     },
     userIdsLiked: [
       {
-        userId: ObjectId
+        userId: ObjectId,
+        name: String
       }
     ],
-    zipCode: Number,
-    noOfLike: {
-      type: Number,
-      default: 0
+    participants: [
+      {
+        userId: ObjectId,
+        name: String
+      }
+    ],
+    alreadyParticipated: {
+      type: Boolean,
+      default: false
     },
+    zipCode: Number,
     userlikedIds: [ObjectId],
     createdAt: {
       type: Date,

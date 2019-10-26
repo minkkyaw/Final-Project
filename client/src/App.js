@@ -8,8 +8,7 @@ import Tournament from "./pages/tournament/tournament.component";
 import Profile from "./pages/profile/profile.component";
 import LogIn from "./pages/log-in/log-in.component";
 import NavBar from "./components/nav-bar/nav-bar-component";
-
-import API from "./utils/API";
+import CurrentUserContext from "./contexts/current-user/current-user.context";
 
 const App = () => {
   const [user, setUser] = useState();
@@ -24,52 +23,28 @@ const App = () => {
 
   return (
     <Router>
-      <React.Fragment>
-        <NavBar user={user ? user : null} />
+      <CurrentUserContext.Provider value={user}>
+        <NavBar />
+
         {!user ? (
           <Switch>
             <Route exact path="/login/:action" component={LogIn} />
-            <Route
-              exact
-              path="/profile/:id"
-              user={user ? user : null}
-              component={Profile}
-            />
+            <Route exact path="/profile/:id" component={Profile} />
             <Route component={LogIn} />
           </Switch>
         ) : (
           <React.Fragment>
             <Switch>
-              <Route
-                exact
-                path="/"
-                user={user ? user : null}
-                component={Home}
-              />
+              <Route exact path="/" component={Home} />
               <Route exact path="/login/:action" component={LogIn} />
-              <Route
-                exact
-                path="/home"
-                user={user ? user : null}
-                component={Home}
-              />
-              <Route
-                exact
-                path="/tournament"
-                user={user ? user : null}
-                component={Tournament}
-              />
-              <Route
-                exact
-                path="/profile/:id"
-                user={user ? user : null}
-                component={Profile}
-              />
+              <Route exact path="/home" component={Home} />
+              <Route exact path="/tournament" component={Tournament} />
+              <Route exact path="/profile/:id" component={Profile} />
               {/* <Route component={NoMatch} /> */}
             </Switch>
           </React.Fragment>
         )}
-      </React.Fragment>
+      </CurrentUserContext.Provider>
     </Router>
   );
 };

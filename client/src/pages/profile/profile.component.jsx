@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 import PostsContainer from '../../components/posts-container/posts-container.component';
-import PostFormContainer from '../../components/post-form-container/post-form-container.component'
+import PostFormContainer from '../../components/post-form-container/post-form-container.component';
+import PostsContext from '../../contexts/posts/posts.context';
+
 
 import './profile.styles.scss';
 import API from '../../utils/API';
@@ -83,69 +85,48 @@ const Profile = props => {
   return (
     <div className="profile-page-container">
       <div className="main-left-container">
-            <div className="user-container">
-                <div className="user-image">
-                    <img className="profile-pic" src="/images/download.jpeg" />
+        <div className="user-container">
+            <div className="user-image">
+              <img className="profile-pic" src="/images/profile-picture-template.jpeg" alt="Profile Image" />
+            </div>
+            <div className="user-info-container">
+              <h2>{`${firstName} ${lastName}`}</h2>
+              <div className="user-info">
+                <p><i className="material-icons">sports</i> Basketball, Golf</p>
+                <p><i className="material-icons">home</i>{`${city} ${zipCode}`}</p>
+                <p><i className="material-icons">smartphone</i>{phone}</p>
+              </div>
+              <hr />
+              <div className="skills-container">
+                <h3>Skills</h3>
+                <p>Shooting</p>
+                <div className="skills-bar">
+                    <div className="skill one">90%</div>
                 </div>
-                <div className="user-info-container">
-                    <h2>{`${firstName} ${lastName}`}</h2>
-                    <div className="user-info">
-                        <p><i className="material-icons">sports</i> Basketball, Golf</p>
-                        <p><i className="material-icons">home</i>{`${city} ${zipCode}`}</p>
-                        <p><i className="material-icons">smartphone</i>{phone}</p>
-                    </div>
-                    <hr />
-                    <div className="skills-container">
-                        <h3>Skills</h3>
-                        <p>Shooting</p>
-                        <div className="skills-bar">
-                            <div className="skill one">90%</div>
-                        </div>
 
-                        <p>Dunking</p>
-                        <div className="skills-bar">
-                            <div className="skill two">80%</div>
-                        </div>
-
-                        <p>Long Range Golf</p>
-                        <div className="skills-bar">
-                            <div className="skill three">65%</div>
-                        </div>
-
-                        <p>Driving</p>
-                        <div className="skills-bar">
-                            <div className="skill four">60%</div>
-                        </div>
-                    </div>
+                <p>Dunking</p>
+                <div className="skills-bar">
+                    <div className="skill two">80%</div>
                 </div>
+
+                <p>Long Range Golf</p>
+                <div className="skills-bar">
+                    <div className="skill three">65%</div>
+                </div>
+
+                <p>Driving</p>
+                <div className="skills-bar">
+                    <div className="skill four">60%</div>
+                </div>
+              </div>
             </div>
         </div>
-      {/* <form className="home-search-form">
-        <Input 
-          className="post-input form-input form-inherit"
-          onChange={handleInputChange}
-          name="post"
-          type="text"
-          value={postToPost ? postToPost: undefined}
-          placeholder="What is your plan?"
-          />
-        <Input 
-          className="form-btn form-inherit"
-          onClick={handleFormSubmit}
-          name="post"
-          type="submit"
-          value="Post"
-        />
-      </form> */}
+      </div>
       <div className="main-center-container">
         <PostFormContainer handleInputChange={handleInputChange} handleInputFocus={handleInputFocus} />
-        <PostsContainer 
-          posts={posts} 
-          user={props.user ? props.user : null}
-          handleInputChange={handleInputChange} 
-          handleFormSubmit={handleFormSubmit} 
-          handleInputFocus={handleInputFocus}
-        />
+        <PostsContext.Provider value={posts}>
+          <PostsContainer />
+        </PostsContext.Provider>
       </div>
     </div>
   );
