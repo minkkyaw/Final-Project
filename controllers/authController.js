@@ -42,7 +42,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     email: newUser.email,
     name: newUser.firstName,
     subject: "Welcome To Quattuor",
-    text: "new Account"
+    text: "Thank you for joining the fastest growing sports social media platform on the web! We are pumped to have you as part of the Quattuor community and hope to help you find fun games and new friends wherever you might be!"
   };
 
   mailer(mailObj);

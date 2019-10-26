@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import './comment-form-component.styles.scss';
 
-import { SubmitButton, ContentEditableInput } from '../form/form.component';
+import { SubmitButton, ContentEditableInput } from '../Form/form.component';
 
 const CommentFormContainer = () => {
   const [content, setContent] = useState('');

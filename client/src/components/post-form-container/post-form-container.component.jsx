@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import './post-form-container.styles.scss';
 
-import { SubmitButton, ContentEditableInput } from '../form/form.component';
+import { SubmitButton, ContentEditableInput } from '../Form/form.component';
 import CurrentContentContext from '../../contexts/current-content/current-content.context';
 
 const PostFormContainer = () => {
