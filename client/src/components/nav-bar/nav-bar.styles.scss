@@ -40,6 +40,11 @@
   border: none;
   cursor: pointer;
   border-radius: 5px;
+
+  &:hover{
+    transform: scale(1.2);
+    
+  }
 }
 
 .nav-links {
@@ -53,5 +58,11 @@
     padding: 13px 10px;
     text-decoration: none;
     color: rgb(255, 0, 0);;
+
+    &:hover{
+      transform: scale(1.2);
+    }
   }
+
+
 }

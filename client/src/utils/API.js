@@ -56,6 +56,12 @@ const getUserWithPosts = userId => {
   return transport.get(`/api/users/${userId}/posts`);
 };
 
+const getPlaces = (zip, keyword) => {
+  zip = 19106;
+  keyword="bowling";
+  return transport.get(`/api/posts/googlePlace?keyword=${keyword}&zip=${zip}`);
+};
+
 export default {
   signIn,
   signUp,
@@ -68,5 +74,6 @@ export default {
   searchPosts,
   likePost,
   setPost,
-  getUserWithPosts
+  getUserWithPosts,
+  getPlaces
 };
