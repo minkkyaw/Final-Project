@@ -2,11 +2,12 @@ const nodemailer = require('nodemailer');
 
 const mailer = mailContent => {
     const newAccountOutput = `
-        <h2>Welcome To Quattuor ${mailContent.name}</h2>
+        <h2>Welcome To Quattuor ${mailContent.name}!</h2>
         <p>${mailContent.text}</p>
     `;
     const resetPasswordOutput = `
-        <p>Reset Password</p>
+        <h2>Reset Password</h2>
+    <p>Follow these steps to reset your password...and don't forget it this time!</p>
     `
     let output;
     switch(mailContent.type) {
@@ -38,7 +39,7 @@ const mailer = mailContent => {
         from: '"Quattuor" quattuorapp@gmail.com', // sender address
         to: mailContent.email, // list of receivers
         subject: mailContent.subject, // Subject line
-        text: 'trust the process.', // plain text body
+        text: 'Thank you for joining the fastest growing sports social media platform on the web! We are pumped to have you as part of the Quattuor community and hope to help you find fun games and new friends wherever you might be!', // plain text body
         html: output // html body
     };
 

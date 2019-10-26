@@ -10,13 +10,15 @@ exports.getOne = (Model, populateObj, sort) =>
     if (!doc) return next(new AppError("No doc is found with that ID!", 404));
     if (
       req.user &&
-      doc.userlikedIds.userId &&
+      doc.userlikedIds &&
+      doc.userlikedIds.userId && 
       doc.userlikedIds.userId.includes(req.user._id)
     )
       doc.userLiked = true;
     if (
       req.user &&
-      doc.participants.userId &&
+      doc.participants &&
+      doc.participants.userId && 
       doc.participants.userId.includes(req.user._id)
     )
       doc.alreadyParticipated = true;

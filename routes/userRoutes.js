@@ -9,7 +9,7 @@ router.route("/signout").get(authController.signout);
 router.post("/forgotPassword", authController.forgotPassword);
 router.patch("/resetPassword/:token", authController.resetPassword);
 
-router.use(authController.protect);
+router.use(authController.isLoggedIn);
 router.patch("/updateMyPassword", authController.updatePassword);
 router.route("/:id").get(userController.getUser);
 router.route("/:id/posts").get(userController.getUserWithPosts);
