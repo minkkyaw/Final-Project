@@ -17,12 +17,29 @@ const signOut = () => {
   return axios.get("/api/users/signout");
 };
 
+const updateUser = (userId, userData) => {
+  console.log(userId, userData);
+  return transport.patch(`/api/users/${userId}`, userData);
+};
+
 const postPost = post => {
   return transport.post("/api/posts/", { post });
 };
 
 const getAllPosts = () => {
   return transport.get("/api/posts/");
+};
+
+const getPost = postId => {
+  return transport.get(`/api/posts/${postId}`);
+};
+
+const updatePost = postId => {
+  return transport.patch(`/api/posts/${postId}`);
+};
+
+const deletePost = postId => {
+  return transport.delete(`/api/posts/${postId}`);
 };
 
 const postComment = (comment, postId) => {
@@ -35,6 +52,16 @@ const getAllCommentsByPost = postId => {
 
 const getRecentCommentsByPost = postId => {
   return transport.get(`/api/posts/${postId}/comments/recent`);
+};
+
+const updateComment = (postId, commentId, comment) => {
+  return transport.patch(`/api/posts/${postId}/comments/${commentId}`, {
+    comment
+  });
+};
+
+const deleteComment = (postId, commentId) => {
+  return transport.delete(`/api/posts/${postId}/comments/${commentId}`);
 };
 
 const searchPosts = searchInput => {
@@ -58,7 +85,7 @@ const getUserWithPosts = userId => {
 
 const getPlaces = (zip, keyword) => {
   zip = 19106;
-  keyword="bowling";
+  keyword = "bowling";
   return transport.get(`/api/posts/googlePlace?keyword=${keyword}&zip=${zip}`);
 };
 
@@ -66,11 +93,16 @@ export default {
   signIn,
   signUp,
   signOut,
+  updateUser,
   postPost,
   getAllPosts,
+  getPost,
+  deletePost,
+  updatePost,
   postComment,
   getAllCommentsByPost,
   getRecentCommentsByPost,
+  deleteComment,
   searchPosts,
   likePost,
   setPost,

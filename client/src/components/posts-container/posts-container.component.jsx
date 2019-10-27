@@ -13,7 +13,7 @@ const PostsContainer = () => {
     <div className="post-container">
       <h4>Recent Activity</h4>
       <hr style={{"margin-bottom": "20px"}}/>
-      {posts.length !== 0 ? posts.map((currentPost, i) => (
+      {posts && posts.length > 0 ? posts.map((currentPost, i) => (
           <CurrentPostContext.Provider value={currentPost}>
             <PostContainer 
               key={currentPost._id}

@@ -1,0 +1,58 @@
+.main-right-container {
+    width: 24vw;
+    margin-left: 1vw
+}
+
+.ad-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#ad-1,#ad-2 {
+    width: 100%;
+    height: 40vw;
+    margin: auto;
+}
+
+#caption1,
+#caption2,
+#caption3,
+#caption4 {
+    width: 100%;
+    height: 5%;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+#caption1 {
+    background-color: black;
+}
+
+#caption2 {
+    background-color: #ec252c;
+}
+
+#caption3 {
+    background-color: #202124;
+}
+
+#caption4 {
+    background-color: #efeeea;
+}
+
+.caption p {
+    font-size: 10px;
+    padding-left: 10px;
+    padding: 5px;
+    color: white;
+    background-color: rgb(74, 118, 184);
+    border-top-right-radius: 100px;
+    margin: 0;
+}
+
+@media screen and (max-width: 900px) {
+    .main-right-container {
+        display: none;
+    }
+}

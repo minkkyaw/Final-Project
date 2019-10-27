@@ -19,94 +19,27 @@
   padding-right: 10px;
 }
 
-.favorites-container {
-  width: 100%;
-  min-height: 25vh; /* change to auto when backend is implemented */
-  margin-bottom: 20px;
-  padding: 10px;
-  background-color: white;
-  border: .5px solid rgba(212, 210, 210, 0.788);
-  border-radius: 5px;
-  box-shadow: 0 4px 8px 0 rgba(144, 144, 144, 0.2), 0 6px 20px 0 rgba(144, 144, 144, 0.2);
-}
+// .favorites-container {
+//   width: 100%;
+//   min-height: 25vh; /* change to auto when backend is implemented */
+//   margin-bottom: 20px;
+//   padding: 10px;
+//   background-color: white;
+//   border: .5px solid rgba(212, 210, 210, 0.788);
+//   border-radius: 5px;
+//   box-shadow: 0 4px 8px 0 rgba(144, 144, 144, 0.2), 0 6px 20px 0 rgba(144, 144, 144, 0.2);
+// }
 
-.reviews-container {
-  width: 100%;
-  min-height: 25vh; /* change to auto when backend is implemented */
-  margin-bottom: 20px;
-  padding: 10px;
-  background-color: white;
-  border: .5px solid rgba(212, 210, 210, 0.788);
-  border-radius: 5px;
-  box-shadow: 0 4px 8px 0 rgba(144, 144, 144, 0.2), 0 6px 20px 0 rgba(144, 144, 144, 0.2);
-}
-
-
-.user-image {
-  width: 100%;
-  margin: 0 auto 20px;
-  border-radius: 10%;
-  box-shadow: 0 4px 8px 0 rgba(144, 144, 144, 0.2), 0 6px 20px 0 rgba(144, 144, 144, 0.2);
-  overflow: hidden;
-}
-
-.profile-pic {
-  width: 100%;
-  height: 100%;
-}
-
-.user-info-container {
-  width: 100%;
-  padding: 10px;
-  background-color: white;
-  border: .5px solid rgba(212, 210, 210, 0.788);
-  border-radius: 5px;
-  box-shadow: 0 4px 8px 0 rgba(144, 144, 144, 0.2), 0 6px 20px 0 rgba(144, 144, 144, 0.2);
-}
-
-.user-info p {
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-
-}
-
-.skills-container {
-  width: 100%;
-}
-
-.skills-container p {
-  font-size: 1rem;
-}
-
-.skills-bar {
-  border-radius: 25px;
-  background-color: rgb(214, 214, 214);
-}
-  
-.skill {
-  text-align: right;
-  color: white;
-  font-size: 1rem;
-  border-radius: 20px;
-}
-  
-.one {
-  width: 90%; 
-  background-color: red;
-}
-.two {
-  width: 80%; 
-  background-color: red;
-}
-.three {
-  width: 65%; 
-  background-color: red;
-}
-.four {
-  width: 60%; 
-  background-color: red;
-}
+// .reviews-container {
+//   width: 100%;
+//   min-height: 25vh; /* change to auto when backend is implemented */
+//   margin-bottom: 20px;
+//   padding: 10px;
+//   background-color: white;
+//   border: .5px solid rgba(212, 210, 210, 0.788);
+//   border-radius: 5px;
+//   box-shadow: 0 4px 8px 0 rgba(144, 144, 144, 0.2), 0 6px 20px 0 rgba(144, 144, 144, 0.2);
+// }
 
 @media screen and (max-width: 700px) {
   .main-left-container {

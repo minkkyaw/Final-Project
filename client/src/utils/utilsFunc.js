@@ -1,4 +1,4 @@
-const getDuration = input => {
+export const getDuration = input => {
   let timeDiff = (new Date(Date.now()) - new Date(input)) / 1000 / 60;
   let roundTimeDiff = Math.round(timeDiff);
 
@@ -17,4 +17,16 @@ const getDuration = input => {
     : `${Math.round(roundTimeDiff / 60 / 24)} days ago `;
 };
 
-export default { getDuration };
+export const arrObjToString = input => {
+  let output = input.map(obj => {
+    let arr = new Array();
+    for (let key in obj) {
+      if (key !== "_id") arr.push(obj[key]);
+    }
+    let x = arr[0];
+    arr[0] = arr[1];
+    arr[1] = x;
+    return arr.join(" ");
+  });
+  return output.join(" ");
+};

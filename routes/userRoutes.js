@@ -11,7 +11,11 @@ router.route("/signout").get(authController.signout);
 
 router.use(authController.isLoggedIn);
 // router.patch("/updateMyPassword", authController.updatePassword);
-router.route("/:id").get(userController.getUser);
+router
+  .route("/:id")
+  .get(userController.getUser)
+  .patch(userController.updateUser);
+
 router.route("/:id/posts").get(userController.getUserWithPosts);
 
 module.exports = router;

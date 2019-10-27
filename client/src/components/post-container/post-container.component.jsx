@@ -1,4 +1,5 @@
-import React,{ useState } from 'react';
+import React,{ useState, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import './post-container.styles.scss';
 
@@ -7,59 +8,116 @@ import LikeParticipantsCommentsContainer from '../LikeParticipantsCommentsContai
 import CurrentUserContext from "../../contexts/current-user/current-user.context";
 
 
-import utilsFunc from '../../utils/utilsFunc.js';
+import { getDuration } from '../../utils/utilsFunc.js';
 import CurrentPostContext from '../../contexts/current-post/current-post.context';
+import API from '../../utils/API';
 
 const PostContainer = () => {
+  const currentUser= useContext(CurrentUserContext);
+  const [redirect, setRedirect] = useState(false);
+  const [redirectToUserCommented, setRedirectToUserCommented] = useState(false);
+  const [userIdCommented, setUserIdCommented] = useState('');
+  const renderRedirect = (id) => {
+    if (redirect) {
+      return <Redirect to={`/profile/${id}`} />
+    }
+  }
+
+  const renderRedirectToUserCommented = () => {
+    if (redirectToUserCommented) {
+      return <Redirect to={`/profile/${userIdCommented}`} />
+    }
+  }
+
+  const deletePost = async (id) => {
+    try {
+      const response = await API.deletePost(id);
+      alert("Successfully deleted");
+    } catch(err) {
+      console.log(err);
+    }
+  };
+
+  const deleteComment = async (postId, commentId) => {
+    try {
+      const response = await API.deleteComment(postId, commentId);
+      alert("Successfully deleted");
+    } catch(err) {
+      console.log(err);
+    }
+  };
+
+  const handleRedirect = () => {
+    setRedirect(true);
+  };
+
+  const handleRedirectToUserCommented = (id) => {
+    setRedirectToUserCommented(true);
+    setUserIdCommented(id);
+  };
+
   return (
     <CurrentPostContext.Consumer>
       {
         currentPost => {
           const {user: {firstName}, zipCode, post,createdAt}= currentPost;
-          const postedTime = utilsFunc.getDuration(createdAt);
+          const postedTime = getDuration(createdAt);
+          const postedDate = new Date(createdAt);
+          const formattedDate = `${postedDate.getMonth() + 1}/${postedDate.getDate()}/${postedDate.getFullYear()}`;
           return (
             <div key={currentPost._id} className="activity-card">
+              {renderRedirect(currentPost.user._id)}
+              {renderRedirectToUserCommented()}
               <div className="user">
                 <div className="profile-img">
                   <img className="profile-pic" src="/images/profile-picture-template.jpeg" alt="Profile Image" />
                 </div>
-                <h3>{firstName}</h3> <p id="postedTime">{postedTime}</p>
+                <h3 onClick={handleRedirect} className="post-user-firstname">{firstName}</h3> <p id="postedTime">{postedTime}</p>
+                {
+                  currentUser.user._id == currentPost.user._id ? 
+                    <p className="delete-btn" onClick={()=>deletePost(currentPost._id)}>x</p>
+                  : null
+                }
               </div>
               {/* <p id="postedTime">{postedTime}</p> */}
               <div className="activity-description">
-                <p className="activity-zipcode">"Activity" / {zipCode}</p>
-                <p className="date-time">"Date / Time"</p>
+                <p className="activity-zipcode">Zipcode - {zipCode}</p>
+                <p className="date-time">Date - {formattedDate}</p>
               </div>
               <p className="post">{post}</p>
-              <LikeParticipantsCommentsContainer currentPost={currentPost} />
+              <LikeParticipantsCommentsContainer />
               <div className="comments-wrapper">
                 {
                   currentPost.comments? currentPost.comments.map((comment,i) => {
+                    console.log(comment.user._id);
                     return (
-                      <React.Fragment>
-                        <div key={i} className="comment-wrapper">
-                          <div className="comment">
-                            <span className="user-commented">{comment.user.firstName}</span>
+                      <div key={i} className="comment-wrapper">
+                        <div className="comment">
+                          <p>
+                            <span onClick={() => handleRedirectToUserCommented(comment.user._id)} className="user-commented">{comment.user.firstName}</span>
                             <span className="post-comment">{comment.comment}</span>
-                          </div>
-                          <p id="postedTime">{utilsFunc.getDuration(comment.createdAt)}</p>
+                          </p>
+                          {
+                            currentUser.user._id == currentPost.user._id ? 
+                              <p className="delete-btn" onClick={()=>deleteComment(currentPost._id, comment._id)}>x</p>
+                            : null
+                          }
                         </div>
-                      </React.Fragment>
-                      );
+                        <p id="postedTime">{getDuration(comment.createdAt)}</p>
+                      </div>
+                    );
                   })
                   :
                   null
                 }
               </div>
-              <CurrentUserContext.Consumer>
                 {
-                  user => user ? (
+                  currentUser ? (
                     <CommentFormContainer />
                   ) : (
                     null
                   )
                 }
-              </CurrentUserContext.Consumer>
             </div>
           )
         }

@@ -3,9 +3,11 @@ import React, { useState, useEffect } from 'react';
 import PostsContainer from '../../components/posts-container/posts-container.component';
 import PostFormContainer from '../../components/post-form-container/post-form-container.component';
 import PostsContext from '../../contexts/posts/posts.context';
+import AdsContainer from '../../components/ads-container/ads-container.component';
 
 import './home.styles.scss';
 import API from '../../utils/API';
+import PostsProvider from '../../provider/posts.provider';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -46,11 +48,14 @@ const Home = () => {
         />
       </form> */}
       <div className="main-center-container">
-        <PostFormContainer />
-        <PostsContext.Provider value={posts}>
-          <PostsContainer />
-        </PostsContext.Provider>
+        <PostsProvider>
+          <PostFormContainer />
+          <PostsContext.Provider value={posts}>
+            <PostsContainer />
+          </PostsContext.Provider>
+        </PostsProvider>
       </div>
+      <AdsContainer />
     </div>
   );
 }
