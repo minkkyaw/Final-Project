@@ -17,6 +17,11 @@ const signOut = () => {
   return axios.get("/api/users/signout");
 };
 
+const updateUser = (userId, userData) => {
+  console.log(userId, userData);
+  return transport.patch(`/api/users/${userId}`, userData);
+};
+
 const postPost = post => {
   return transport.post("/api/posts/", { post });
 };
@@ -88,6 +93,7 @@ export default {
   signIn,
   signUp,
   signOut,
+  updateUser,
   postPost,
   getAllPosts,
   getPost,

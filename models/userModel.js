@@ -48,8 +48,20 @@ const userSchema = new Schema(
       required: true
     },
     interest: {
-      type: [String]
+      type: String
     },
+    skills: [
+      {
+        skillName: {
+          type: String,
+          required: [true, "Please add the skill name!"]
+        },
+        rating: {
+          type: Number,
+          default: 30
+        }
+      }
+    ],
     photoUrl: String,
     passwordChangedAt: Date,
     passwordResetToken: String,

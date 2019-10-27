@@ -79,6 +79,10 @@ exports.createOne = Model =>
 
 exports.updateOne = Model =>
   catchAsync(async (req, res, next) => {
+    for (let key in req.body) {
+      if (!req.body[key]) delete req.body[key];
+      if (key === "password") delete req.body[key];
+    }
     if (req.query.like) {
       delete req.body.user;
       if (req.query.like === "false")
@@ -94,6 +98,15 @@ exports.updateOne = Model =>
     if (req.query.competitor)
       req.body.$push = { competitors: req.query.competitor };
 
+    if (req.body.skills) {
+      req.body.skills = req.body.skills.split(",").map(skill => {
+        skill = skill.trim().split(" ");
+        return {
+          skillName: skill[0],
+          rating: skill[1]
+        };
+      });
+    }
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true

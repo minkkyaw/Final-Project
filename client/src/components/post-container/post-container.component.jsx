@@ -8,7 +8,7 @@ import LikeParticipantsCommentsContainer from '../LikeParticipantsCommentsContai
 import CurrentUserContext from "../../contexts/current-user/current-user.context";
 
 
-import utilsFunc from '../../utils/utilsFunc.js';
+import { getDuration } from '../../utils/utilsFunc.js';
 import CurrentPostContext from '../../contexts/current-post/current-post.context';
 import API from '../../utils/API';
 
@@ -53,7 +53,7 @@ const PostContainer = () => {
 
   const handleRedirectToUserCommented = (id) => {
     setRedirectToUserCommented(true);
-    setUserIdCommented(id)
+    setUserIdCommented(id);
   };
 
   return (
@@ -61,7 +61,7 @@ const PostContainer = () => {
       {
         currentPost => {
           const {user: {firstName}, zipCode, post,createdAt}= currentPost;
-          const postedTime = utilsFunc.getDuration(createdAt);
+          const postedTime = getDuration(createdAt);
           const postedDate = new Date(createdAt);
           const formattedDate = `${postedDate.getMonth() + 1}/${postedDate.getDate()}/${postedDate.getFullYear()}`;
           return (
@@ -103,7 +103,7 @@ const PostContainer = () => {
                             : null
                           }
                         </div>
-                        <p id="postedTime">{utilsFunc.getDuration(comment.createdAt)}</p>
+                        <p id="postedTime">{getDuration(comment.createdAt)}</p>
                       </div>
                     );
                   })
