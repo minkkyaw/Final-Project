@@ -43,6 +43,7 @@ export const ContentEditableInput = ({children, handleInputChange}) => {
 export const SubmitButton = ({children, content}) => {
   const handleFormSubmit = (event, id) => {
     event.preventDefault();
+    console.log(content, id);
     if(id)         
       return API.postComment(content, id)
         .catch(err => console.log(err));
@@ -53,18 +54,15 @@ export const SubmitButton = ({children, content}) => {
     <CurrentPostContext.Consumer>
       {
         currentPost => {
-          return children=="Post" ?  <button onClick={event => handleFormSubmit(event)} className="form-submit-btn">{children}</button>
-            
-          : children==="Add a place" ?           
-            <button onClick={ event => {event.preventDefault();API.getPlaces().then(response => console.log(response.data.results))}} className="form-submit-btn">{children}</button>
-          :
-            <button onClick={event => handleFormSubmit(event, currentPost._id)} className="form-submit-btn">
-              <i className="material-icons">send</i>
-            </button>
-            
+          return children ? <button onClick={event => handleFormSubmit(event)} className="form-submit-btn">{children}</button>
+            : <button onClick={event => handleFormSubmit(event, currentPost._id)} className="form-submit-btn">
+                <i className="material-icons">send</i>
+              </button>
         }
       }
     </CurrentPostContext.Consumer>
   )
 };
+
+
 

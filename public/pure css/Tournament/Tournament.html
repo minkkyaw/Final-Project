@@ -1,172 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="../styles/index/index.css">
-    <link rel="stylesheet" href="../styles/index/navbar.css">
-    <link rel="stylesheet" href="../styles/index/main-left.css">
-    <link rel="stylesheet" href="styles/main-center.css">
-    <link rel="stylesheet" href="styles/main-right.css">
-    <link rel="stylesheet" href="tournament_css/tournament.css">
+    <link rel="stylesheet" href="../styles/index/index.css" />
+    <link rel="stylesheet" href="../styles/index/navbar.css" />
+    <link rel="stylesheet" href="../styles/index/main-left.css" />
+    <link rel="stylesheet" href="styles/main-center.css" />
+    <link rel="stylesheet" href="styles/main-right.css" />
+    <link rel="stylesheet" href="tournament_css/tournament.css" />
     <title>Quattuor</title>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <div class="nav">
-        <input type="checkbox" id="nav-check">
-        <div class="nav-header">
-            <div class="nav-title">
-                <img src="../images/Quattuor-logo.png">
-            </div>
+      <input type="checkbox" id="nav-check" />
+      <div class="nav-header">
+        <div class="nav-title">
+          <img src="../images/Quattuor-logo.png" />
         </div>
-        <div class="nav-search-container">
-            <form action="/action_page.php">
-                <input id="input" type="text" placeholder="Search.." name="search">
-                <button type="submit"><i class="fa fa-search"></i></button>
-            </form>
-        </div>
-        <div class="nav-btn">
-            <label for="nav-check">
-                <span></span>
-                <span></span>
-                <span></span>
-            </label>
-        </div>
+      </div>
+      <div class="nav-search-container">
+        <form action="/action_page.php">
+          <input id="input" type="text" placeholder="Search.." name="search" />
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+      </div>
+      <div class="nav-btn">
+        <label for="nav-check">
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
+      </div>
 
-        <div class="nav-links">
-            <a href="global-feed / home-page" target="_blank"><i class="material-icons">public</i></a>
-            <a href="profile" target="_blank"><i class="material-icons">person</i></a>
-            <a href="tournaments" target="_blank"><i class="material-icons">sports_kabaddi</i></a>
-            <a href="contact" target="_blank"><i class="material-icons">contact_support</i></a>
-        </div>
+      <div class="nav-links">
+        <a href="global-feed / home-page" target="_blank"
+          ><i class="material-icons">public</i></a
+        >
+        <a href="profile" target="_blank"
+          ><i class="material-icons">person</i></a
+        >
+        <a href="tournaments" target="_blank"
+          ><i class="material-icons">sports_kabaddi</i></a
+        >
+        <a href="contact" target="_blank"
+          ><i class="material-icons">contact_support</i></a
+        >
+      </div>
     </div>
     <div class="container">
-    <div class="main-center-container">
+      <div class="main-center-container">
         <div class="search-container">
-            <h4>Create a tournament for you and your friends!</h4>
-            <form class="search">
-                <label for="location" class="search-item">Location:</label>
-                <input type="text" class="input" id="location" name="location" placeholder="Zip Code">
+          <h4>Create a tournament for you and your friends!</h4>
+          <form class="search">
+            <label for="location" class="search-item">Location:</label>
+            <input
+              type="text"
+              class="input"
+              id="location"
+              name="location"
+              placeholder="Zip Code"
+            />
 
-                <label for="location" class="search-item">When:</label>
-                <input type="text" class="input" id="when" name="when" placeholder="mm/dd/yyyy">
+            <label for="location" class="search-item">When:</label>
+            <input
+              type="text"
+              class="input"
+              id="when"
+              name="when"
+              placeholder="mm/dd/yyyy"
+            />
 
-                <label for="location" class="search-item">How many participants?:</label>
-                <input type="text" class="input" id="participants" name="when" placeholder="8">
+            <label for="location" class="search-item"
+              >How many participants?:</label
+            >
+            <input
+              type="text"
+              class="input"
+              id="participants"
+              name="when"
+              placeholder="8"
+            />
 
+            <label for="activity" class="search-item">Activity:</label>
+            <select id="activity" name="activity">
+              <option value="australia">Basketball</option>
+              <option value="canada">Football</option>
+              <option value="usa">Tennis</option>
+              <option value="usa">Soccer</option>
+              <option value="usa">Golf</option>
+              <option value="usa">Bowling</option>
+              <option value="usa">Baseball</option>
+            </select>
 
-                <label for="activity" class="search-item">Activity:</label>
-                <select id="activity" name="activity">
-                    <option value="australia">Basketball</option>
-                    <option value="canada">Football</option>
-                    <option value="usa">Tennis</option>
-                    <option value="usa">Soccer</option>
-                    <option value="usa">Golf</option>
-                    <option value="usa">Bowling</option>
-                    <option value="usa">Baseball</option>
-                </select>
-
-                <input id="submit" type="submit" value="Submit">
-            </form>
+            <input id="submit" type="submit" value="Submit" />
+          </form>
         </div>
         <div class="global-feed-container">
-            <h4>Tournaments Near You!</h4>
-            <div class="activity-card">
-                <hr>
-                <div class="user">
-                    <div class="tournament-img"></div>
-                    <h5>Tournament Name</h5>
-                </div>
-                <div class="activity-description">
-                    <p>Activity / Zip Code</p>
-                    <p>Date / Time</p>
-                    <p>Number of Participants: </p>
-                    <p>(Tournament's Description) <i>"Lorem ipsum dolor sit amet, consectetur adipisicing elite...</i></p>
-                    <input id="submit" type="submit" value="COUNT ME IN">
-                    <input id="submit" type="submit" value="MAYBE">
-                    <input id="submit" type="submit" value="JOIN WAITLIST">
-                    <br>
-                    <label for="comment" class="comment-box">
-                        <p>Comment:</p>
-                    </label>
-                    <input type="text" id="comment-box" name="comment-box" placeholder="Can't wait to play!">
-                    <i class="material-icons">send</i>
-                </div>
+          <h4>Tournaments Near You!</h4>
+          <div class="activity-card">
+            <hr />
+            <div class="user">
+              <div class="tournament-img"></div>
+              <h5>Tournament Name</h5>
             </div>
-            <div class="activity-card">
-                <hr>
-                <div class="user">
-                    <div class="tournament-img"></div>
-                    <h5>Tournament Name</h5>
-                </div>
-                <div class="activity-description">
-                    <p>Activity / Zip Code</p>
-                    <p>Date / Time</p>
-                    <p>Number of Participants: </p>
-                    <p>(Tournament's Description) <i>"Lorem ipsum dolor sit amet, consectetur adipisicing elite...</i>
-                    </p>
-                    <input id="submit" type="submit" value="COUNT ME IN">
-                    <input id="submit"type="submit" value="MAYBE">
-                    <input id="submit" type="submit" value="JOIN WAITLIST">
-                    <br>
-                    <label for="comment" class="comment-box">
-                        <p>Comment:</p>
-                    </label>
-                    <input type="text" id="comment-box" name="comment-box" placeholder="Can't wait to play!">
-                    <i class="material-icons">send</i>                      
-                </div>
+            <div class="activity-description">
+              <p>Activity / Zip Code</p>
+              <p>Date / Time</p>
+              <p>Number of Participants:</p>
+              <p>
+                (Tournament's Description)
+                <i
+                  >"Lorem ipsum dolor sit amet, consectetur adipisicing
+                  elite...</i
+                >
+              </p>
+              <input id="submit" type="submit" value="COUNT ME IN" />
+              <input id="submit" type="submit" value="MAYBE" />
+              <input id="submit" type="submit" value="JOIN WAITLIST" />
+              <br />
+              <label for="comment" class="comment-box">
+                <p>Comment:</p>
+              </label>
+              <input
+                type="text"
+                id="comment-box"
+                name="comment-box"
+                placeholder="Can't wait to play!"
+              />
+              <i class="material-icons">send</i>
             </div>
-            <div class="activity-card">
-                <hr>
-                <div class="user">
-                    <div class="tournament-img"></div>
-                    <h5>Tournament Name</h5>
-                </div>
-                <div class="activity-description">
-                    <p>Activity / Zip Code</p>
-                    <p>Date / Time</p>
-                    <p>Number of Participants: </p>
-                    <p>(Tournaments's Description) <i>"Lorem ipsum dolor sit amet, consectetur adipisicing elite...</i>
-                    </p>
-                    <input id="submit" type="submit" value="COUNT ME IN">
-                    <input id="submit"type="submit" value="MAYBE">
-                    <input id="submit" type="submit" value="JOIN WAITLIST">
-                    <br>
-                    <label for="comment" class="comment-box">
-                        <p>Comment:</p>
-                    </label>
-                    <input type="text" id="comment-box" name="comment-box" placeholder="Can't wait to play!">
-                    <i class="material-icons">send</i>
-                </div>
-
+          </div>
+          <div class="activity-card">
+            <hr />
+            <div class="user">
+              <div class="tournament-img"></div>
+              <h5>Tournament Name</h5>
             </div>
+            <div class="activity-description">
+              <p>Activity / Zip Code</p>
+              <p>Date / Time</p>
+              <p>Number of Participants:</p>
+              <p>
+                (Tournament's Description)
+                <i
+                  >"Lorem ipsum dolor sit amet, consectetur adipisicing
+                  elite...</i
+                >
+              </p>
+              <input id="submit" type="submit" value="COUNT ME IN" />
+              <input id="submit" type="submit" value="MAYBE" />
+              <input id="submit" type="submit" value="JOIN WAITLIST" />
+              <br />
+              <label for="comment" class="comment-box">
+                <p>Comment:</p>
+              </label>
+              <input
+                type="text"
+                id="comment-box"
+                name="comment-box"
+                placeholder="Can't wait to play!"
+              />
+              <i class="material-icons">send</i>
+            </div>
+          </div>
+          <div class="activity-card">
+            <hr />
+            <div class="user">
+              <div class="tournament-img"></div>
+              <h5>Tournament Name</h5>
+            </div>
+            <div class="activity-description">
+              <p>Activity / Zip Code</p>
+              <p>Date / Time</p>
+              <p>Number of Participants:</p>
+              <p>
+                (Tournaments's Description)
+                <i
+                  >"Lorem ipsum dolor sit amet, consectetur adipisicing
+                  elite...</i
+                >
+              </p>
+              <input id="submit" type="submit" value="COUNT ME IN" />
+              <input id="submit" type="submit" value="MAYBE" />
+              <input id="submit" type="submit" value="JOIN WAITLIST" />
+              <br />
+              <label for="comment" class="comment-box">
+                <p>Comment:</p>
+              </label>
+              <input
+                type="text"
+                id="comment-box"
+                name="comment-box"
+                placeholder="Can't wait to play!"
+              />
+              <i class="material-icons">send</i>
+            </div>
+          </div>
         </div>
-    </div>
-    <div class="main-right-container">
+      </div>
+      <div class="main-right-container">
         <div class="ad-container">
-            <img id="ad-1" src="../../pure css/images/ad-3.jpg">
-            <div class="caption" id="caption3">
-                <p>Ad</p>
-            </div>
+          <img id="ad-1" src="../../pure css/images/ad-3.jpg" />
+          <div class="caption" id="caption3">
+            <p>Ad</p>
+          </div>
         </div>
         <div class="ad-container">
-                <img id="ad-2" src="../../pure css/images/ad-4.png">
-                <div class="caption" id="caption4">
-                    <p>Ad</p>
-                </div>
-            </div>
+          <img id="ad-2" src="../../pure css/images/ad-4.png" />
+          <div class="caption" id="caption4">
+            <p>Ad</p>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
-    </body>
-
-    </html>
-   
-
+  </body>
+</html>

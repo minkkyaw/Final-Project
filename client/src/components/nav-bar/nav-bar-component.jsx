@@ -38,9 +38,9 @@ const NavBar = () => {
                 user ? (
                   <React.Fragment>
                     <a href="/home" className="nav-link"><i className="material-icons">home</i></a>
-                    <a href="global-feed / home" className="nav-link"><i className="material-icons">public</i></a>
+                    <a href="/home" className="nav-link"><i className="material-icons">public</i></a>
                     <a href={`profile/${user ? user.user._id : null}`} className="nav-link"><i className="material-icons">person</i></a>
-                    <a href="tournaments" className="nav-link"><i className="material-icons">sports_kabaddi</i></a>
+                    <a href="/tournaments" className="nav-link"><i className="material-icons">sports_kabaddi</i></a>
                     <a href="/" className="nav-link" onClick={handleSignOut}>SIGN OUT</a>
                   </React.Fragment>
                 )
