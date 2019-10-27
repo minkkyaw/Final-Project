@@ -1,39 +1,28 @@
 .main-right-container {
-    width: 25vw;
-    height: auto;
-    /* background-color: grey; */
+    width: 24vw;
+    margin-left: 1vw
 }
 
 .ad-container {
-    /* border: 1px solid black; */
-    height: auto;
-    width: 20vw;
-    margin-top: 25px;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    /* background-image: url(../../images/ad-1.jpeg); */
 }
 
-#ad-1 {
-    width: 55%;
-    height: 55vh;
+#ad-1,#ad-2 {
+    width: 100%;
+    height: 40vw;
     margin: auto;
 }
-
-#ad-2 {
-    width: 55%;
-    height: 55vh;
-    margin: auto;
-}
-
 
 #caption1,
 #caption2,
 #caption3,
 #caption4 {
-    width: 55%;
+    width: 100%;
     height: 5%;
     margin: auto;
+    margin-bottom: 20px;
 }
 
 #caption1 {
@@ -60,7 +49,6 @@
     background-color: rgb(74, 118, 184);
     border-top-right-radius: 100px;
     margin: 0;
-
 }
 
 @media screen and (max-width: 900px) {

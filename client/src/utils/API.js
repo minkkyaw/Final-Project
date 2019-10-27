@@ -49,6 +49,16 @@ const getRecentCommentsByPost = postId => {
   return transport.get(`/api/posts/${postId}/comments/recent`);
 };
 
+const updateComment = (postId, commentId, comment) => {
+  return transport.patch(`/api/posts/${postId}/comments/${commentId}`, {
+    comment
+  });
+};
+
+const deleteComment = (postId, commentId) => {
+  return transport.delete(`/api/posts/${postId}/comments/${commentId}`);
+};
+
 const searchPosts = searchInput => {
   return transport.get(`/api/posts?search=${searchInput}`);
 };
@@ -86,6 +96,7 @@ export default {
   postComment,
   getAllCommentsByPost,
   getRecentCommentsByPost,
+  deleteComment,
   searchPosts,
   likePost,
   setPost,

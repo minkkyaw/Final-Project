@@ -54,7 +54,6 @@ exports.getAll = (Model, populateObj, sort) =>
       )
         data.userLiked = true;
     });
-    console.log(doc);
 
     res.status(200).json({
       status: "success",

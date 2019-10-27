@@ -41,21 +41,23 @@ export const ContentEditableInput = ({children, handleInputChange}) => {
 };
 
 export const SubmitButton = ({children, content}) => {
-  const handleFormSubmit = (event, id) => {
+  const handleFormSubmit = (event, id, children) => {
     event.preventDefault();
-    console.log(content, id);
     if(id)         
-      return API.postComment(content, id)
+      API.postComment(content, id)
         .catch(err => console.log(err));
-    else return API.postPost(content)
+    else API.postPost(content)
           .catch(err => console.log(err));
+    if(children === "Post")
+      event.target.parentNode.parentNode.querySelector('.contentEditable-input').textContent = "Add a post";
+    else event.target.parentNode.parentNode.querySelector('.contentEditable-input').textContent = "Add a comment";
   }
   return (
     <CurrentPostContext.Consumer>
       {
         currentPost => {
-          return children ? <button onClick={event => handleFormSubmit(event)} className="form-submit-btn">{children}</button>
-            : <button onClick={event => handleFormSubmit(event, currentPost._id)} className="form-submit-btn">
+          return children ? <button onClick={event => handleFormSubmit(event, null, children)} className="form-submit-btn">{children}</button>
+            : <button onClick={event => handleFormSubmit(event, currentPost._id, children)} className="form-submit-btn">
                 <i className="material-icons">send</i>
               </button>
         }
