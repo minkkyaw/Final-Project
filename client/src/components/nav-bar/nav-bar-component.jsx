@@ -40,7 +40,7 @@ const NavBar = () => {
                   <React.Fragment>
                     <Link to="/home" className="nav-link"><i className="material-icons">home</i></Link>
                     <Link to="/home" className="nav-link"><i className="material-icons">public</i></Link>
-                    <Link to={`profile/${user ? user.user._id : null}`} className="nav-link"><i className="material-icons">person</i></Link>
+                    <Link to={`/profile/${user ? user.user._id : null}`} className="nav-link"><i className="material-icons">person</i></Link>
                     <Link to="/tournaments" className="nav-link"><i className="material-icons">sports_kabaddi</i></Link>
                     <Link to="/" className="nav-link" onClick={handleSignOut}>SIGN OUT</Link>
                   </React.Fragment>

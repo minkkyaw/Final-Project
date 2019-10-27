@@ -27,7 +27,6 @@ const postSchema = new Schema(
       }
     ],
     zipCode: Number,
-    userlikedIds: [ObjectId],
     createdAt: {
       type: Date,
       default: Date.now()

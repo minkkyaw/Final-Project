@@ -7,17 +7,21 @@ import AdsContainer from '../../components/ads-container/ads-container.component
 
 import './home.styles.scss';
 import API from '../../utils/API';
+import HandleReloadContext from '../../contexts/handle-reload/handle-reload.context';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     API.setPost(setPosts);
-  },[]);
+  },[reload]);
 
   useEffect(() => {
     if(posts) console.log(posts);
   },[posts]);
+
+  const handleReload = () => setReload(true);
   
   return (
     <div className="home-page-container">
@@ -48,9 +52,11 @@ const Home = () => {
       </form> */}
       <div className="main-center-container">
         <PostFormContainer />
-        <PostsContext.Provider value={posts}>
-          <PostsContainer />
-        </PostsContext.Provider>
+        <HandleReloadContext value={handleReload}>
+          <PostsContext.Provider value={posts}>
+            <PostsContainer />
+          </PostsContext.Provider>
+        </HandleReloadContext>
       </div>
       <AdsContainer />
     </div>

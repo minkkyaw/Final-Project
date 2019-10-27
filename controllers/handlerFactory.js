@@ -9,9 +9,19 @@ exports.getOne = (Model, populateObj, sort) =>
     const doc = await query;
     if (!doc) return next(new AppError("No doc is found with that ID!", 404));
     if (req.user) {
-      if (doc.userlikedIds && doc.userlikedIds.userId.includes(req.user._id))
+      if (doc.userIdsLiked && doc.userIdsLiked.userId.includes(req.user._id))
         doc.userLiked = true;
+      if (doc.posts) {
+        doc.posts.forEach(data => {
+          if (
+            req.user &&
+            data.userIdsLiked.some(userData => userData.userId == req.user.id)
+          )
+            data.userLiked = true;
+        });
+      }
     }
+
     res.status(200).json({
       status: "success",
       data: {
@@ -20,7 +30,7 @@ exports.getOne = (Model, populateObj, sort) =>
     });
   });
 
-exports.getAll = (Model, populateObj, sort, likedCheck) =>
+exports.getAll = (Model, populateObj, sort) =>
   catchAsync(async (req, res, next) => {
     let filter = {};
     if (req.query.search)
@@ -40,11 +50,11 @@ exports.getAll = (Model, populateObj, sort, likedCheck) =>
     doc.forEach(data => {
       if (
         req.user &&
-        data.userlikedIds.userId &&
-        data.userlikedIds.userId.includes(req.user._id)
+        data.userIdsLiked.some(userData => userData.userId == req.user.id)
       )
         data.userLiked = true;
     });
+    console.log(doc);
 
     res.status(200).json({
       status: "success",
@@ -72,36 +82,23 @@ exports.updateOne = Model =>
   catchAsync(async (req, res, next) => {
     if (req.query.like) {
       delete req.body.user;
-      if (req.query.like === "-1")
+      if (req.query.like === "false")
         req.body.$push = {
-          userlikedIds: { userId: req.user._id, name: req.user.firstName }
+          userIdsLiked: { userId: req.user._id, name: req.user.firstName }
         };
-      if (req.query.like === "1")
+      if (req.query.like === "true")
         req.body.$pull = {
-          userlikedIds: { userId: req.user._id, name: req.user.firstName }
-        };
-    }
-
-    if (req.query.participants) {
-      delete req.body.user;
-      if (req.query.participants === "-1")
-        req.body.$push = {
-          participants: { userId: req.user._id, name: req.user.firstName }
-        };
-      if (req.query.participants === "1")
-        req.body.$pull = {
-          participants: { userId: req.user._id, name: req.user.firstName }
+          userIdsLiked: { userId: req.user._id, name: req.user.firstName }
         };
     }
 
     if (req.query.competitor)
       req.body.$push = { competitors: req.query.competitor };
+
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true
     });
-
-    doc.noOfLike = doc.userlikedIds.length;
 
     if (!doc) return next(new AppError("No doc is found with that ID!", 404));
 

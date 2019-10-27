@@ -25,6 +25,18 @@ const getAllPosts = () => {
   return transport.get("/api/posts/");
 };
 
+const getPost = postId => {
+  return transport.get(`/api/posts/${postId}`);
+};
+
+const updatePost = postId => {
+  return transport.patch(`/api/posts/${postId}`);
+};
+
+const deletePost = postId => {
+  return transport.delete(`/api/posts/${postId}`);
+};
+
 const postComment = (comment, postId) => {
   return transport.post(`/api/posts/${postId}/comments`, { comment });
 };
@@ -58,7 +70,7 @@ const getUserWithPosts = userId => {
 
 const getPlaces = (zip, keyword) => {
   zip = 19106;
-  keyword="bowling";
+  keyword = "bowling";
   return transport.get(`/api/posts/googlePlace?keyword=${keyword}&zip=${zip}`);
 };
 
@@ -68,6 +80,9 @@ export default {
   signOut,
   postPost,
   getAllPosts,
+  getPost,
+  deletePost,
+  updatePost,
   postComment,
   getAllCommentsByPost,
   getRecentCommentsByPost,

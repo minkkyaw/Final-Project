@@ -19,6 +19,8 @@ const Profile = props => {
   const [city, setCity] = useState('city');
   const [zipCode, setZipCode] = useState('zipcode');
   const [phone, setPhone] = useState('123-456-7890');
+  const [reload, setReload] = useState(false);
+
   useEffect(() => {
     API.getUserWithPosts(props.match.params.id)
       .then(response => {
@@ -29,11 +31,14 @@ const Profile = props => {
         setZipCode(zipCode);
         setPosts(posts);
       })
-  },[]);
+  },[reload]);
 
   useEffect(() => {
     if(posts) console.log(posts);
   },[posts]);
+
+  const handleReload = () => setReload(true);
+  console.log(reload);
 
   const handleInputChange = event => {
     switch(event.target.name) {

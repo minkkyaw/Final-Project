@@ -54,7 +54,8 @@
   cursor: pointer;
   border-radius: 5px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  height: fit-content;
 
   &:hover {
     color: rgb(226, 226, 226);

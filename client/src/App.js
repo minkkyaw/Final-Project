@@ -7,6 +7,7 @@ import Home from "./pages/home/home.component";
 import Tournament from "./pages/tournament/tournament.component";
 import Profile from "./pages/profile/profile.component";
 import LogIn from "./pages/log-in/log-in.component";
+import PostPage from "./pages/post/post.component";
 import NavBar from "./components/nav-bar/nav-bar-component";
 import CurrentUserContext from "./contexts/current-user/current-user.context";
 
@@ -30,6 +31,7 @@ const App = () => {
           <Switch>
             <Route exact path="/login/:action" component={LogIn} />
             <Route exact path="/profile/:id" component={Profile} />
+            <Route exact path="/post/:id" component={PostPage} />
             <Route component={LogIn} />
           </Switch>
         ) : (
@@ -40,6 +42,7 @@ const App = () => {
               <Route exact path="/home" component={Home} />
               <Route exact path="/tournaments" component={Tournament} />
               <Route exact path="/profile/:id" component={Profile} />
+              <Route exact path="/post/:id" component={PostPage} />
               {/* <Route component={NoMatch} /> */}
             </Switch>
           </React.Fragment>
