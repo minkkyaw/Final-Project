@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import PostsContainer from '../../components/posts-container/posts-container.component';
 import PostFormContainer from '../../components/post-form-container/post-form-container.component';
 import PostsContext from '../../contexts/posts/posts.context';
+import AdsContainer from '../../components/ads-container/ads-container.component';
 
 import './home.styles.scss';
 import API from '../../utils/API';
@@ -51,6 +52,7 @@ const Home = () => {
           <PostsContainer />
         </PostsContext.Provider>
       </div>
+      <AdsContainer />
     </div>
   );
 }

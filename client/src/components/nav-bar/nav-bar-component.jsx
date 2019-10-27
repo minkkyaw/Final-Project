@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import CurrentUserContext from '../../contexts/current-user/current-user.context.js';
 import API from '../../utils/API';
@@ -37,17 +38,17 @@ const NavBar = () => {
               {
                 user ? (
                   <React.Fragment>
-                    <a href="/home" className="nav-link"><i className="material-icons">home</i></a>
-                    <a href="/home" className="nav-link"><i className="material-icons">public</i></a>
-                    <a href={`profile/${user ? user.user._id : null}`} className="nav-link"><i className="material-icons">person</i></a>
-                    <a href="/tournaments" className="nav-link"><i className="material-icons">sports_kabaddi</i></a>
-                    <a href="/" className="nav-link" onClick={handleSignOut}>SIGN OUT</a>
+                    <Link to="/home" className="nav-link"><i className="material-icons">home</i></Link>
+                    <Link to="/home" className="nav-link"><i className="material-icons">public</i></Link>
+                    <Link to={`profile/${user ? user.user._id : null}`} className="nav-link"><i className="material-icons">person</i></Link>
+                    <Link to="/tournaments" className="nav-link"><i className="material-icons">sports_kabaddi</i></Link>
+                    <Link to="/" className="nav-link" onClick={handleSignOut}>SIGN OUT</Link>
                   </React.Fragment>
                 )
                 :
                   <React.Fragment>
-                    <a href="/login/signin" className="nav-link">SIGN IN</a>
-                    <a href="/login/signup" className="nav-link">SIGN UP</a>
+                    <Link to="/login/signin" className="nav-link">SIGN IN</Link>
+                    <Link to="/login/signup" className="nav-link">SIGN UP</Link>
                   </React.Fragment>
               }
             </div>
