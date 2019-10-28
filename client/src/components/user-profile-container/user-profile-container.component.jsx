@@ -1,39 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect, useContext } from 'react';
 
 import './user-profile-container.styles.scss';
 
 import { ContentEditableInput } from '../Form/form.component';
 
 import { arrObjToString } from '../../utils/utilsFunc';
-
+import CurrentUserContext from '../../contexts/current-user/current-user.context';
+import ReloadPostContext from '../../contexts/reload-post/reload-post.context';
+  
 import API from '../../utils/API';
 
 const UserProfileContainer = props => {
+  const reloadPost = useContext(ReloadPostContext);
+  const currentUser= useContext(CurrentUserContext);
+  const {firstName, lastName, zipCode, city,interest, skills} = props.userData;
+
   const [editCheck, setEditCheck] = useState(false);
   const [updateUser, setUpdateUser] = useState({
     firstName: '',
     lastName: '',
     zipCode: '',
     city: '',
+    interest: '',
     skills: ''
   })
-  console.log(updateUser);
-  const {firstName, lastName, zipCode, city,interest, skills} = props.userData;
-  console.log(props.userData);
+  
   const handleEdit = () => setEditCheck(!editCheck); 
-  const handleInputChange = (event, key) => 
-    setUpdateUser({...updateUser, [key]: event.target.textContent});
-  const HandleUpdateData = () => {
-    API.updateUser(props.userData._id,updateUser);
+  const handleInputChange = (event, key) => { 
+      setUpdateUser({...updateUser, [key]: event.target.textContent});
+    }
+  const HandleUpdateData = async () => {
+    try {
+      await API.updateUser(props.userData._id,updateUser);
+      reloadPost();
+      setEditCheck(!editCheck);
+            console.log(updateUser);
+    } catch(err) {
+      console.log(err);
+    }
+
   }
   
   return (
     <div className="user-container">
       <div className="user-image">
-        <img className="profile-pic" src="/images/profile-picture-template.jpeg" alt="Profile Image" />
+        <img className="profile-pic" src="/images/profile-picture-template.jpeg" alt="Profile" />
       </div>
       <div className="user-info-container">
-        <p onClick={handleEdit} className="edit-btn">{editCheck ? `Close`: `Edit`}</p>
+        {
+          currentUser && props.userData._id == currentUser.user._id ?
+            <p onClick={handleEdit} className="edit-btn">{editCheck ? `Close`: `Edit`}</p>
+          : null
+        }
         { !editCheck ?
           <React.Fragment>
             <h2>{`${firstName} ${lastName}`}</h2>
@@ -45,7 +63,7 @@ const UserProfileContainer = props => {
             <div className="skills-container">
               <h3>Skills</h3>
               {
-                skills ? skills.map(skill => {
+                skills && skills.length > 0 ? skills.map(skill => {
                   return (
                     <div className="skill-wrapper">
                       <p>{skill.skillName}</p>
@@ -62,28 +80,28 @@ const UserProfileContainer = props => {
           <div className="edit-user-wrapper">
             <div className="profile-label-input-wrapper">
               <p className="profile-edit-label">Firstname -  </p>
-              <ContentEditableInput handleInputChange={event => handleInputChange(event, "firstName")}>{firstName}</ContentEditableInput>
+              <ContentEditableInput handleInputChange={event => handleInputChange(event, "firstName")} noChange >{firstName}</ContentEditableInput>
             </div>
             <div className="profile-label-input-wrapper">
               <p className="profile-edit-label">Lastname -  </p>
-              <ContentEditableInput handleInputChange={event => handleInputChange(event, "lastName")}>{lastName}</ContentEditableInput>
+              <ContentEditableInput handleInputChange={event => handleInputChange(event, "lastName")} noChange >{lastName}</ContentEditableInput>
             </div>
             <div className="profile-label-input-wrapper">
               <p className="profile-edit-label">City -  </p>
-              <ContentEditableInput handleInputChange={event => handleInputChange(event, "city")}>{city}</ContentEditableInput>
+              <ContentEditableInput handleInputChange={event => handleInputChange(event, "city")} noChange >{city}</ContentEditableInput>
             </div>
             <div className="profile-label-input-wrapper">
               <p className="profile-edit-label">Zipcode -  </p>
-              <ContentEditableInput handleInputChange={event => handleInputChange(event, "zipCode")}>{zipCode}</ContentEditableInput>
+              <ContentEditableInput handleInputChange={event => handleInputChange(event, "zipCode")} noChange >{zipCode}</ContentEditableInput>
             </div>
             <div className="profile-label-input-wrapper">
               <p className="profile-edit-label">Interest -  </p>
-              <ContentEditableInput handleInputChange={event => handleInputChange(event, "interest")}>{interest}</ContentEditableInput>
+              <ContentEditableInput handleInputChange={event => handleInputChange(event, "interest")} noChange >{interest}</ContentEditableInput>
             </div>
             <p id="postedTime">Please put in the format - Football 85 Soccer 79</p>
             <div className="profile-label-input-wrapper">
               <p className="profile-edit-label">Skills -  </p>
-              <ContentEditableInput handleInputChange={event => handleInputChange(event, "skills")}>{arrObjToString(skills)}</ContentEditableInput>
+              <ContentEditableInput handleInputChange={event => handleInputChange(event, "skills")} noChange >{arrObjToString(skills)}</ContentEditableInput>
             </div>
             <p onClick={HandleUpdateData}>Submit</p>
           </div>

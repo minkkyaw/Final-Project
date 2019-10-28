@@ -99,21 +99,23 @@ exports.updateOne = Model =>
       req.body.$push = { competitors: req.query.competitor };
 
     if (req.body.skills) {
-      req.body.skills = req.body.skills.split(",").map(skill => {
-        skill = skill.trim().split(" ");
-        return {
-          skillName: skill[0],
-          rating: skill[1]
-        };
-      });
+      let arr = req.body.skills.split(" ");
+      let skillsArr = new Array();
+      for (let i = 0; i < arr.length; i += 2) {
+        skillsArr.push({
+          skillName: arr[i],
+          rating: parseInt(arr[i + 1])
+        });
+      }
+      req.body.skills = skillsArr;
     }
+
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true
     });
 
     if (!doc) return next(new AppError("No doc is found with that ID!", 404));
-
     res.status(200).json({
       status: "success",
       data: {

@@ -6,7 +6,6 @@ import PostContainer from '../post-container/post-container.component';
 import CurrentPostContext from '../../contexts/current-post/current-post.context';
 import PostsContext from '../../contexts/posts/posts.context';
 
-
 const PostsContainer = () => {
   const posts = useContext(PostsContext);
   return(

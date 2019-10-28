@@ -10,9 +10,13 @@ import LogIn from "./pages/log-in/log-in.component";
 import PostPage from "./pages/post/post.component";
 import NavBar from "./components/nav-bar/nav-bar-component";
 import CurrentUserContext from "./contexts/current-user/current-user.context";
+import AddSearchContext from "./contexts/add-search/addSearch.context";
 
 const App = () => {
   const [user, setUser] = useState();
+  const [search, setSearch] = useState();
+
+  const addSearch = searchInput => setSearch(searchInput);
 
   useEffect(() => {
     if (localStorage.getItem("user"))
@@ -21,12 +25,10 @@ const App = () => {
   }, []);
 
   useEffect(() => console.log(user));
-
   return (
     <Router>
       <CurrentUserContext.Provider value={user}>
-        <NavBar />
-
+        <NavBar addSearch={addSearch} />
         {!user ? (
           <Switch>
             <Route exact path="/login/:action" component={LogIn} />
@@ -37,9 +39,17 @@ const App = () => {
         ) : (
           <React.Fragment>
             <Switch>
-              <Route exact path="/" component={Home} />
+              <Route
+                exact
+                path="/"
+                component={() => <Home search={search} />}
+              />
               <Route exact path="/login/:action" component={LogIn} />
-              <Route exact path="/home" component={Home} />
+              <Route
+                exact
+                path="/home"
+                component={() => <Home search={search} />}
+              />
               <Route exact path="/tournaments" component={Tournament} />
               <Route exact path="/profile/:id" component={Profile} />
               <Route exact path="/post/:id" component={PostPage} />

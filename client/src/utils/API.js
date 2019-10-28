@@ -100,6 +100,7 @@ export default {
   deletePost,
   updatePost,
   postComment,
+  updateComment,
   getAllCommentsByPost,
   getRecentCommentsByPost,
   deleteComment,
