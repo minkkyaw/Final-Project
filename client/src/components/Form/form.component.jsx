@@ -5,6 +5,8 @@ import './form.styles.scss';
 import CurrentPostContext from '../../contexts/current-post/current-post.context';
 import API from '../../utils/API';
 import ReloadPostContext from '../../contexts/reload-post/reload-post.context';
+import CurrentUserContext from '../../contexts/current-user/current-user.context.js'
+import TogglePlaceDisplayContext from '../../contexts/toggle-place-display/toggle-place-display.context';
 
 export const Input = (props) => {
   return (
@@ -43,28 +45,40 @@ export const ContentEditableInput = ({children, handleInputChange, noChange}) =>
 };
 
 export const SubmitButton = ({children, content}) => {
+
+  const user = useContext(CurrentUserContext);
+  const userId = user.user._id;
   const reloadPost = useContext(ReloadPostContext);
-  const handleFormSubmit = (event, id, children) => {
+  const togglePlaceDisplay = useContext(TogglePlaceDisplayContext);
+  const handleFormSubmit = (event, postId, name, children) => {
     event.preventDefault();
     if(content) {
-      if(id)         
-        API.postComment(content, id)
+      if(postId)         
+        API.postComment(content, postId)
+          .then(() => API.createNotifications(postId, userId ,{notification: `${name} commented on your post!`}))
           .catch(err => console.log(err));
       else 
         API.postPost(content)
           .catch(err => console.log(err));
+      reloadPost();
+    } else if(!content && children === "Add a place") {
+      togglePlaceDisplay();
     }
-    reloadPost();
-    if(children === "Post")
-      event.target.parentNode.parentNode.querySelector('.contentEditable-input').textContent = "Create a post";
-    else event.target.parentNode.parentNode.querySelector('.contentEditable-input').textContent = "Add a comment";
+    switch(children) {
+      case "Post":
+        return event.target.parentNode.parentNode.querySelector('.contentEditable-input').textContent = "Create a post";
+      case "Add a place": 
+        return ;
+      default:
+        return event.target.parentNode.parentNode.querySelector('.contentEditable-input').textContent = "Add a comment";
+    }
   }
   return (
     <CurrentPostContext.Consumer>
       {
         currentPost => {
-          return children ? <button onClick={event => handleFormSubmit(event, null, children)} className="form-submit-btn">{children}</button>
-            : <button onClick={event => handleFormSubmit(event, currentPost._id, children)} className="form-submit-btn">
+          return children ? <button onClick={event => handleFormSubmit(event, null, null, children)} className="form-submit-btn">{children}</button>
+            : <button onClick={event => handleFormSubmit(event, currentPost._id,currentPost.user.firstName, children)} className="form-submit-btn">
                 <i className="material-icons">send</i>
               </button>
         }

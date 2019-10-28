@@ -3,10 +3,19 @@ const router = require("express").Router();
 const postController = require("./../controllers/postController");
 const authController = require("./../controllers/authController");
 const commentController = require("./../controllers/commentController");
+const notificationController = require("./../controllers/notificationController");
 const commentRouter = require("./../routes/commentRoutes");
 
 router.use("/:postId/comments/", commentController.addedPostIds, commentRouter);
 router.route("/googlePlace").get(postController.getGooglePlaces);
+
+router
+  .route("/:postId/users/:userId/notifications/")
+  .post(
+    authController.protect,
+    notificationController.addedUserPostIds,
+    notificationController.createNotification
+  );
 
 router
   .route("/")

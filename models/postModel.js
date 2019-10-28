@@ -44,7 +44,7 @@ postSchema.virtual("comments", {
   localField: "_id"
 });
 
-postSchema.index({ createdAt: 1 });
+postSchema.index({ createdAt: -1 });
 postSchema.index({ "$**": "text" });
 
 const Post = mongoose.model("Post", postSchema);

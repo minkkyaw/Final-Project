@@ -67,6 +67,7 @@
   display: flex;
   align-items: flex-start;
   height: fit-content;
+  transition: all .5s ease-in;
 
   &:hover {
     color: rgb(226, 226, 226);

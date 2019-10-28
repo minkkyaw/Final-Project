@@ -22,11 +22,14 @@ const Profile = props => {
   });
 
   useEffect(() => {
-    API.getUserWithPosts(props.match.params.id)
+    API.getUser(props.match.params.id)
       .then(response => {
-        setPosts(response.data.data.data.posts)
-        delete response.data.data.data.posts;
-        setUserData(response.data.data.data)
+        let user = response.data.data.data
+        setUserData(user);
+        let query = {userId: user._id, firstName:user.firstName};
+        if(user.photoUrl) query.photoUrl = user.photoUrl;
+        API.getAllPosts(query)
+          .then(response => setPosts(response.data.data.data))
       })
   },[reloadPostCheck]);
 

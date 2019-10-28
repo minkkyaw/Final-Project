@@ -10,11 +10,11 @@ import LogIn from "./pages/log-in/log-in.component";
 import PostPage from "./pages/post/post.component";
 import NavBar from "./components/nav-bar/nav-bar-component";
 import CurrentUserContext from "./contexts/current-user/current-user.context";
-import AddSearchContext from "./contexts/add-search/addSearch.context";
 
 const App = () => {
   const [user, setUser] = useState();
   const [search, setSearch] = useState();
+  const [notifications, setNotifications] = useState([]);
 
   const addSearch = searchInput => setSearch(searchInput);
 
@@ -24,11 +24,10 @@ const App = () => {
     return () => setUser(JSON.parse(localStorage.getItem("user")));
   }, []);
 
-  useEffect(() => console.log(user));
   return (
     <Router>
       <CurrentUserContext.Provider value={user}>
-        <NavBar addSearch={addSearch} />
+        <NavBar addSearch={addSearch} noOfNoti={notifications.length} />
         {!user ? (
           <Switch>
             <Route exact path="/login/:action" component={LogIn} />
