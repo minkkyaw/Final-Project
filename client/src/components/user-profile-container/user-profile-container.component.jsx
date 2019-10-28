@@ -34,7 +34,6 @@ const UserProfileContainer = props => {
       await API.updateUser(props.userData._id,updateUser);
       reloadPost();
       setEditCheck(!editCheck);
-            console.log(updateUser);
     } catch(err) {
       console.log(err);
     }

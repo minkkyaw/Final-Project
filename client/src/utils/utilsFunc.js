@@ -30,3 +30,16 @@ export const arrObjToString = input => {
   });
   return output.join(" ");
 };
+
+export const objToQueryString = obj => {
+  let query = "";
+  let index = 0;
+  for (let key in obj) {
+    if (index === 0) {
+      query += "?";
+      index++;
+    } else query += "&";
+    query += `${key}=${obj[key]}`;
+  }
+  return query;
+};

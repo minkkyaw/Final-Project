@@ -22,16 +22,6 @@
   align-items: center;
 }
 
-.search-input {
-  width: 45vw;
-  padding: 8px;
-  border-radius: 3px;
-  font-size: inherit;
-  font-family: inherit;
-  border: 1px solid rgb(133, 133, 133);
-  margin: 10px;
-}
-
 .search-btn {
   padding: 8px 11px;
   background: rgb(255, 68, 68);
@@ -40,6 +30,7 @@
   border: none;
   cursor: pointer;
   border-radius: 5px;
+  transition: all .5s ease-in;
 
   &:hover{
     transform: scale(1.2);
@@ -57,7 +48,8 @@
   .nav-link {
     padding: 13px 10px;
     text-decoration: none;
-    color: rgb(255, 0, 0);;
+    color: rgb(255, 0, 0);
+    transition: all .5s ease-in;
 
     &:hover{
       transform: scale(1.2);

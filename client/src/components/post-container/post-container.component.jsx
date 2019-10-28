@@ -14,7 +14,7 @@ import ReloadPostContext from '../../contexts/reload-post/reload-post.context';
 import API from '../../utils/API';
 
 const PostContainer = () => {
-  const reloadPost = useContext(ReloadPostContext)
+  const reloadPost = useContext(ReloadPostContext);
   const currentUser= useContext(CurrentUserContext);
   const [redirect, setRedirect] = useState(false);
   const [redirectToUserCommented, setRedirectToUserCommented] = useState(false);
@@ -91,7 +91,6 @@ const PostContainer = () => {
               <div className="comments-wrapper">
                 {
                   currentPost.comments? currentPost.comments.map((comment,i) => {
-                    console.log(comment.user._id == currentUser.user._id);
                     return (
                       <div key={i} className="comment-wrapper">
                         <div className="comment">

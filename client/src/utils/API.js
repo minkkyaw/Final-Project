@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { objToQueryString } from "../utils/utilsFunc";
+
 const transport = axios.create({ withCredentials: true });
 
 const signIn = (email, password) => {
@@ -18,7 +20,6 @@ const signOut = () => {
 };
 
 const updateUser = (userId, userData) => {
-  console.log(userId, userData);
   return transport.patch(`/api/users/${userId}`, userData);
 };
 
@@ -26,8 +27,10 @@ const postPost = post => {
   return transport.post("/api/posts/", { post });
 };
 
-const getAllPosts = () => {
-  return transport.get("/api/posts/");
+const getAllPosts = user => {
+  let query = "";
+  if (user) query = objToQueryString(user);
+  return transport.get("/api/posts" + query);
 };
 
 const getPost = postId => {
@@ -79,8 +82,23 @@ const setPost = async (setPosts, data) => {
   setPosts(response.data.data.data);
 };
 
-const getUserWithPosts = userId => {
-  return transport.get(`/api/users/${userId}/posts`);
+const getUser = userId => {
+  return transport.get(`/api/users/${userId}`);
+};
+
+const getNotifications = () => {
+  return transport.get(`/api/notifications/`);
+};
+
+const createNotifications = (postId, userId, noti) => {
+  return transport.post(
+    `/api/posts/${postId}/users/${userId}/notifications/`,
+    noti
+  );
+};
+
+const updateNotifications = () => {
+  return transport.patch(`/api/notifications/`);
 };
 
 const getPlaces = (zip, keyword) => {
@@ -107,6 +125,9 @@ export default {
   searchPosts,
   likePost,
   setPost,
-  getUserWithPosts,
+  getUser,
+  getNotifications,
+  createNotifications,
+  updateNotifications,
   getPlaces
 };

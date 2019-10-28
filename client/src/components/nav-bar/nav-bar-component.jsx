@@ -8,7 +8,7 @@ import API from '../../utils/API';
 
 import './nav-bar.styles.scss';
 
-const NavBar = ({ addSearch }) => {
+const NavBar = ({ addSearch, noOfNoti }) => {
   const [redirect, setRedirect] = useState(false);
   const [search, setSearch] = useState('');
 

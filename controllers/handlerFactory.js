@@ -1,3 +1,5 @@
+var ObjectId = require("mongoose").Types.ObjectId;
+
 const AppError = require("./../utils/appError");
 const catchAsync = require("./../utils/catchAsync");
 
@@ -41,7 +43,18 @@ exports.getAll = (Model, populateObj, sort) =>
           $caseSensitive: false
         }
       };
+    if (req.query.userId) {
+      filter = {
+        user: {
+          _id: new ObjectId(req.query.userId),
+          firstName: req.query.firstName
+        }
+      };
+      if (req.query.photoUrl) filter.user.photoUrl = req.query.photoUrl;
+    }
+
     if (req.body.postId) filter = { postId: req.body.postId };
+    if (req.body.userId) filter = { userId: req.body.userId };
     let query = Model.find(filter);
     if (sort) query = query.sort({ [sort]: -1 });
     if (populateObj) query = query.populate(populateObj);
@@ -50,6 +63,7 @@ exports.getAll = (Model, populateObj, sort) =>
     doc.forEach(data => {
       if (
         req.user &&
+        data.userIdsLiked &&
         data.userIdsLiked.some(userData => userData.userId == req.user.id)
       )
         data.userLiked = true;
@@ -68,7 +82,6 @@ exports.createOne = Model =>
   catchAsync(async (req, res, next) => {
     req.body.createdAt = new Date(Date.now());
     const doc = await Model.create(req.body);
-
     res.status(201).json({
       status: "success",
       data: {
@@ -80,8 +93,10 @@ exports.createOne = Model =>
 exports.updateOne = Model =>
   catchAsync(async (req, res, next) => {
     for (let key in req.body) {
-      if (!req.body[key]) delete req.body[key];
-      if (key === "password") delete req.body[key];
+      if (req.body[key] !== false) {
+        if (!req.body[key]) delete req.body[key];
+        if (key === "password") delete req.body[key];
+      }
     }
     if (req.query.like) {
       delete req.body.user;

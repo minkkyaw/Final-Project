@@ -13,6 +13,7 @@ const viewRouter = require("./routes/viewRoutes");
 const userRouter = require("./routes/userRoutes");
 const postRouter = require("./routes/postRoutes");
 const tournamentRouter = require("./routes/tournamentRoutes");
+const notificationRouter = require("./routes/notificationRoutes");
 
 const app = express();
 
@@ -59,6 +60,7 @@ app.use((req, res, next) => {
 app.use("/api/users", userRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/tournaments", tournamentRouter);
+app.use("/api/notifications", notificationRouter);
 app.use(viewRouter);
 
 app.use(globalErrorHandler);
