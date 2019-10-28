@@ -19,7 +19,7 @@ export const getDuration = input => {
 
 export const arrObjToString = input => {
   let output = input.map(obj => {
-    let arr = new Array();
+    let arr = [];
     for (let key in obj) {
       if (key !== "_id") arr.push(obj[key]);
     }

@@ -8,55 +8,62 @@ import AdsContainer from '../../components/ads-container/ads-container.component
 import './home.styles.scss';
 import API from '../../utils/API';
 import PostsProvider from '../../provider/posts.provider';
+import ReloadPostContext from '../../contexts/reload-post/reload-post.context';
 
-const Home = () => {
+const Home = ({search}) => {
   const [posts, setPosts] = useState([]);
-
+  const [reloadPostCheck, setReloadPostCheck] = useState(false);
+  const reloadPost = () => setReloadPostCheck(!reloadPostCheck);
   useEffect(() => {
-    API.setPost(setPosts);
-  },[]);
+    if(search) {
+      API.searchPosts(search).then(response => setPosts(response.data.data.data))
+    }
+    else API.setPost(setPosts);
+  },[search,reloadPostCheck]);
 
   useEffect(() => {
     if(posts) console.log(posts);
   },[posts]);
   
   return (
-    <div className="home-page-container">
-      <div className="main-left-container">
-        <div className="favorites-container">
-          <h4><i className="material-icons">star</i> Favorites</h4>
+    <ReloadPostContext.Provider value={reloadPost} >
+      <div className="home-page-container">
+        <div className="main-left-container">
+          <div className="favorites-container">
+            <h4><i className="material-icons">star</i> Favorites</h4>
+          </div>
+          <div className="reviews-container">
+            <h4><i className="material-icons">thumb_up</i> Tournament Reviews</h4>
+          </div>
         </div>
-        <div className="reviews-container">
-          <h4><i className="material-icons">thumb_up</i> Tournament Reviews</h4>
-        </div>
-      </div>
-      {/* <form className="home-search-form">
-        <Input 
-          className="post-input form-input form-inherit"
-          onChange={handleInputChange}
-          name="post"
-          type="text"
-          value={postToPost ? postToPost: undefined}
-          placeholder="What is your plan?"
+        {/* <form className="home-search-form">
+          <Input 
+            className="post-input form-input form-inherit"
+            onChange={handleInputChange}
+            name="post"
+            type="text"
+            value={postToPost ? postToPost: undefined}
+            placeholder="What is your plan?"
+            />
+          <Input 
+            className="form-btn form-inherit"
+            onClick={handleFormSubmit}
+            name="post"
+            type="submit"
+            value="Post"
           />
-        <Input 
-          className="form-btn form-inherit"
-          onClick={handleFormSubmit}
-          name="post"
-          type="submit"
-          value="Post"
-        />
-      </form> */}
-      <div className="main-center-container">
-        <PostsProvider>
-          <PostFormContainer />
-          <PostsContext.Provider value={posts}>
-            <PostsContainer />
-          </PostsContext.Provider>
-        </PostsProvider>
+        </form> */}
+        <div className="main-center-container">
+          <PostsProvider>
+            <PostFormContainer />
+            <PostsContext.Provider value={posts}>
+              <PostsContainer />
+            </PostsContext.Provider>
+          </PostsProvider>
+        </div>
+        <AdsContainer />
       </div>
-      <AdsContainer />
-    </div>
+    </ReloadPostContext.Provider>
   );
 }
 

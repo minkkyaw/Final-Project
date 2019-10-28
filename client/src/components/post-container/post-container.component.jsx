@@ -10,9 +10,11 @@ import CurrentUserContext from "../../contexts/current-user/current-user.context
 
 import { getDuration } from '../../utils/utilsFunc.js';
 import CurrentPostContext from '../../contexts/current-post/current-post.context';
+import ReloadPostContext from '../../contexts/reload-post/reload-post.context';
 import API from '../../utils/API';
 
 const PostContainer = () => {
+  const reloadPost = useContext(ReloadPostContext)
   const currentUser= useContext(CurrentUserContext);
   const [redirect, setRedirect] = useState(false);
   const [redirectToUserCommented, setRedirectToUserCommented] = useState(false);
@@ -32,7 +34,7 @@ const PostContainer = () => {
   const deletePost = async (id) => {
     try {
       const response = await API.deletePost(id);
-      alert("Successfully deleted");
+      reloadPost();
     } catch(err) {
       console.log(err);
     }
@@ -40,8 +42,8 @@ const PostContainer = () => {
 
   const deleteComment = async (postId, commentId) => {
     try {
-      const response = await API.deleteComment(postId, commentId);
-      alert("Successfully deleted");
+      await API.deleteComment(postId, commentId);
+      reloadPost();
     } catch(err) {
       console.log(err);
     }
@@ -70,7 +72,7 @@ const PostContainer = () => {
               {renderRedirectToUserCommented()}
               <div className="user">
                 <div className="profile-img">
-                  <img className="profile-pic" src="/images/profile-picture-template.jpeg" alt="Profile Image" />
+                  <img className="profile-pic" src="/images/profile-picture-template.jpeg" alt="Profile" />
                 </div>
                 <h3 onClick={handleRedirect} className="post-user-firstname">{firstName}</h3> <p id="postedTime">{postedTime}</p>
                 {
@@ -89,7 +91,7 @@ const PostContainer = () => {
               <div className="comments-wrapper">
                 {
                   currentPost.comments? currentPost.comments.map((comment,i) => {
-                    console.log(comment.user._id);
+                    console.log(comment.user._id == currentUser.user._id);
                     return (
                       <div key={i} className="comment-wrapper">
                         <div className="comment">
@@ -98,7 +100,7 @@ const PostContainer = () => {
                             <span className="post-comment">{comment.comment}</span>
                           </p>
                           {
-                            currentUser.user._id == currentPost.user._id ? 
+                            comment.user._id == currentUser.user._id ? 
                               <p className="delete-btn" onClick={()=>deleteComment(currentPost._id, comment._id)}>x</p>
                             : null
                           }

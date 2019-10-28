@@ -1,33 +1,64 @@
-import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Redirect, Link } from 'react-router-dom';
+
+import { Input } from '../Form/form.component';
 
 import CurrentUserContext from '../../contexts/current-user/current-user.context.js';
 import API from '../../utils/API';
 
 import './nav-bar.styles.scss';
 
-const NavBar = () => {
+const NavBar = ({ addSearch }) => {
+  const [redirect, setRedirect] = useState(false);
+  const [search, setSearch] = useState('');
+
+  useEffect(() => setRedirect(false),[redirect])
+  
+  const renderRedirect = () => {
+    if (redirect) {
+      return <Redirect to='/' />
+    }
+  }
+
   const handleSignOut = () => {
     API.signOut().then(() => {
-      // alert('Successfully Signed out!');
       setTimeout(() => window.location.reload(), 1000);
       localStorage.setItem('user', null);
     });
   }
+
+  const handleInputChange = event => {
+    setSearch(event.target.value);
+  }
+
+  const handleFormSubmit = event => {
+    event.preventDefault();
+    addSearch(search);
+    setRedirect(!redirect);
+  }
+
   return (
     <CurrentUserContext.Consumer>
       {
         user => (
           <div className="nav">
+            {renderRedirect()}
             <div className="nav-header">
-              <div className="nav-title">
-                <img src="/images/Quattuor-logo.png" alt="Quattuor" />
-              </div>
+              <Link to="/home" className="nav-link">
+                <div className="nav-title">
+                  <img src="/images/Quattuor-logo.png" alt="Quattuor" />
+                </div>
+              </Link>
               {
                 user ? (
                   <form className="search-form">
-                    <input className="search-input" type="text" placeholder="Search.." name="search" />
-                    <button className="search-btn"><i className="fa fa-search"></i></button>
+                    <Input 
+                      className="search-input" 
+                      type="text" 
+                      placeholder="Search.." 
+                      onChange={handleInputChange}
+                    />
+                    <button className="search-btn" onClick={handleFormSubmit}><i className="fa fa-search"></i></button>
                   </form>
                 )
                 :

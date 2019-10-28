@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import './form.styles.scss';
 
 import CurrentPostContext from '../../contexts/current-post/current-post.context';
 import API from '../../utils/API';
+import ReloadPostContext from '../../contexts/reload-post/reload-post.context';
 
 export const Input = (props) => {
   return (
@@ -21,8 +22,9 @@ export const Label = (props) => {
   );
 };
 
-export const ContentEditableInput = ({children, handleInputChange}) => {
+export const ContentEditableInput = ({children, handleInputChange, noChange}) => {
   const handleInputFocus = event => {
+    if(!noChange)
     if(event.target.textContent === children) event.target.textContent='';
   };
   const handleBlur = event => {
@@ -41,15 +43,20 @@ export const ContentEditableInput = ({children, handleInputChange}) => {
 };
 
 export const SubmitButton = ({children, content}) => {
+  const reloadPost = useContext(ReloadPostContext);
   const handleFormSubmit = (event, id, children) => {
     event.preventDefault();
-    if(id)         
-      API.postComment(content, id)
-        .catch(err => console.log(err));
-    else API.postPost(content)
+    if(content) {
+      if(id)         
+        API.postComment(content, id)
           .catch(err => console.log(err));
+      else 
+        API.postPost(content)
+          .catch(err => console.log(err));
+    }
+    reloadPost();
     if(children === "Post")
-      event.target.parentNode.parentNode.querySelector('.contentEditable-input').textContent = "Add a post";
+      event.target.parentNode.parentNode.querySelector('.contentEditable-input').textContent = "Create a post";
     else event.target.parentNode.parentNode.querySelector('.contentEditable-input').textContent = "Add a comment";
   }
   return (
