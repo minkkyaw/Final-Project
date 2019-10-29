@@ -14,7 +14,7 @@ const LogIn = (props) => {
   const [lastName, setLastName] = useState();
   const [city, setCity] = useState();
   const [zipCode, setZipCode] = useState();
-  const [interest, setInterest] = useState([]);
+  const [interest, setInterest] = useState('');
   const [redirect, setRedirect] = useState(false);
 
   const handleInputChange = event => {
@@ -45,6 +45,7 @@ const LogIn = (props) => {
     if(event.target.name === "sign-up")
       API.signUp({email, password, confirmPassword, firstName, lastName, city, zipCode, interest})
         .then(() => alert("Successfully login"))
+        .then(() => setRedirect(true))
         .catch(err => alert(err.response.data.message));
 
     if(event.target.name === "sign-in")
