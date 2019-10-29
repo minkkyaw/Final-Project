@@ -5,7 +5,7 @@ const factory = require("./handlerFactory");
 
 exports.addedUser = (req, res, next) => {
   if (req.user) {
-    req.body.user = { _id: req.user._id, firstName: req.user.firstName };
+    req.body.user = { _id: req.user._id, firstName: req.user.firstName, photoUrl: req.user.photoUrl };
     req.body.zipCode = req.user.zipCode;
   }
   next();

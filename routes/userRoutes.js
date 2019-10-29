@@ -14,6 +14,7 @@ router.use(authController.isLoggedIn);
 router
   .route("/:id")
   .get(userController.getUser)
+  .post(userController.uploadPhoto)
   .patch(userController.updateUser);
 
 router.route("/:id/posts").get(userController.getUserWithPosts);

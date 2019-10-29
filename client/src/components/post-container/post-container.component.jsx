@@ -62,7 +62,9 @@ const PostContainer = () => {
     <CurrentPostContext.Consumer>
       {
         currentPost => {
-          const {user: {firstName}, zipCode, post,createdAt}= currentPost;
+          const {user, zipCode, post,createdAt}= currentPost;
+          const {firstName, photoUrl} = user;
+          console.log(user);
           const postedTime = getDuration(createdAt);
           const postedDate = new Date(createdAt);
           const formattedDate = `${postedDate.getMonth() + 1}/${postedDate.getDate()}/${postedDate.getFullYear()}`;
@@ -72,7 +74,7 @@ const PostContainer = () => {
               {renderRedirectToUserCommented()}
               <div className="user">
                 <div className="profile-img">
-                  <img className="profile-pic" src="/images/profile-picture-template.jpeg" alt="Profile" />
+                  <img className="profile-pic" src={ photoUrl ? `${photoUrl}`: "/images/profile-picture-template.jpeg"} alt="Profile" />
                 </div>
                 <h3 onClick={handleRedirect} className="post-user-firstname">{firstName}</h3> <p id="postedTime">{postedTime}</p>
                 {
