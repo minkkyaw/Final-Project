@@ -2,6 +2,7 @@ var ObjectId = require("mongoose").Types.ObjectId;
 
 const AppError = require("./../utils/appError");
 const catchAsync = require("./../utils/catchAsync");
+const upload = require("../utils/multer");
 
 exports.getOne = (Model, populateObj, sort) =>
   catchAsync(async (req, res, next) => {
@@ -80,6 +81,7 @@ exports.getAll = (Model, populateObj, sort) =>
 
 exports.createOne = Model =>
   catchAsync(async (req, res, next) => {
+    console.log(req.body)
     req.body.createdAt = new Date(Date.now());
     const doc = await Model.create(req.body);
     res.status(201).json({
@@ -150,5 +152,25 @@ exports.deleteOne = Model =>
       data: {
         data: null
       }
+    });
+  });
+
+exports.uploadPhoto = Model =>
+  catchAsync(async (req, res, next) => {
+    upload(req, res, async err => {
+      if (err) {
+        console.log(err);
+      } else {
+      }
+      const photoUrl = {
+        photoUrl: res.req.file.path.replace("client/public", "")
+      };
+      let doc = await Model.findByIdAndUpdate(req.params.id, photoUrl);
+      res.status(204).json({
+        status: "success",
+        data: {
+          data: null
+        }
+      });
     });
   });

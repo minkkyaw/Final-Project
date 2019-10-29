@@ -22,11 +22,16 @@ const UserProfileContainer = props => {
     zipCode: '',
     city: '',
     interest: '',
-    skills: ''
+    skills: '',
+    photoUrl: undefined
   })
   
   const handleEdit = () => setEditCheck(!editCheck); 
   const handleInputChange = (event, key) => { 
+      if(key==="photoUrl") {
+        setUpdateUser({...updateUser, [key]: event.target.files})
+      }
+      else
       setUpdateUser({...updateUser, [key]: event.target.textContent});
     }
   const HandleUpdateData = async () => {
@@ -37,13 +42,13 @@ const UserProfileContainer = props => {
     } catch(err) {
       console.log(err);
     }
-
+    console.log(updateUser)
   }
   
   return (
     <div className="user-container">
       <div className="user-image">
-        <img className="profile-pic" src="/images/profile-picture-template.jpeg" alt="Profile" />
+        <img className="profile-pic" src={props.userData.photoUrl? props.userData.photoUrl:"/images/profile-picture-template.jpeg"} alt="Profile" />
       </div>
       <div className="user-info-container">
         {
@@ -76,7 +81,13 @@ const UserProfileContainer = props => {
             </div>
           </React.Fragment>
         : (
+          
           <div className="edit-user-wrapper">
+            <div>
+            <input className="image-data" name="myImage" type="file" onChange={event => handleInputChange(event, "photoUrl")} />
+            <button onClick={() => {const data = document.querySelector('.image-data').files;
+          API.uploadPhoto(currentUser.user._id, data)}}>Submit</button>
+          </div>
             <div className="profile-label-input-wrapper">
               <p className="profile-edit-label">Firstname -  </p>
               <ContentEditableInput handleInputChange={event => handleInputChange(event, "firstName")} noChange >{firstName}</ContentEditableInput>

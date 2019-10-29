@@ -103,8 +103,12 @@ const updateNotifications = () => {
 
 const getPlaces = (zip, keyword) => {
   zip = 19106;
-  keyword = "bowling";
+  keyword = "football";
   return transport.get(`/api/posts/googlePlace?keyword=${keyword}&zip=${zip}`);
+};
+
+const uploadPhoto = (userId, data) => {
+  return transport.post(`/api/users/${userId}`, data);
 };
 
 export default {
@@ -129,5 +133,6 @@ export default {
   getNotifications,
   createNotifications,
   updateNotifications,
-  getPlaces
+  getPlaces,
+  uploadPhoto
 };

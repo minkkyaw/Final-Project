@@ -7,7 +7,7 @@ exports.addedPostIds = (req, res, next) => {
 };
 
 exports.addedUser = (req, res, next) => {
-  req.body.user = { _id: req.user._id, firstName: req.user.firstName };
+  req.body.user = { _id: req.user._id, firstName: req.user.firstName, photoUrl: req.user.photoUrl };
   next();
 };
 

@@ -47,7 +47,8 @@ export const ContentEditableInput = ({children, handleInputChange, noChange}) =>
 export const SubmitButton = ({children, content}) => {
 
   const user = useContext(CurrentUserContext);
-  const userId = user.user._id;
+  let userId;
+  if(user) userId = user.user._id;
   const reloadPost = useContext(ReloadPostContext);
   const togglePlaceDisplay = useContext(TogglePlaceDisplayContext);
   const handleFormSubmit = (event, postId, name, children) => {
