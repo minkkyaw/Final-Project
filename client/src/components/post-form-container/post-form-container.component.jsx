@@ -12,14 +12,18 @@ const PostFormContainer = () => {
   const [places, setPlaces] = useState([]);
   const [zipCode, setZipCode] = useState('');
   const [keyword, setKeyword] = useState('');
-  const [place, setPlace] = useState({})
+  const [place, setPlace] = useState(undefined)
   const togglePlaceDisplay = () => {
     setPlaceDisplay(!placeDisplay);
+    setPlaces([]);
   };
 
   const addPlaces = () => 
     API.getPlaces(zipCode, keyword).then(response => setPlaces(response.data.results));
   
+  const addPlace = (place) => {
+    setPlace(place); setPlaceDisplay(!placeDisplay);
+  };
   window.addEventListener('click', (event) => {
     if(event.target.className==="places-modal")
     setPlaceDisplay(false);
@@ -34,6 +38,7 @@ const PostFormContainer = () => {
         return setContent(event.target.textContent);
     }
   };
+  console.log(zipCode);
 
 
   return (
@@ -42,7 +47,7 @@ const PostFormContainer = () => {
       <hr />
       <form className="contentEditable-input-btn-wrapper">
         <ContentEditableInput handleInputChange={handleInputChange}>Create a post</ContentEditableInput>
-        <SubmitButton place={place} content={content}>Post</SubmitButton>
+        <SubmitButton place={place} zipCode={zipCode} content={content}>Post</SubmitButton>
         <TogglePlaceDisplayContext.Provider value={togglePlaceDisplay}>
           <SubmitButton>Add a place</SubmitButton>
         </TogglePlaceDisplayContext.Provider>
@@ -66,7 +71,7 @@ const PostFormContainer = () => {
                       <h4>{name}</h4>
                       <p>{formatted_address}</p>
                       <a className="place-link" href={link} target="_blank">See place</a>
-                      <button className="form-submit-button" onClick={()=> setPlace(place)}>Add place</button>
+                      <button className="form-submit-button" onClick={()=> addPlace(place)}>Add place</button>
                     </div>
                 )}) : <h4>No Places found</h4>}
             </div>

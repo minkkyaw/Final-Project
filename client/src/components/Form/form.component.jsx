@@ -45,13 +45,14 @@ export const ContentEditableInput = ({children, handleInputChange, noChange, nam
   );
 };
 
-export const SubmitButton = ({children, content, place, addPlaces}) => {
+export const SubmitButton = ({children, content, place, zipCode, addPlaces}) => {
   const user = useContext(CurrentUserContext);
   let userId;
   if(user) userId = user.user._id;
   const reloadPost = useContext(ReloadPostContext);
   const togglePlaceDisplay = useContext(TogglePlaceDisplayContext);
   const handleFormSubmit = (event, postId, name, children) => {
+    console.log(zipCode);
     event.preventDefault();
     if(content) {
       if(postId)         
@@ -60,7 +61,7 @@ export const SubmitButton = ({children, content, place, addPlaces}) => {
           .then(()=> reloadPost())
           .catch(err => console.log(err));
       else 
-        API.postPost(content,JSON.stringify(place))
+        API.postPost(content,JSON.stringify(place),zipCode)
           .then(()=> reloadPost())
           .catch(err => console.log(err));
     } else if(!content && children === "Add a place") {
@@ -71,8 +72,10 @@ export const SubmitButton = ({children, content, place, addPlaces}) => {
     switch(children) {
       case "Post":
         return event.target.parentNode.parentNode.querySelector('.contentEditable-input').textContent = "Create a post";
-      case "Add a place": 
+      case "Search Places": 
         return ;
+      case "Add a place":
+        return;
       default:
         return event.target.parentNode.parentNode.querySelector('.contentEditable-input').textContent = "Add a comment";
     }

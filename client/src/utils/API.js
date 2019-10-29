@@ -23,8 +23,9 @@ const updateUser = (userId, userData) => {
   return transport.patch(`/api/users/${userId}`, userData);
 };
 
-const postPost = (post, place) => {
-  return transport.post("/api/posts/", { post, place });
+const postPost = (post, place, zipCode) => {
+  console.log(zipCode);
+  return transport.post("/api/posts/", { post, place, zipCode });
 };
 
 const getAllPosts = user => {
