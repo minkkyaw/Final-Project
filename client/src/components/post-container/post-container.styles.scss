@@ -24,7 +24,9 @@
   padding-top: 10px;
   padding-bottom: 10px;
   font-size: .8rem;
-  color: rgb(255, 97, 97);
+  // color: rgb(255, 97, 97);
+  // color: white;
+  // background-color: red;
 }
 
 #postedTime {
@@ -32,6 +34,7 @@
   font-size: .7rem;
   padding-left: 10px;
   margin: auto 0;
+  width: 100px;
 }
 
 .user {
@@ -44,7 +47,29 @@
 }
 
 .activity-zipcode {
-  width: 200px;
+  width: 100px;
+
+}
+
+#activity-zipcode {
+  color: white;
+  background-color: rgb(255, 68, 68);
+  padding: 5px;
+  width: 65px;
+  border-radius: 25px;
+}
+
+#date-time {
+  color: white;
+  background-color: rgb(255, 68, 68);
+  padding: 5px;
+  width: 90px;
+  border-radius: 25px;
+}
+
+#location,
+#date {
+  font-size: 12px;
 }
 
 .profile-img {
