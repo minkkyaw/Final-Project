@@ -10,13 +10,14 @@ import API from '../../utils/API';
 import PostsProvider from '../../provider/posts.provider';
 import ReloadPostContext from '../../contexts/reload-post/reload-post.context';
 
-const Home = ({search}) => {
+const Home = ({search, addSearch}) => {
   const [posts, setPosts] = useState([]);
   const [reloadPostCheck, setReloadPostCheck] = useState(false);
-  const reloadPost = () => setReloadPostCheck(!reloadPostCheck);
+  const reloadPost = () => {console.log(1);setReloadPostCheck(!reloadPostCheck)};
   useEffect(() => {
     if(search) {
-      API.searchPosts(search).then(response => setPosts(response.data.data.data))
+      API.searchPosts(search)
+        .then(response => setPosts(response.data.data.data));
     }
     else API.setPost(setPosts);
   },[search,reloadPostCheck]);

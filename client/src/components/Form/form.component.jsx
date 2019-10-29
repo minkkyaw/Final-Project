@@ -24,7 +24,7 @@ export const Label = (props) => {
   );
 };
 
-export const ContentEditableInput = ({children, handleInputChange, noChange}) => {
+export const ContentEditableInput = ({children, handleInputChange, noChange, name}) => {
   const handleInputFocus = event => {
     if(!noChange)
     if(event.target.textContent === children) event.target.textContent='';
@@ -35,6 +35,7 @@ export const ContentEditableInput = ({children, handleInputChange, noChange}) =>
   return (
     <div className="input-wrapper">
       <div 
+        name={name}
         className="contentEditable-input" 
         onInput={handleInputChange} 
         onFocus={handleInputFocus}  
@@ -44,8 +45,7 @@ export const ContentEditableInput = ({children, handleInputChange, noChange}) =>
   );
 };
 
-export const SubmitButton = ({children, content}) => {
-
+export const SubmitButton = ({children, content, place, addPlaces}) => {
   const user = useContext(CurrentUserContext);
   let userId;
   if(user) userId = user.user._id;
@@ -57,13 +57,16 @@ export const SubmitButton = ({children, content}) => {
       if(postId)         
         API.postComment(content, postId)
           .then(() => API.createNotifications(postId, userId ,{notification: `${name} commented on your post!`}))
+          .then(()=> reloadPost())
           .catch(err => console.log(err));
       else 
-        API.postPost(content)
+        API.postPost(content,JSON.stringify(place))
+          .then(()=> reloadPost())
           .catch(err => console.log(err));
-      reloadPost();
     } else if(!content && children === "Add a place") {
       togglePlaceDisplay();
+    } else if(addPlaces) {
+      addPlaces()
     }
     switch(children) {
       case "Post":

@@ -3,7 +3,6 @@ import React, { useState, useContext } from 'react';
 import './post-form-container.styles.scss';
 
 import { SubmitButton, ContentEditableInput } from '../Form/form.component';
-import ReloadPostContext from '../../contexts/reload-post/reload-post.context';
 import TogglePlaceDisplayContext from '../../contexts/toggle-place-display/toggle-place-display.context';
 import API from '../../utils/API';
 
@@ -11,17 +10,31 @@ const PostFormContainer = () => {
   const [content, setContent] = useState('');
   const [placeDisplay, setPlaceDisplay] = useState(false);
   const [places, setPlaces] = useState([]);
+  const [zipCode, setZipCode] = useState('');
+  const [keyword, setKeyword] = useState('');
+  const [place, setPlace] = useState({})
   const togglePlaceDisplay = () => {
     setPlaceDisplay(!placeDisplay);
-    API.getPlaces().then(response => setPlaces(response.data.results))
   };
+
+  const addPlaces = () => 
+    API.getPlaces(zipCode, keyword).then(response => setPlaces(response.data.results));
+  
   window.addEventListener('click', (event) => {
-    if(event.target.textContent && event.target.textContent!=="Add a place")
+    if(event.target.className==="places-modal")
     setPlaceDisplay(false);
   })
   const handleInputChange = event => {
-    setContent(event.target.textContent);
+    switch(event.target.getAttribute("name")) {
+      case "zipcode": 
+        return setZipCode(event.target.textContent);
+      case "keyword":
+        return setKeyword(event.target.textContent);
+      default:
+        return setContent(event.target.textContent);
+    }
   };
+
 
   return (
     <div className="post-container">
@@ -29,27 +42,38 @@ const PostFormContainer = () => {
       <hr />
       <form className="contentEditable-input-btn-wrapper">
         <ContentEditableInput handleInputChange={handleInputChange}>Create a post</ContentEditableInput>
-        <SubmitButton content={content}>Post</SubmitButton>
+        <SubmitButton place={place} content={content}>Post</SubmitButton>
         <TogglePlaceDisplayContext.Provider value={togglePlaceDisplay}>
           <SubmitButton>Add a place</SubmitButton>
         </TogglePlaceDisplayContext.Provider>
       </form>
-      <div className="places-modal">
-        <div className="places-container">
-          {
-            placeDisplay ?
-              places.length > 0 ? 
-                places.map(({link, name, formatted_address}) => (
-                  <a href={link} target="_blank">
-                    <h4>{name}</h4>
-                    <p>{formatted_address}</p>
-                  </a>
-                ))
-              : <h4>No Places found</h4>
-            : null
-          }
-        </div>
-      </div>
+      {
+        placeDisplay ?
+          <div className="places-modal">
+            <div className="places-container">
+              <div className="place-search-from">
+                <ContentEditableInput name="zipcode" handleInputChange={handleInputChange}>Enter zipcode</ContentEditableInput>
+                <ContentEditableInput name="keyword" handleInputChange={handleInputChange}>Enter keyword</ContentEditableInput>
+                <SubmitButton addPlaces={addPlaces}>Search Places</SubmitButton>
+              </div>
+              {places.length > 0 ? 
+                places.map((place, i) => {
+                  const {link, name, formatted_address} = place
+                  let addClass = "lightgrey";
+                  if(i % 2 === 1) addClass = "grey";
+                  return (
+                    <div className={`${addClass} place-wrapper`}>
+                      <h4>{name}</h4>
+                      <p>{formatted_address}</p>
+                      <a className="place-link" href={link} target="_blank">See place</a>
+                      <button className="form-submit-button" onClick={()=> setPlace(place)}>Add place</button>
+                    </div>
+                )}) : <h4>No Places found</h4>}
+            </div>
+          </div>
+          
+        : null
+      }
     </div>
   )
 }

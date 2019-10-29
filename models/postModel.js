@@ -26,6 +26,7 @@ const postSchema = new Schema(
         name: String
       }
     ],
+    place: String,
     zipCode: Number,
     createdAt: {
       type: Date,
