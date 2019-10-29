@@ -83,8 +83,8 @@ const PostContainer = () => {
               </div>
               {/* <p id="postedTime">{postedTime}</p> */}
               <div className="activity-description">
-                <p className="activity-zipcode">Zipcode - {zipCode}</p>
-                <p className="date-time">Date - {formattedDate}</p>
+                <p className="activity-zipcode"><div id="activity-zipcode"><i id="location" class="material-icons">room</i> {zipCode}</div></p>
+                <p className="date-time"><div id="date-time"><i id="date" class="material-icons">date_range</i> {formattedDate}</div></p>
               </div>
               <p className="post">{post}</p>
               <LikeParticipantsCommentsContainer />
