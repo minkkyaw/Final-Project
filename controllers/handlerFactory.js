@@ -81,7 +81,6 @@ exports.getAll = (Model, populateObj, sort) =>
 
 exports.createOne = Model =>
   catchAsync(async (req, res, next) => {
-    console.log(req.body);
     req.body.createdAt = new Date(Date.now());
     const doc = await Model.create(req.body);
     res.status(201).json({

@@ -52,7 +52,6 @@ export const SubmitButton = ({children, content, place, zipCode, addPlaces}) => 
   const reloadPost = useContext(ReloadPostContext);
   const togglePlaceDisplay = useContext(TogglePlaceDisplayContext);
   const handleFormSubmit = (event, postId, name, children) => {
-    console.log(zipCode);
     event.preventDefault();
     if(content) {
       if(postId)         
@@ -85,7 +84,7 @@ export const SubmitButton = ({children, content, place, zipCode, addPlaces}) => 
       {
         currentPost => {
           return children ? <button onClick={event => handleFormSubmit(event, null, null, children)} className="form-submit-btn">{children}</button>
-            : <button onClick={event => handleFormSubmit(event, currentPost._id,currentPost.user.firstName, children)} className="form-submit-btn">
+            : <button onClick={event => handleFormSubmit(event, currentPost._id,user.user.firstName, children)} className="form-submit-btn">
                 <i className="material-icons">send</i>
               </button>
         }

@@ -38,8 +38,6 @@ const PostFormContainer = () => {
         return setContent(event.target.textContent);
     }
   };
-  console.log(zipCode);
-
 
   return (
     <div className="post-container">

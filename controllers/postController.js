@@ -11,7 +11,6 @@ exports.addedUser = (req, res, next) => {
       photoUrl: req.user.photoUrl
     };
     if (!req.body.zipCode) req.body.zipCode = req.user.zipCode;
-    console.log(req.body.zipCode);
   }
   next();
 };

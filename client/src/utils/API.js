@@ -24,7 +24,6 @@ const updateUser = (userId, userData) => {
 };
 
 const postPost = (post, place, zipCode) => {
-  console.log(zipCode);
   return transport.post("/api/posts/", { post, place, zipCode });
 };
 

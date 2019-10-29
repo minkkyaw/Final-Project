@@ -1,22 +1,72 @@
-.tournaments-wrapper {
-  padding: 20px;
+.main-center-container h4 {
+    color: red;
 }
 
-.tournament-status {
-  text-align: center;
+.global-feed-container {
+    width: 75vw;
+    height: auto; /* change to auto when backend is implemented */
+    display: flex;  
+    flex-direction: column;
+    margin: 25px; 
+    padding: 10px;
+    background-color: white;
+    border: .5px solid rgba(212, 210, 210, 0.788);
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.tournament-wrapper {
-  width: 90%;
-  margin: 0 auto;
+.activity-card {
+    padding: 10px;
 }
 
-.tournament-title {
-  width: 100%;
-  background-color: #5d60b8;
-  padding: 100px;
-  display: flex;
-  justify-content: center;
-  font-size: 30px;
-  color: #fff;
+.activity-location-time {
+    font-size: 12px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+}
+.tournament-img {
+    width: 25px;
+    height: 25px;
+    border: 1px solid;
+    margin-right: 10px;
+}
+
+#submit{
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    border-radius: 8px;
+    background-color: white;
+    padding: 10px;
+    border: 1px solid black;
+    
+
+}
+
+#submit:hover {
+    background-color: #f44336;
+    color: white;
+}
+
+#comment-box {
+    width: 85%;
+    height: 50px;
+    border-radius: 5px;
+}
+
+@media screen and (max-width: 700px) {
+    .main-center-container {
+        width: 100vw;
+        height: auto;
+    }
+
+    .search-container,
+    .global-feed-container {
+        width: 100vw;
+        height: auto;
+        margin: 0;
+        margin-top: 5%;
+    }
 }

@@ -11,6 +11,12 @@ import './nav-bar.styles.scss';
 const NavBar = ({ addSearch, noOfNoti }) => {
   const [redirect, setRedirect] = useState(false);
   const [search, setSearch] = useState('');
+  let time = 5;
+  let count = 0;
+  setInterval(() => {
+    if (count === time) console.log(1);
+    count++;
+  }, 1000);
 
   useEffect(() => setRedirect(false),[redirect])
   
