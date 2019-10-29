@@ -157,6 +157,7 @@ exports.deleteOne = Model =>
 
 exports.uploadPhoto = Model =>
   catchAsync(async (req, res, next) => {
+    console.log(req.file);
     upload(req, res, async err => {
       if (err) {
         console.log(err);

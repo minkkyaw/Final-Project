@@ -5,8 +5,13 @@ const factory = require("./handlerFactory");
 
 exports.addedUser = (req, res, next) => {
   if (req.user) {
-    req.body.user = { _id: req.user._id, firstName: req.user.firstName, photoUrl: req.user.photoUrl };
-    req.body.zipCode = req.user.zipCode;
+    req.body.user = {
+      _id: req.user._id,
+      firstName: req.user.firstName,
+      photoUrl: req.user.photoUrl
+    };
+    if (!req.body.zipCode) req.body.zipCode = req.user.zipCode;
+    console.log(req.body.zipCode);
   }
   next();
 };

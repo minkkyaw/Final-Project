@@ -23,8 +23,9 @@ const updateUser = (userId, userData) => {
   return transport.patch(`/api/users/${userId}`, userData);
 };
 
-const postPost = post => {
-  return transport.post("/api/posts/", { post });
+const postPost = (post, place, zipCode) => {
+  console.log(zipCode);
+  return transport.post("/api/posts/", { post, place, zipCode });
 };
 
 const getAllPosts = user => {
@@ -102,8 +103,6 @@ const updateNotifications = () => {
 };
 
 const getPlaces = (zip, keyword) => {
-  zip = 19106;
-  keyword = "football";
   return transport.get(`/api/posts/googlePlace?keyword=${keyword}&zip=${zip}`);
 };
 

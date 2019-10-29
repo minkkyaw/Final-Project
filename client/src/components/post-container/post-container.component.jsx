@@ -33,7 +33,7 @@ const PostContainer = () => {
 
   const deletePost = async (id) => {
     try {
-      const response = await API.deletePost(id);
+      await API.deletePost(id);
       reloadPost();
     } catch(err) {
       console.log(err);
@@ -63,8 +63,9 @@ const PostContainer = () => {
       {
         currentPost => {
           const {user, zipCode, post,createdAt}= currentPost;
+          let place;
+          if(currentPost.place) place = JSON.parse(currentPost.place)
           const {firstName, photoUrl} = user;
-          console.log(user);
           const postedTime = getDuration(createdAt);
           const postedDate = new Date(createdAt);
           const formattedDate = `${postedDate.getMonth() + 1}/${postedDate.getDate()}/${postedDate.getFullYear()}`;
@@ -85,7 +86,7 @@ const PostContainer = () => {
               </div>
               {/* <p id="postedTime">{postedTime}</p> */}
               <div className="activity-description">
-                <p className="activity-zipcode"><div id="activity-zipcode"><i id="location" class="material-icons">room</i> {zipCode}</div></p>
+                <p className="activity-zipcode"><i id="location" class="material-icons">room</i> {place ? (<a className="place-link" href={place.link} target="_blank">{place.name}</a>) : zipCode}</p>
                 <p className="date-time"><div id="date-time"><i id="date" class="material-icons">date_range</i> {formattedDate}</div></p>
               </div>
               <p className="post">{post}</p>

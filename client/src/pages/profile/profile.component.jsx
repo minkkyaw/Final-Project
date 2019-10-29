@@ -7,10 +7,13 @@ import AdsContainer from '../../components/ads-container/ads-container.component
 import UserProfileContainer from '../../components/user-profile-container/user-profile-container.component';
 import PostsProvider from '../../provider/posts.provider';
 import ReloadPostContext from '../../contexts/reload-post/reload-post.context';
+import CurrentUserContext from "../../contexts/current-user/current-user.context";
+
 import './profile.styles.scss';
 import API from '../../utils/API';
 
 const Profile = props => {
+  const currentUser = useContext(CurrentUserContext);
   const [posts, setPosts] = useState([]);
   const [reloadPostCheck, setReloadPostCheck] = useState(false);
   const [userData, setUserData] = useState({
@@ -24,9 +27,9 @@ const Profile = props => {
   useEffect(() => {
     API.getUser(props.match.params.id)
       .then(response => {
-        let user = response.data.data.data
-        setUserData(user);
+        let user = response.data.data.data;
         console.log(user);
+        setUserData(user);
         let query = {userId: user._id, firstName:user.firstName};
         if(user.photoUrl) query.photoUrl = user.photoUrl;
         API.getAllPosts(query)
@@ -48,7 +51,11 @@ const Profile = props => {
         </div>
         <div className="main-center-container">
           <PostsProvider>
-            {/* <PostFormContainer /> */}
+            {
+              currentUser && currentUser.user._id == userData._id ?
+                <PostFormContainer />
+              : null
+            }
             <PostsContext.Provider value={posts}>
               <PostsContainer />
             </PostsContext.Provider>

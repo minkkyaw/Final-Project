@@ -47,16 +47,16 @@
 }
 
 .activity-zipcode {
-  width: 100px;
-
-}
-
-#activity-zipcode {
   color: white;
   background-color: rgb(255, 68, 68);
   padding: 5px;
-  width: 65px;
+  width: fit-content;
   border-radius: 25px;
+  margin-right: 20px;
+}
+.place-link {
+  color: inherit;
+  text-decoration: none;
 }
 
 #date-time {
