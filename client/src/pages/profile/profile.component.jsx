@@ -26,6 +26,7 @@ const Profile = props => {
       .then(response => {
         let user = response.data.data.data
         setUserData(user);
+        console.log(user);
         let query = {userId: user._id, firstName:user.firstName};
         if(user.photoUrl) query.photoUrl = user.photoUrl;
         API.getAllPosts(query)
@@ -47,7 +48,7 @@ const Profile = props => {
         </div>
         <div className="main-center-container">
           <PostsProvider>
-            <PostFormContainer />
+            {/* <PostFormContainer /> */}
             <PostsContext.Provider value={posts}>
               <PostsContainer />
             </PostsContext.Provider>
