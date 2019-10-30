@@ -10,9 +10,7 @@ import TogglePlaceDisplayContext from '../../contexts/toggle-place-display/toggl
 
 export const Input = (props) => {
   return (
-    <div>
       <input {...props} />
-    </div>
   );
 };
 
@@ -63,7 +61,7 @@ export const SubmitButton = ({children, content, place, zipCode, addPlaces}) => 
         API.postPost(content,JSON.stringify(place),zipCode)
           .then(()=> reloadPost())
           .catch(err => console.log(err));
-    } else if(!content && children === "Add a place") {
+    } else if(!content && (children === "Add a place" || children === "Change this place")) {
       togglePlaceDisplay();
     } else if(addPlaces) {
       addPlaces()
@@ -74,6 +72,8 @@ export const SubmitButton = ({children, content, place, zipCode, addPlaces}) => 
       case "Search Places": 
         return ;
       case "Add a place":
+        return;
+      case "Change this place":
         return;
       default:
         return event.target.parentNode.parentNode.querySelector('.contentEditable-input').textContent = "Add a comment";

@@ -11,6 +11,10 @@
   display: flex;
 }
 
+.nav-title {
+  margin-left: 20px;
+}
+
 .nav-title img {
   width: 75px;
   height: 75px;
@@ -55,6 +59,30 @@
       transform: scale(1.2);
     }
   }
+}
 
+@media screen and (max-width: 1000px) {
+  .search-input {
+    width: 30vw;
+  }
+}
 
+@media screen and (max-width: 680px) {
+  .nav {
+    flex-direction: column;
+  }
+  .nav-header {
+    width: 100%;
+    justify-content: space-around;
+  }
+  .search-form {
+    width: 100%;
+    margin-left: 10px;
+  }
+  .search-input {
+    width: 70%;
+  }
+  .nav-links {
+    width: 80%;
+  }
 }

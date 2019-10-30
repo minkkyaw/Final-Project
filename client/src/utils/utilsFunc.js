@@ -43,3 +43,8 @@ export const objToQueryString = obj => {
   }
   return query;
 };
+
+export const changeDateToMMDDYYY = date => {
+  date = new Date(date);
+  return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+};

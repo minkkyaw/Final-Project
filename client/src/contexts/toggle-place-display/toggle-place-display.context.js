@@ -1,5 +1,5 @@
 import { createContext } from "react";
 
-const TogglePlaceDisplay = createContext();
+const TogglePlaceDisplayContext = createContext();
 
-export default TogglePlaceDisplay;
+export default TogglePlaceDisplayContext;

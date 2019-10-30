@@ -45,7 +45,7 @@ const Profile = props => {
   return (
     <ReloadPostContext.Provider value={reloadPost}>
       <div className="profile-page-container">
-        <div className="main-left-container">
+        <div className="profile-left-container">
           <UserProfileContainer userData={userData} />
         </div>
         <div className="main-center-container">

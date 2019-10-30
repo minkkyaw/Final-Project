@@ -81,8 +81,34 @@ exports.getAll = (Model, populateObj, sort) =>
 
 exports.createOne = Model =>
   catchAsync(async (req, res, next) => {
+    for (let key in req.body) {
+      if (req.body[key] !== false) {
+        if (!req.body[key]) delete req.body[key];
+        if (key === "password") delete req.body[key];
+      }
+      switch (key) {
+        case "pricePool":
+          req.body[key] = parseInt(req.body[key]);
+          console.log(typeof req.body[key]);
+          break;
+        case "maxNumberOfParticipants":
+          req.body[key] = parseInt(req.body[key]);
+          break;
+        case "enrollmentFee":
+          req.body[key] = parseInt(req.body[key]);
+          break;
+        case "pricePool":
+          req.body[key] = parseInt(req.body[key]);
+          break;
+        case "pricePool":
+          req.body[key] = parseInt(req.body[key]);
+          break;
+      }
+    }
+    console.log(req.body);
     req.body.createdAt = new Date(Date.now());
     const doc = await Model.create(req.body);
+    if (!doc) return next();
     res.status(201).json({
       status: "success",
       data: {

@@ -45,7 +45,7 @@ const UserProfileContainer = props => {
   }
   
   return (
-    <div className="user-container">
+    <React.Fragment>
       <div className="user-image">
         <img className="profile-pic" src={props.userData.photoUrl? props.userData.photoUrl:"/images/profile-picture-template.jpeg"} alt="Profile" />
       </div>
@@ -116,7 +116,7 @@ const UserProfileContainer = props => {
           </div>
         )}
       </div>
-  </div>
+  </React.Fragment>
   )
 }
 
