@@ -92,6 +92,3 @@ export const SubmitButton = ({children, content, place, zipCode, addPlaces, top2
     </CurrentPostContext.Consumer>
   )
 };
-
-
-

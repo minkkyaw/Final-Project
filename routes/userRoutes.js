@@ -10,12 +10,22 @@ router.route("/signout").get(authController.signout);
 // router.patch("/resetPassword/:token", authController.resetPassword);
 
 router.use(authController.isLoggedIn);
-// router.patch("/updateMyPassword", authController.updatePassword);
+
 router
   .route("/:id")
   .get(userController.getUser)
-  .post(userController.uploadPhoto)
-  .patch(userController.updateUser);
+  .patch(
+    userController.uploadUserPhoto,
+    userController.resizeUserPhoto,
+    userController.updateUser
+  );
+router
+  .route("/:id/photoupload")
+  .patch(
+    userController.uploadUserPhoto,
+    userController.resizeUserPhoto,
+    userController.updateUser
+  );
 
 router.route("/:id/posts").get(userController.getUserWithPosts);
 

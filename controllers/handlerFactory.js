@@ -2,7 +2,7 @@ var ObjectId = require("mongoose").Types.ObjectId;
 
 const AppError = require("./../utils/appError");
 const catchAsync = require("./../utils/catchAsync");
-const upload = require("../utils/multer");
+const Post = require("../models/postModel");
 
 exports.getOne = (Model, populateObj, sort) =>
   catchAsync(async (req, res, next) => {
@@ -35,7 +35,6 @@ exports.getOne = (Model, populateObj, sort) =>
 
 exports.getAll = (Model, populateObj, sort) =>
   catchAsync(async (req, res, next) => {
-    console.log(req.query);
     let filter = {};
     if (req.query.search)
       filter = {
@@ -54,7 +53,6 @@ exports.getAll = (Model, populateObj, sort) =>
       };
       if (req.query.photoUrl) filter.user.photoUrl = req.query.photoUrl;
     }
-
     if (req.body.postId) filter = { postId: req.body.postId };
     if (req.body.userId) filter = { userId: req.body.userId };
     let query = Model.find(filter);
@@ -90,7 +88,6 @@ exports.createOne = Model =>
       switch (key) {
         case "pricePool":
           req.body[key] = parseInt(req.body[key]);
-          console.log(typeof req.body[key]);
           break;
         case "maxNumberOfParticipants":
           req.body[key] = parseInt(req.body[key]);
@@ -106,7 +103,6 @@ exports.createOne = Model =>
           break;
       }
     }
-    console.log(req.body);
     req.body.createdAt = new Date(Date.now());
     const doc = await Model.create(req.body);
     if (!doc) return next();
@@ -120,6 +116,9 @@ exports.createOne = Model =>
 
 exports.updateOne = Model =>
   catchAsync(async (req, res, next) => {
+    if (req.file) {
+      req.body.photoUrl = "/images/profile/" + req.file.filename;
+    }
     for (let key in req.body) {
       if (req.body[key] !== false) {
         if (!req.body[key]) delete req.body[key];
@@ -153,6 +152,24 @@ exports.updateOne = Model =>
       req.body.skills = skillsArr;
     }
 
+    let filter = {
+      user: {
+        _id: req.user._id,
+        firstName: req.user.firstName,
+        photoUrl: req.user.photoUrl
+      }
+    };
+
+    if (req.file) {
+      await Post.updateMany(filter, {
+        user: {
+          _id: req.user._id,
+          firstName: req.user.firstName,
+          photoUrl: req.body.photoUrl
+        }
+      });
+    }
+
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true
@@ -178,25 +195,5 @@ exports.deleteOne = Model =>
       data: {
         data: null
       }
-    });
-  });
-
-exports.uploadPhoto = Model =>
-  catchAsync(async (req, res, next) => {
-    console.log(req.file);
-    upload(req, res, async err => {
-      if (err) {
-        console.log(err);
-      }
-      const photoUrl = {
-        photoUrl: res.req.file.path.replace("client/public", "")
-      };
-      let doc = await Model.findByIdAndUpdate(req.params.id, photoUrl);
-      res.status(204).json({
-        status: "success",
-        data: {
-          data: null
-        }
-      });
     });
   });
