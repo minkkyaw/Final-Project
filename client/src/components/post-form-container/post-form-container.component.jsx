@@ -76,12 +76,14 @@ const PostFormContainer = () => {
                   if(i % 2 === 1) addClass = "grey";
                   return (
                     <div className={`${addClass} place-wrapper`}>
-                      <h4>{name}</h4>
-                      <p>{formatted_address}</p>
-                      <a className="place-link" href={link} target="_blank">See place</a>
-                      <button className="form-submit-button" onClick={()=> addPlace(place)}>Add place</button>
+                      <h4 className="place-name">{name}</h4>
+                      <p className="place-address">{formatted_address}</p>
+                        <div className="links">
+                          <a className="place-link" href={link} target="_blank">See Google Maps</a>
+                          <a className="form-submit-button" onClick={()=> addPlace(place)}>Add To Post</a>
+                        </div>
                     </div>
-                )}) : <h4>No Places found</h4>}
+                )}) : <h4 className="no-place">No Places found</h4>}
             </div>
           </div>
           
