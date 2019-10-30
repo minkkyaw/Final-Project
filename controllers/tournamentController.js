@@ -21,7 +21,7 @@ exports.userCheck = catchAsync(async (req, res, next) => {
   next();
 });
 
-exports.getAllTournaments = factory.getAll(Tournament);
+exports.getAllTournaments = factory.getAll(Tournament, null, "createdAt");
 exports.getTournament = factory.getOne(Tournament);
 exports.createTournament = factory.createOne(Tournament);
 exports.updateTournament = factory.updateOne(Tournament);
