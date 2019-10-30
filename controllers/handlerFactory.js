@@ -75,7 +75,6 @@ exports.getAll = (Model, populateObj, sort) =>
         );
       }
     });
-    console.log(doc);
 
     res.status(200).json({
       status: "success",

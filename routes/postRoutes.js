@@ -17,7 +17,13 @@ router
     notificationController.createNotification
   );
 
-router.route("/users/").get(postController.getAllPosts);
+router
+  .route("/users/")
+  .get(
+    authController.isLoggedIn,
+    postController.addedUser,
+    postController.getAllPosts
+  );
 
 router
   .route("/")

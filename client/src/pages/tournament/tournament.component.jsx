@@ -10,6 +10,7 @@ import {changeDateToMMDDYYY} from '../../utils/utilsFunc';
 
 const Tournament = () => {
   const [redirect, setRedirect] = useState(false);
+  const [reloadTournament, setReloadTournament] = useState(false);
   const [tournaments, setTournaments] = useState([]);
   const [newTournament, setNewTournament] = useState({
     enrollmentFee: 0,
@@ -26,7 +27,7 @@ const Tournament = () => {
     API.getTournaments()
       .then(response => setTournaments(response.data.data.data));
     return setTournaments([])
-  }, [])
+  }, [reloadTournament])
   const handleInputChange = event => {
     const el = event.target;
     event.preventDefault();
@@ -51,14 +52,16 @@ const Tournament = () => {
         break;
       }
       if(alertCheck) alert("Please Fill all the fields correctly")
-      await API.postTournament(newTournament);
+      await API.postTournament(newTournament).then(() => setReloadTournament(!reloadTournament));
     } catch(err) {
       alert(err);
     }
   };
+  console.log(newTournament);
 
   const enroll = async (e, id) => {
     const data = await API.enrollTournament(id);
+    setReloadTournament(!setReloadTournament);
     console.log(data);
   }
 
@@ -78,7 +81,6 @@ const Tournament = () => {
         <h4>Create a tournament for you and your friends!</h4>
         <div className="tournament-form-input-label-wrapper">
           <div className="pairs">
-          {/* <label className="tournament-form-label">Name:</label> */}
           <Input
             className="tournament-form-input"
             type="text"
@@ -86,7 +88,6 @@ const Tournament = () => {
             placeholder="Tournament Name"
             onChange={handleInputChange}
           />
-          {/* <label className="tournament-form-label">Location:</label> */}
           <Input
             className="tournament-form-input"
             type="text"
@@ -96,7 +97,6 @@ const Tournament = () => {
           />
           </div>
           <div className="pairs">
-          {/* <label className="tournament-form-label">Start Date:</label> */}
           <Input
             className="tournament-form-input"
             type="text"
@@ -104,7 +104,6 @@ const Tournament = () => {
             placeholder="Start Date mm/dd/yyyy"
             onChange={handleInputChange}
           />
-          {/* <label className="tournament-form-label">Max-number of Participants:</label> */}
           <Input
             className="tournament-form-input"
             type="number"
@@ -114,7 +113,6 @@ const Tournament = () => {
           />
           </div>
           <div className="pairs">
-          {/* <label className="tournament-form-label">Enrollment Fee:</label> */}
           <Input
             className="tournament-form-input"
             type="number"
@@ -122,7 +120,6 @@ const Tournament = () => {
             placeholder="Enrollment Fee $"
             onChange={handleInputChange}
           />
-          {/* <label className="tournament-form-label">Price Pool:</label> */}
           <Input
             className="tournament-form-input"
             type="number"
@@ -133,7 +130,7 @@ const Tournament = () => {
           />
           </div>
           <label className="tournament-form-label">Select Sport:</label>
-          <select className="category" onChange={handleInputChange}>
+          <select className="category" name="category" onChange={handleInputChange}>
             <option value="Basketball">Basketball</option>
             <option value="Football">Football</option>
             <option value="Tennis">Tennis</option>
@@ -147,46 +144,41 @@ const Tournament = () => {
         <ContentEditableInput name="description" handleInputChange={handleInputChange}>Game rules...</ContentEditableInput>
         <Input onClick={handleFormSubmit} className="form-submit-btn tournament" type="submit" value="Submit" />
       </form>
-      <div className="main-center-container">
-        <div className="tournaments-container">
-          <h4>Tournaments Near You!</h4>
-          <hr />
-          {
-            tournaments && tournaments.length > 0 ? 
-              tournaments.map(tmt => {
-                let tnmtId = tmt._id
-                const {user,pricePool,maxNumberOfParticipants, category, description, competitors, enrollmentFee, _id, location, startDate, tournament,createdAt,enrolled} = tmt
-                return (
-                <div key={tnmtId}className="activity-card">
-                  <div className="user">
-                    <div className="tournament-img">
-                      <img className="profile-pic" src="/images/profile-picture-template.jpeg" alt="Tournament" />
-                    </div>
-                    <h5>{tournament}</h5>
-                  </div>
-                  <div className="activity-description">
-                    <p className="activity-zipcode"><i id="location" class="material-icons">room</i>{location}</p>
-                    <p className="date-time"><div id="date-time"><i id="date" class="material-icons">date_range</i>{changeDateToMMDDYYY(createdAt)}</div></p>
-                  </div>
-                  <p><span className="tournament-details-label">Number of Participants:</span><span className="tournament-details-value">{maxNumberOfParticipants}</span></p>
-                  <p><span className="tournament-details-label">Enrollment fee:</span><span className="tournament-details-value">{`$${enrollmentFee}`}</span></p>
-                  <p><span className="tournament-details-label">Price Pool:</span><span className="tournament-details-value">{`$${pricePool}`}</span></p>
-                  <p><span className="tournament-details-label">Start-Date:</span><span className="tournament-details-value">{changeDateToMMDDYYY(startDate)}</span></p>
-                  <p><span className="tournament-details-label">Category:</span><span className="tournament-details-value">{category}</span></p>
-                  <p><span className="tournament-details-label">Participants:</span><span className="tournament-details-value">{competitors && competitors.length > 0 ? competitors.map(competitor => (
-                      <React.Fragment>
-                        {renderRedirect(competitor.userId)}
-                        <span className="competitor-name" onClick={handleRedirect}>{competitor.firstName}</span>
-                      </React.Fragment>
-                    )): 'Coming soon'}</span></p>
-                  <p><span className="tournament-details-label">Description:</span><span className="tournament-details-value">{description ? description: ' - '}</span></p>
-                  { !enrolled ? <Input onClick={(e) => enroll(e,tnmtId)} className="form-submit-btn tournament" type="submit" value="Enroll" />
-                    : <h4>Already Enrolled</h4>
-                  }
-              </div>)})
-            : <h4>CURRENTLY, THERE IS NO TOURNAMENT.</h4>
-           }
-        </div>
+      <div className="tournaments-container">
+        <h4>Tournaments Near You!</h4>
+        <hr />
+        {
+          tournaments && tournaments.length > 0 ? 
+            tournaments.map(tmt => {
+              let tnmtId = tmt._id
+              const {user,pricePool,maxNumberOfParticipants, category, description, competitors, enrollmentFee, _id, location, startDate, tournament,createdAt,enrolled} = tmt
+              return (
+              <div key={tnmtId}className="activity-card">
+                <div className="tournament-name">
+                  <h5>{tournament}</h5>
+                </div>
+                <div className="tournament-activity-description">
+                  <p className="activity-zipcode"><i id="location" class="material-icons">room</i>{location}</p>
+                  <p className="date-time"><div id="date-time"><i id="date" class="material-icons">date_range</i>{changeDateToMMDDYYY(createdAt)}</div></p>
+                </div>
+                <p className="tournament-label-value"><span className="tournament-details-label">Number of Participants:</span><span className="tournament-details-value">{maxNumberOfParticipants}</span></p>
+                <p className="tournament-label-value"><span className="tournament-details-label">Enrollment fee:</span><span className="tournament-details-value">{`$${enrollmentFee}`}</span></p>
+                <p className="tournament-label-value"><span className="tournament-details-label">Price Pool:</span><span className="tournament-details-value">{`$${pricePool}`}</span></p>
+                <p className="tournament-label-value"><span className="tournament-details-label">Start-Date:</span><span className="tournament-details-value">{changeDateToMMDDYYY(startDate)}</span></p>
+                <p className="tournament-label-value"><span className="tournament-details-label">Category:</span><span className="tournament-details-value">{category}</span></p>
+                <p className="tournament-label-value"><span className="tournament-details-label">Participants:</span><span className="tournament-details-value">{competitors && competitors.length > 0 ? competitors.map(competitor => (
+                    <React.Fragment>
+                      {renderRedirect(competitor.userId)}
+                      <span className="competitor-name" onClick={handleRedirect}>{competitor.firstName}</span>
+                    </React.Fragment>
+                  )): 'Coming soon'}</span></p>
+                <p className="tournament-label-value"><span className="tournament-details-label">Description:</span><span className="tournament-details-value">{description ? description: ' - '}</span></p>
+                { !enrolled ? <Input onClick={(e) => enroll(e,tnmtId)} className="form-submit-btn tournament" type="submit" value="Enroll" />
+                  : <h4 className="enrollment-status">Already Enrolled</h4>
+                }
+            </div>)})
+          : <h4>CURRENTLY, THERE IS NO TOURNAMENT.</h4>
+          }
       </div>
     </div>
   );
