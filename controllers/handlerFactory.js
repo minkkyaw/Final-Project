@@ -58,7 +58,6 @@ exports.getAll = (Model, populateObj, sort) =>
     let query = Model.find(filter);
     if (sort) query = query.sort({ [sort]: -1 });
     if (populateObj) query = query.populate(populateObj);
-
     const doc = await query;
     doc.forEach(data => {
       if (
@@ -67,7 +66,16 @@ exports.getAll = (Model, populateObj, sort) =>
         data.userIdsLiked.some(userData => userData.userId == req.user.id)
       )
         data.userLiked = true;
+      if (req.user && data.competitors) {
+        console.log(data.competitors.length < data.maxNumberOfParticipants);
+        data.fullCompetitors =
+          data.competitors.length > data.maxNumberOfParticipants;
+        data.enrolled = data.competitors.some(
+          competitor => competitor.userId == req.user.id
+        );
+      }
     });
+    console.log(doc);
 
     res.status(200).json({
       status: "success",
@@ -138,8 +146,9 @@ exports.updateOne = Model =>
     }
 
     if (req.query.competitor)
-      req.body.$push = { competitors: req.query.competitor };
-
+      req.body.$push = {
+        competitors: { userId: req.user._id, firstName: req.user.firstName }
+      };
     if (req.body.skills) {
       let arr = req.body.skills.split(" ");
       let skillsArr = new Array();
@@ -174,6 +183,7 @@ exports.updateOne = Model =>
       new: true,
       runValidators: true
     });
+    console.log(doc);
 
     if (!doc) return next(new AppError("No doc is found with that ID!", 404));
     res.status(200).json({
