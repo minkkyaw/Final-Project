@@ -52,7 +52,7 @@ const UserProfileContainer = props => {
       <div className="user-info-container">
         {
           currentUser && props.userData._id == currentUser.user._id ?
-            <p onClick={handleEdit} className="edit-btn">{editCheck ? `Close`: `Edit`}</p>
+            <p onClick={handleEdit} className="edit-btn">{editCheck ? `Close`: `Edit Profile`}</p>
           : null
         }
         { !editCheck ?
