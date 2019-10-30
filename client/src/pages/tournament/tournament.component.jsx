@@ -77,15 +77,16 @@ const Tournament = () => {
       <form className="tournament-form-container">
         <h4>Create a tournament for you and your friends!</h4>
         <div className="tournament-form-input-label-wrapper">
-          <label className="tournament-form-label">Name:</label>
+          <div className="pairs">
+          {/* <label className="tournament-form-label">Name:</label> */}
           <Input
             className="tournament-form-input"
             type="text"
             name="tournament"
-            placeholder="Tournament"
+            placeholder="Tournament Name"
             onChange={handleInputChange}
           />
-          <label className="tournament-form-label">Location:</label>
+          {/* <label className="tournament-form-label">Location:</label> */}
           <Input
             className="tournament-form-input"
             type="text"
@@ -93,42 +94,46 @@ const Tournament = () => {
             placeholder="Location"
             onChange={handleInputChange}
           />
-          <label className="tournament-form-label">Start Date:</label>
+          </div>
+          <div className="pairs">
+          {/* <label className="tournament-form-label">Start Date:</label> */}
           <Input
             className="tournament-form-input"
             type="text"
             name="startDate"
-            placeholder="mm/dd/yyyy"
+            placeholder="Start Date mm/dd/yyyy"
             onChange={handleInputChange}
           />
-          <label className="tournament-form-label">Max-number of Participants:</label>
+          {/* <label className="tournament-form-label">Max-number of Participants:</label> */}
           <Input
             className="tournament-form-input"
             type="number"
             name="maxNumberOfParticipants"
-            placeholder="8"
+            placeholder="Max # of Participants"
             onChange={handleInputChange}
           />
-          <label className="tournament-form-label">Enrollment Fee:</label>
+          </div>
+          <div className="pairs">
+          {/* <label className="tournament-form-label">Enrollment Fee:</label> */}
           <Input
             className="tournament-form-input"
             type="number"
             name="enrollmentFee"
-            placeholder="10"
+            placeholder="Enrollment Fee $"
             onChange={handleInputChange}
           />
-          <label className="tournament-form-label">Price Pool:</label>
+          {/* <label className="tournament-form-label">Price Pool:</label> */}
           <Input
             className="tournament-form-input"
             type="number"
             name="pricePool"
-            placeholder="100"
+            placeholder="Price Pool $"
             onChange={handleInputChange}
             required
           />
-
-          <label className="tournament-form-label">Category:</label>
-          <select name="category" onChange={handleInputChange}>
+          </div>
+          <label className="tournament-form-label">Select Sport:</label>
+          <select className="category" onChange={handleInputChange}>
             <option value="Basketball">Basketball</option>
             <option value="Football">Football</option>
             <option value="Tennis">Tennis</option>
@@ -139,7 +144,7 @@ const Tournament = () => {
           </select>
         </div>
         <label className="tournament-form-label">Description:</label>
-        <ContentEditableInput name="description" handleInputChange={handleInputChange}>Add description</ContentEditableInput>
+        <ContentEditableInput name="description" handleInputChange={handleInputChange}>Game rules...</ContentEditableInput>
         <Input onClick={handleFormSubmit} className="form-submit-btn tournament" type="submit" value="Submit" />
       </form>
       <div className="main-center-container">
