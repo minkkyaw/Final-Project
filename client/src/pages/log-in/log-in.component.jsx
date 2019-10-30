@@ -67,8 +67,8 @@ const LogIn = (props) => {
   return (
     <div className="log-in-container">
       {renderRedirect()}
-
-      <h1>{action === "signup" ? "Sign Up" : action === "forgotpassword" ? "Forget Password" : "Sign In"}</h1>
+      <img src="/images/Quattuor-logo.png" alt="Quattuor" />
+      {/* <h1>{action === "signup" ? "Sign Up" : action === "forgotpassword" ? "Forget Password" : "Sign In"}</h1> */}
       <form>
         {
           action === "forgotpassword" ? (
@@ -88,7 +88,7 @@ const LogIn = (props) => {
                 type="submit"
                 value="Get One Time Password"
               />
-              or <a href="/login/signin">Sign in</a>
+              <a lass="alt-btn" href="/login/signin">Sign in</a>
             </React.Fragment>
           ) : (
             <React.Fragment>
@@ -159,7 +159,7 @@ const LogIn = (props) => {
                     type="submit"
                     value="Sign up"
                   />
-                  or <a href="/login/signin">Sign in</a>
+                  <a class="alt-btn" href="/login/signin">Sign in</a>
                 </React.Fragment>
               ) : action === "forgotpassword" ? (
                 <React.Fragment>
@@ -170,7 +170,7 @@ const LogIn = (props) => {
                     type="submit"
                     value="Sign in"
                   />
-                  or <a href="/login/signup">Create new account</a>
+                  <a class="alt-btn" href="/login/signup">Create new account</a>
                 </React.Fragment>
               ) : (
                 <React.Fragment>
@@ -181,12 +181,12 @@ const LogIn = (props) => {
                     type="submit"
                     value="Sign in"
                   />
-                  or <a href="/login/signup">Create new account</a>
+                  <a class="alt-btn" href="/login/signup">Create new account</a>
                 </React.Fragment>
               )
             } 
             <br/>
-            <a href="/login/forgotpassword">Forgot Password?</a>
+            <a class="forgot" href="/login/forgotpassword">Forgot Password?</a>
           </React.Fragment>
           )
         }
