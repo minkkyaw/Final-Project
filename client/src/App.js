@@ -17,17 +17,22 @@ const App = () => {
   const [notifications, setNotifications] = useState([]);
 
   const addSearch = searchInput => setSearch(searchInput);
-
+  let isLoginPage = window.location.href.includes("login");
   useEffect(() => {
     if (localStorage.getItem("user"))
       setUser(JSON.parse(localStorage.getItem("user")));
     return () => setUser(JSON.parse(localStorage.getItem("user")));
   }, []);
+  let redirect;
+  if (user) redirect = true;
+  else redirect = false;
 
   return (
     <Router>
       <CurrentUserContext.Provider value={user}>
-        <NavBar addSearch={addSearch} noOfNoti={notifications.length} />
+        {!isLoginPage ? (
+          <NavBar addSearch={addSearch} noOfNoti={notifications.length} />
+        ) : null}
         {!user ? (
           <Switch>
             <Route exact path="/login/:action" component={LogIn} />
@@ -41,7 +46,7 @@ const App = () => {
               <Route
                 exact
                 path="/"
-                component={() => <Home search={search} />}
+                component={() => <Home search={search} redirect={redirect} />}
               />
               <Route exact path="/login/:action" component={LogIn} />
               <Route

@@ -48,7 +48,7 @@ const PostFormContainer = () => {
         <SubmitButton place={place} zipCode={zipCode} content={content}>Post</SubmitButton>
       </form>
       <TogglePlaceDisplayContext.Provider value={togglePlaceDisplay}>
-        <SubmitButton>{place ? "Change this place": "Add a place"}</SubmitButton>
+        <SubmitButton top20px>{place ? "Change this place": "Add a place"}</SubmitButton>
       </TogglePlaceDisplayContext.Provider>
       {
         place ? (

@@ -1,21 +1,20 @@
-body {
+.log-in-container {
+  height: 100vh;
+  width: 100vw;
   background-image: url(./login.png);
-font-family: "Roboto", sans-serif;
--webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;      
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;  
+  display: flex;
+  justify-content: center;
+  align-items: center;    
 }
 
 
-.log-in-container {
-  // margin: 0 auto;
-  // width: 300px;
-  // background-color: green;
-  position: relative;
+.log-in-form-container {
   z-index: 1;
   background: #FFFFFF;
   max-width: 360px;
-  margin: 0 auto 100px;
-  /* padding-top: 10px; */
   padding: 35px;
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
@@ -50,15 +49,12 @@ font-family: "Roboto", sans-serif;
 }
 
 .alt-btn {
+  display: block;
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   text-decoration: none;
   outline: 0;
-  // background: rgb(126, 125, 125);
-  // border: 1px solid black;
   width: 100%;
-  margin-bottom: 30px;
-  padding: 15px;
   color: black;
   font-size: 14px;
   -webkit-transition: all 0.3 ease;
@@ -71,18 +67,27 @@ font-family: "Roboto", sans-serif;
 }
 
 .forgot {
+  display: block;
   font-family: "Roboto", sans-serif;
-  // text-transform: uppercase;
   text-decoration: none;
   outline: 0;
-  // background: rgb(126, 125, 125);
-  // border: 1px solid black;
   width: 100%;
-  // margin-top: 30px;
-  padding: 15px;
   color: rgb(90, 90, 90);
   font-size: 14px;
   -webkit-transition: all 0.3 ease;
   transition: all 0.3 ease;
   cursor: pointer;
+}
+
+@media screen and (max-height: 902px) {
+  .log-in-container {
+    height: fit-content;
+    padding: 30px 0;
+  }
+  .forgotpassword-responsive {
+    margin: calc((50vh - 30px) - 171px - 35px)
+  }
+  .signin-responsive {
+    margin: calc((50vh - 30px) - 437px / 2 - 35px)
+  }
 }

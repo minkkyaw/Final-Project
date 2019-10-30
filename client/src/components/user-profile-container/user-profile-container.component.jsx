@@ -71,7 +71,7 @@ const UserProfileContainer = props => {
                     <div className="skill-wrapper">
                       <p>{skill.skillName}</p>
                       <div className="skills-bar">
-                          <div style={{"width": `${skill.rating}%`, "background-color": "red"}} className="skill">{skill.rating}%</div>
+                          <div style={{"width": `${skill.rating}%`, "backgroundColor": "red"}} className="skill">{skill.rating}%</div>
                       </div>
                     </div>
                   )

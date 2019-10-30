@@ -16,6 +16,7 @@ const LogIn = (props) => {
   const [zipCode, setZipCode] = useState();
   const [interest, setInterest] = useState('');
   const [redirect, setRedirect] = useState(false);
+  const [redirectToLogin, setRedirectToLogin] = useState(false);
 
   const handleInputChange = event => {
     switch(event.target.name) {
@@ -44,8 +45,7 @@ const LogIn = (props) => {
     event.preventDefault();
     if(event.target.name === "sign-up")
       API.signUp({email, password, confirmPassword, firstName, lastName, city, zipCode, interest})
-        .then(() => alert("Successfully login"))
-        .then(() => setRedirect(true))
+        .then(() => setRedirectToLogin(true))
         .catch(err => alert(err.response.data.message));
 
     if(event.target.name === "sign-in")
@@ -61,15 +61,18 @@ const LogIn = (props) => {
         return window.location.reload();
       return <Redirect to='/' />
     }
+    if(redirectToLogin) return <Redirect to='/login/signin' />
   }
 
   const action = props.match.params.action;
+  let responsiveClass = "";
+  if(action === "signin") responsiveClass = "signin-responsive";
+  if(action === "forgotpassword") responsiveClass = "forgotpassword-responsive";
   return (
     <div className="log-in-container">
       {renderRedirect()}
-      <img src="/images/Quattuor-logo.png" alt="Quattuor" />
-      {/* <h1>{action === "signup" ? "Sign Up" : action === "forgotpassword" ? "Forget Password" : "Sign In"}</h1> */}
-      <form>
+      <form className={`log-in-form-container ${responsiveClass}`}>
+        <img src="/images/Quattuor-logo.png" alt="Quattuor" />
         {
           action === "forgotpassword" ? (
             <React.Fragment>
@@ -88,7 +91,7 @@ const LogIn = (props) => {
                 type="submit"
                 value="Get One Time Password"
               />
-              <a lass="alt-btn" href="/login/signin">Sign in</a>
+              <a className="alt-btn" href="/login/signin">Sign in</a>
             </React.Fragment>
           ) : (
             <React.Fragment>
@@ -159,7 +162,7 @@ const LogIn = (props) => {
                     type="submit"
                     value="Sign up"
                   />
-                  <a class="alt-btn" href="/login/signin">Sign in</a>
+                  <a className="alt-btn" href="/login/signin">Sign in</a>
                 </React.Fragment>
               ) : action === "forgotpassword" ? (
                 <React.Fragment>
@@ -170,7 +173,7 @@ const LogIn = (props) => {
                     type="submit"
                     value="Sign in"
                   />
-                  <a class="alt-btn" href="/login/signup">Create new account</a>
+                  <a className="alt-btn" href="/login/signup">Create new account</a>
                 </React.Fragment>
               ) : (
                 <React.Fragment>
@@ -181,12 +184,12 @@ const LogIn = (props) => {
                     type="submit"
                     value="Sign in"
                   />
-                  <a class="alt-btn" href="/login/signup">Create new account</a>
+                  <a className="alt-btn" href="/login/signup">Create new account</a>
                 </React.Fragment>
               )
             } 
             <br/>
-            <a class="forgot" href="/login/forgotpassword">Forgot Password?</a>
+            <a className="forgot" href="/login/forgotpassword">Forgot Password?</a>
           </React.Fragment>
           )
         }

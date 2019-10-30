@@ -33,6 +33,13 @@ const getAllPosts = user => {
   return transport.get("/api/posts" + query);
 };
 
+const getAllPostsForProfile = user => {
+  let query = "";
+  if (user) query = objToQueryString(user);
+  console.log(query);
+  return axios.get("/api/posts/users" + query);
+};
+
 const getPost = postId => {
   return transport.get(`/api/posts/${postId}`);
 };
@@ -124,6 +131,7 @@ export default {
   updateUser,
   postPost,
   getAllPosts,
+  getAllPostsForProfile,
   getPost,
   deletePost,
   updatePost,
