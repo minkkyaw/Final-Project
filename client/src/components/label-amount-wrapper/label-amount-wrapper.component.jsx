@@ -26,13 +26,15 @@ const LabelAmountWrapper = ({label}) => {
   const handleSubmit = label => {
     switch(label) {
       case "Like":
+        if(user)
         return API.likePost(currentPost._id, userLiked)
           .then(() => {
             if(currentPost.user._id !== userId)
-              API.createNotifications(currentPost._id, userId ,{notification: `${user.user.firstName} liked your post!`}).then(response => console.log(response.data))
+              API.createNotifications(currentPost._id, userId ,{notification: `${user.user.firstName} liked your post!`})
           })
           .then(()=> reloadPost())
           .catch(err=> alert(err));
+        else return alert('Log in to like this post.')
       default:
         return null;
     }

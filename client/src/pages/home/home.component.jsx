@@ -12,10 +12,9 @@ import PostsProvider from '../../provider/posts.provider';
 import ReloadPostContext from '../../contexts/reload-post/reload-post.context';
 
 const Home = ({search, addSearch, redirect}) => {
-  console.log(redirect);
   const [posts, setPosts] = useState([]);
   const [reloadPostCheck, setReloadPostCheck] = useState(false);
-  const reloadPost = () => {console.log(1);setReloadPostCheck(!reloadPostCheck)};
+  const reloadPost = () => {setReloadPostCheck(!reloadPostCheck)};
   useEffect(() => {
     if(search) {
       API.searchPosts(search)
