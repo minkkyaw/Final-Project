@@ -38,8 +38,6 @@ const PostFormContainer = () => {
         return setContent(event.target.textContent);
     }
   };
-  console.log(zipCode);
-
 
   return (
     <div className="post-container">
@@ -48,10 +46,20 @@ const PostFormContainer = () => {
       <form className="contentEditable-input-btn-wrapper">
         <ContentEditableInput handleInputChange={handleInputChange}>Create a post</ContentEditableInput>
         <SubmitButton place={place} zipCode={zipCode} content={content}>Post</SubmitButton>
-        <TogglePlaceDisplayContext.Provider value={togglePlaceDisplay}>
-          <SubmitButton>Add a place</SubmitButton>
-        </TogglePlaceDisplayContext.Provider>
       </form>
+      <TogglePlaceDisplayContext.Provider value={togglePlaceDisplay}>
+        <SubmitButton>{place ? "Change this place": "Add a place"}</SubmitButton>
+      </TogglePlaceDisplayContext.Provider>
+      {
+        place ? (
+          <div className="selected-place-wrapper">
+            <p className="place-delete-btn" onClick={()=>setPlace('')}>x</p>
+            <h3>Place</h3>
+            <h4>{place.name}</h4>
+            <p>{place.formatted_address}</p>
+          </div>
+        ) : null
+      }
       {
         placeDisplay ?
           <div className="places-modal">

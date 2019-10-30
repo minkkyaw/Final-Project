@@ -1,16 +1,24 @@
+.main-center-container {
+  width: 50vw;
+}
 .post-container {
   padding: 20px;
-  width: 50vw;
+  width: 100%;
   border: .5px solid rgba(212, 210, 210, 0.788);
   border-radius: 5px;
   box-shadow: 0 4px 8px 0 rgba(144, 144, 144, 0.2), 0 6px 20px 0 rgba(144, 144, 144, 0.2);
 }
 
+@media screen and (max-width: 1000px) {
+  .main-center-container {
+    width: 54vw;
+  }
+}
+
 
 @media screen and (max-width: 700px) {
   .main-center-container {
-    width: 100vw;
-    height: auto;
+    width: 100%;
   }
 }
 

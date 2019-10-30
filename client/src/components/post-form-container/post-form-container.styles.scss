@@ -53,6 +53,28 @@
   background-color: rgb(211, 211, 211);
 }
 
+.grey {
+  background-color: rgb(173, 173, 173);
+}
+
+.selected-place-wrapper {
+  margin-top: 20px;
+  position: relative;
+
+  .place-delete-btn {
+    position: absolute;
+    cursor: pointer;
+    color: grey;
+    top: 0;
+    right: 0;
+    transition: all .5s ease-in;
+
+    &:hover {
+      color: red;
+    }
+  }
+}
+
 .place-link {
   padding-top: 4px;
   margin-right: 10%;
@@ -79,6 +101,16 @@
   color: rgb(80, 76, 76);
 }
 
+@media screen and (max-width: 1) {
+    .main-right-container {
+        display: none;
+    }
+    .place-search-from {
+      .input-wrapper {
+        height: fit-content;
+      }
+    }
+}
 
 
 

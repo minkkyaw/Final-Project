@@ -10,9 +10,7 @@ import TogglePlaceDisplayContext from '../../contexts/toggle-place-display/toggl
 
 export const Input = (props) => {
   return (
-    <div>
       <input {...props} />
-    </div>
   );
 };
 
@@ -52,7 +50,6 @@ export const SubmitButton = ({children, content, place, zipCode, addPlaces}) => 
   const reloadPost = useContext(ReloadPostContext);
   const togglePlaceDisplay = useContext(TogglePlaceDisplayContext);
   const handleFormSubmit = (event, postId, name, children) => {
-    console.log(zipCode);
     event.preventDefault();
     if(content) {
       if(postId)         
@@ -64,7 +61,7 @@ export const SubmitButton = ({children, content, place, zipCode, addPlaces}) => 
         API.postPost(content,JSON.stringify(place),zipCode)
           .then(()=> reloadPost())
           .catch(err => console.log(err));
-    } else if(!content && children === "Add a place") {
+    } else if(!content && (children === "Add a place" || children === "Change this place")) {
       togglePlaceDisplay();
     } else if(addPlaces) {
       addPlaces()
@@ -76,6 +73,8 @@ export const SubmitButton = ({children, content, place, zipCode, addPlaces}) => 
         return ;
       case "Add a place":
         return;
+      case "Change this place":
+        return;
       default:
         return event.target.parentNode.parentNode.querySelector('.contentEditable-input').textContent = "Add a comment";
     }
@@ -85,7 +84,7 @@ export const SubmitButton = ({children, content, place, zipCode, addPlaces}) => 
       {
         currentPost => {
           return children ? <button onClick={event => handleFormSubmit(event, null, null, children)} className="form-submit-btn">{children}</button>
-            : <button onClick={event => handleFormSubmit(event, currentPost._id,currentPost.user.firstName, children)} className="form-submit-btn">
+            : <button onClick={event => handleFormSubmit(event, currentPost._id,user.user.firstName, children)} className="form-submit-btn">
                 <i className="material-icons">send</i>
               </button>
         }

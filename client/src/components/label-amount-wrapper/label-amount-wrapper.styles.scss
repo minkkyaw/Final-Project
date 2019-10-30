@@ -24,10 +24,14 @@
   margin: 0 0 10px;
 }
 
-
-
 .user-commented {
   display: inline-block;
   color: #5e6eff;
   margin-right: 10px;
+}
+
+@media screen and (max-width: 1000px) {
+  .label-amount-wrapper {
+    width: 120px;
+  }
 }

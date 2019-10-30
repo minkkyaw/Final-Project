@@ -24,7 +24,6 @@ const updateUser = (userId, userData) => {
 };
 
 const postPost = (post, place, zipCode) => {
-  console.log(zipCode);
   return transport.post("/api/posts/", { post, place, zipCode });
 };
 
@@ -102,6 +101,14 @@ const updateNotifications = () => {
   return transport.patch(`/api/notifications/`);
 };
 
+const postTournament = data => {
+  return transport.post(`/api/tournaments/`, data);
+};
+
+const getTournaments = () => {
+  return transport.get(`/api/tournaments/`);
+};
+
 const getPlaces = (zip, keyword) => {
   return transport.get(`/api/posts/googlePlace?keyword=${keyword}&zip=${zip}`);
 };
@@ -133,5 +140,7 @@ export default {
   createNotifications,
   updateNotifications,
   getPlaces,
-  uploadPhoto
+  uploadPhoto,
+  postTournament,
+  getTournaments
 };

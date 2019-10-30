@@ -29,7 +29,7 @@ const Home = ({search, addSearch}) => {
   return (
     <ReloadPostContext.Provider value={reloadPost} >
       <div className="home-page-container">
-        <div className="main-left-container">
+        <div className="home-left-container">
           <div className="favorites-container">
             <h4><i className="material-icons">star</i> Favorites</h4>
           </div>

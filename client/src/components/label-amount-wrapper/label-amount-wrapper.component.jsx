@@ -4,12 +4,16 @@ import './label-amount-wrapper.styles.scss';
 
 import CurrentPostContext from '../../contexts/current-post/current-post.context';
 import ReloadPostContext from '../../contexts/reload-post/reload-post.context';
+import CurrentUserContext from '../../contexts/current-user/current-user.context.js';
 
 import API from '../../utils/API';
 
 const LabelAmountWrapper = ({label}) => {
   const reloadPost = useContext(ReloadPostContext);
+  const user = useContext(CurrentUserContext);
   const currentPost = useContext(CurrentPostContext);
+  let userId;
+  if(user) userId = user.user._id;
   const { userIdsLiked, comments, userLiked } = currentPost;
   let amount;
   let style;
@@ -23,6 +27,10 @@ const LabelAmountWrapper = ({label}) => {
     switch(label) {
       case "Like":
         return API.likePost(currentPost._id, userLiked)
+          .then(() => {
+            if(currentPost.user._id !== userId)
+              API.createNotifications(currentPost._id, userId ,{notification: `${user.user.firstName} liked your post!`}).then(response => console.log(response.data))
+          })
           .then(()=> reloadPost())
           .catch(err=> alert(err));
       default:

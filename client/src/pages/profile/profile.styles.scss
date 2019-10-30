@@ -9,25 +9,32 @@
   }
 }
 
-.main-left-container {
+.profile-left-container {
   width: 24vw;
   margin-right: 1vw;
 }
 
-.main-left-container .material-icons {
+.profile-left-container .material-icons {
   font-size: 20px;
   padding-right: 10px;
 }
 
 @media screen and (max-width: 700px) {
-  .main-left-container {
-    width: 100vw;
+  .profile-page-container {
+    padding: 1.5vw;
+    flex-direction: column;
   }
-
-  .favorites-container,
-  .reviews-container {
+  .profile-left-container {
     width: 100%;
-    height: auto;
+    display: flex;
+    margin-bottom: 1vw;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .profile-left-container {
+    flex-direction: column;
+    margin-bottom: 1vw;
   }
 }
 

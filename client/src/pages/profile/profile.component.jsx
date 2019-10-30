@@ -28,7 +28,6 @@ const Profile = props => {
     API.getUser(props.match.params.id)
       .then(response => {
         let user = response.data.data.data;
-        console.log(user);
         setUserData(user);
         let query = {userId: user._id, firstName:user.firstName};
         if(user.photoUrl) query.photoUrl = user.photoUrl;
@@ -46,7 +45,7 @@ const Profile = props => {
   return (
     <ReloadPostContext.Provider value={reloadPost}>
       <div className="profile-page-container">
-        <div className="main-left-container">
+        <div className="profile-left-container">
           <UserProfileContainer userData={userData} />
         </div>
         <div className="main-center-container">

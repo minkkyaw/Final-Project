@@ -76,3 +76,26 @@
   font-size: 1rem;
   border-radius: 20px;
 }
+
+@media screen and (max-width: 700px) {
+  .user-image {
+    max-height: 47vw;
+    margin: 0;
+    border-radius: 5px;
+  }
+  .user-info-container {
+    margin-left: .5vw;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .user-image {
+    max-height: 96vw;
+    margin: 0;
+    margin-bottom: 1.5vw;
+  }
+  .user-info-container {
+    margin-left: 0;
+  }
+}
+

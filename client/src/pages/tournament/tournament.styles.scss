@@ -1,22 +1,91 @@
-.tournaments-wrapper {
-  padding: 20px;
+.tournament-container {
+    padding: 20px;
 }
 
-.tournament-status {
-  text-align: center;
+.tournament-form-container {
+    padding: 20px;
+    width: 100%;
+    border: .5px solid rgba(212, 210, 210, 0.788);
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(144, 144, 144, 0.2), 0 6px 20px 0 rgba(144, 144, 144, 0.2);
+    margin-bottom: 1vw;
 }
 
-.tournament-wrapper {
-  width: 90%;
-  margin: 0 auto;
+.tournament-center-container {
+    width: 50vw;
+    padding: 20px;
+    border: .5px solid rgba(212, 210, 210, 0.788);
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(144, 144, 144, 0.2), 0 6px 20px 0 rgba(144, 144, 144, 0.2);
+    h4 {
+        color: red;
+    }
 }
 
-.tournament-title {
-  width: 100%;
-  background-color: #5d60b8;
-  padding: 100px;
+.tournament-form-input-label-wrapper {
   display: flex;
-  justify-content: center;
-  font-size: 30px;
-  color: #fff;
+}
+
+.tournament-form-label {
+  margin-right: 10px;
+}
+
+.activity-card {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.activity-location-time {
+    font-size: 12px;
+    width: fit-content;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+}
+.tournament-img {
+    width: 25px;
+    height: 25px;
+    border: 1px solid;
+    margin-right: 10px;
+}
+
+#submit{
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    border-radius: 8px;
+    background-color: white;
+    padding: 10px;
+    border: 1px solid black;
+    
+
+}
+
+#submit:hover {
+    background-color: #f44336;
+    color: white;
+}
+
+#comment-box {
+    width: 85%;
+    height: 50px;
+    border-radius: 5px;
+}
+
+@media screen and (max-width: 700px) {
+    .tournament-center-container {
+        width: 100vw;
+        height: auto;
+    }
+
+    .search-container,
+    .global-feed-container {
+        width: 100vw;
+        height: auto;
+        margin: 0;
+        margin-top: 5%;
+    }
 }
