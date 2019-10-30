@@ -86,7 +86,7 @@ const PostContainer = () => {
               </div>
               {/* <p id="postedTime">{postedTime}</p> */}
               <div className="activity-description">
-                <p className="activity-zipcode"><i id="location" class="material-icons">room</i> {place ? (<a className="place-link" href={place.link} target="_blank">{place.name}</a>) : zipCode}</p>
+                <p className="activity-zipcode"><i id="location" class="material-icons">room</i> {place ? (<a className="place-icon" href={place.link} target="_blank">{place.name}</a>) : zipCode}</p>
                 <p className="date-time"><div id="date-time"><i id="date" class="material-icons">date_range</i> {formattedDate}</div></p>
               </div>
               <p className="post">{post}</p>
