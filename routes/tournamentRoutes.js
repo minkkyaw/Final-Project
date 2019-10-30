@@ -5,7 +5,11 @@ const authController = require("../controllers/authController");
 
 router
   .route("/")
-  .get(tournamentController.getAllTournaments)
+  .get(
+    authController.protect,
+    tournamentController.addedUser,
+    tournamentController.getAllTournaments
+  )
   .post(
     authController.protect,
     tournamentController.addedUser,
@@ -19,7 +23,7 @@ router
     tournamentController.addedUser,
     tournamentController.getTournament
   )
-  .patch(tournamentController.updateTournament)
+  .patch(authController.protect, tournamentController.updateTournament)
   .delete(
     authController.protect,
     tournamentController.addedUser,

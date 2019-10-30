@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {Redirect} from 'react-router-dom';
 
 import './tournament.styles.scss';
 
@@ -8,6 +9,7 @@ import API from '../../utils/API';
 import {changeDateToMMDDYYY} from '../../utils/utilsFunc';
 
 const Tournament = () => {
+  const [redirect, setRedirect] = useState(false);
   const [tournaments, setTournaments] = useState([]);
   const [newTournament, setNewTournament] = useState({
     enrollmentFee: 0,
@@ -53,7 +55,22 @@ const Tournament = () => {
     } catch(err) {
       alert(err);
     }
+  };
+
+  const enroll = async (e, id) => {
+    const data = await API.enrollTournament(id);
+    console.log(data);
   }
+
+  const renderRedirect = (id) => {
+    if (redirect) {
+      return <Redirect to={`/profile/${id}`} />
+    }
+  }
+
+  const handleRedirect = () => {
+    setRedirect(true);
+  };
 
   return (
     <div className="tournament-container">
@@ -137,9 +154,10 @@ const Tournament = () => {
           {
             tournaments && tournaments.length > 0 ? 
               tournaments.map(tmt => {
-                const {user,pricePool,maxNumberOfParticipants, category, description, competitors, enrollmentFee, _id, location, startDate, tournament,createdAt} = tmt
+                let tnmtId = tmt._id
+                const {user,pricePool,maxNumberOfParticipants, category, description, competitors, enrollmentFee, _id, location, startDate, tournament,createdAt,enrolled} = tmt
                 return (
-                <div className="activity-card">
+                <div key={tnmtId}className="activity-card">
                   <div className="user">
                     <div className="tournament-img">
                       <img className="profile-pic" src="/images/profile-picture-template.jpeg" alt="Tournament" />
@@ -155,10 +173,16 @@ const Tournament = () => {
                   <p><span className="tournament-details-label">Price Pool:</span><span className="tournament-details-value">{`$${pricePool}`}</span></p>
                   <p><span className="tournament-details-label">Start-Date:</span><span className="tournament-details-value">{changeDateToMMDDYYY(startDate)}</span></p>
                   <p><span className="tournament-details-label">Category:</span><span className="tournament-details-value">{category}</span></p>
-                  <p><span className="tournament-details-label">Participants:</span><span className="tournament-details-value">{competitors && competitors.length > 0 ? competitors.join(', '): 'Coming soon'}</span></p>
+                  <p><span className="tournament-details-label">Participants:</span><span className="tournament-details-value">{competitors && competitors.length > 0 ? competitors.map(competitor => (
+                      <React.Fragment>
+                        {renderRedirect(competitor.userId)}
+                        <span className="competitor-name" onClick={handleRedirect}>{competitor.firstName}</span>
+                      </React.Fragment>
+                    )): 'Coming soon'}</span></p>
                   <p><span className="tournament-details-label">Description:</span><span className="tournament-details-value">{description ? description: ' - '}</span></p>
-                  <Input className="form-submit-btn tournament" type="submit" value="Enroll" />
-                  <CommentFormContainer />
+                  { !enrolled ? <Input onClick={(e) => enroll(e,tnmtId)} className="form-submit-btn tournament" type="submit" value="Enroll" />
+                    : <h4>Already Enrolled</h4>
+                  }
               </div>)})
             : <h4>CURRENTLY, THERE IS NO TOURNAMENT.</h4>
            }

@@ -116,6 +116,7 @@
 }
 
 
+
 #submit:hover {
     background-color: #f44336;
     color: white;
@@ -125,6 +126,11 @@
     width: 85%;
     height: 50px;
     border-radius: 5px;
+
+.competitor-name {
+    font-size: 16px;
+    margin: 0 10px;
+    font-weight: 800;
 }
 
 @media screen and (max-width: 700px) {

@@ -63,7 +63,6 @@ const PostContainer = () => {
       {
         currentPost => {
           const {user, zipCode, post,createdAt}= currentPost;
-          console.log(currentPost);
           let place;
           if(currentPost.place) place = JSON.parse(currentPost.place)
           const {firstName, photoUrl} = user;

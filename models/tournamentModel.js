@@ -21,7 +21,15 @@ const tournamentSchema = new Schema(
       firstName: String,
       photoUrl: String
     },
-    competitors: [ObjectId],
+    competitors: [
+      {
+        userId: {
+          type: ObjectId,
+          ref: "User"
+        },
+        firstName: String
+      }
+    ],
     location: {
       type: String,
       required: [true, "Tournament must have a category."]
@@ -35,6 +43,14 @@ const tournamentSchema = new Schema(
       type: Number,
       min: 8,
       default: 8
+    },
+    fullCompetitors: {
+      type: Boolean,
+      default: false
+    },
+    enrolled: {
+      type: Boolean,
+      default: false
     },
     pricePool: {
       type: Number,

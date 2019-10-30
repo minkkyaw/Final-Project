@@ -108,11 +108,17 @@ const updateNotifications = () => {
 };
 
 const postTournament = data => {
+  console.log(data);
   return transport.post(`/api/tournaments/`, data);
 };
 
 const getTournaments = () => {
   return transport.get(`/api/tournaments/`);
+};
+
+const enrollTournament = tmtId => {
+  console.log(tmtId);
+  return transport.patch(`/api/tournaments/${tmtId}?competitor=1`);
 };
 
 const getPlaces = (zip, keyword) => {
@@ -149,5 +155,6 @@ export default {
   getPlaces,
   uploadPhoto,
   postTournament,
-  getTournaments
+  getTournaments,
+  enrollTournament
 };
