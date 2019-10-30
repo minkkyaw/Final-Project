@@ -83,9 +83,14 @@ const UserProfileContainer = props => {
           
           <div className="edit-user-wrapper">
             <div>
-            <input className="image-data" name="myImage" type="file" onChange={event => handleInputChange(event, "photoUrl")} />
-            <button onClick={() => {const data = document.querySelector('.image-data').files;
-          API.uploadPhoto(currentUser.user._id, data)}}>Submit</button>
+            <input className="image-data" accept="image/*" id="photo" name="photo" type="file" onChange={event => handleInputChange(event, "photoUrl")} />
+            <button onClick={() => {
+              const form = new FormData();
+
+              form.append('photo', document.querySelector('.image-data').files[0]);
+              console.log(form);
+              const data = document.querySelector('.image-data').files[0];
+              API.uploadPhoto(currentUser.user._id, form)}}>Submit</button>
           </div>
             <div className="profile-label-input-wrapper">
               <p className="profile-edit-label">Firstname -  </p>

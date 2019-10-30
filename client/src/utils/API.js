@@ -36,7 +36,6 @@ const getAllPosts = user => {
 const getAllPostsForProfile = user => {
   let query = "";
   if (user) query = objToQueryString(user);
-  console.log(query);
   return axios.get("/api/posts/users" + query);
 };
 
@@ -121,7 +120,7 @@ const getPlaces = (zip, keyword) => {
 };
 
 const uploadPhoto = (userId, data) => {
-  return transport.post(`/api/users/${userId}`, data);
+  return transport.patch(`/api/users/${userId}/photoupload`, data);
 };
 
 export default {
