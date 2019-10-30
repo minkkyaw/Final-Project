@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {Redirect} from 'react-router-dom';
 
 import PostsContainer from '../../components/posts-container/posts-container.component';
 import PostFormContainer from '../../components/post-form-container/post-form-container.component';
@@ -10,7 +11,8 @@ import API from '../../utils/API';
 import PostsProvider from '../../provider/posts.provider';
 import ReloadPostContext from '../../contexts/reload-post/reload-post.context';
 
-const Home = ({search, addSearch}) => {
+const Home = ({search, addSearch, redirect}) => {
+  console.log(redirect);
   const [posts, setPosts] = useState([]);
   const [reloadPostCheck, setReloadPostCheck] = useState(false);
   const reloadPost = () => {console.log(1);setReloadPostCheck(!reloadPostCheck)};
@@ -25,9 +27,16 @@ const Home = ({search, addSearch}) => {
   useEffect(() => {
     if(posts) console.log(posts);
   },[posts]);
+
+  const renderRedirect = () => {
+    if (redirect) {
+      return <Redirect to='/login/signin' />
+    }
+  }
   
   return (
     <ReloadPostContext.Provider value={reloadPost} >
+      {setTimeout(() => renderRedirect(),1000)}
       <div className="home-page-container">
         <div className="home-left-container">
           <div className="favorites-container">

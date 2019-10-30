@@ -43,7 +43,7 @@ export const ContentEditableInput = ({children, handleInputChange, noChange, nam
   );
 };
 
-export const SubmitButton = ({children, content, place, zipCode, addPlaces}) => {
+export const SubmitButton = ({children, content, place, zipCode, addPlaces, top20px}) => {
   const user = useContext(CurrentUserContext);
   let userId;
   if(user) userId = user.user._id;
@@ -83,7 +83,7 @@ export const SubmitButton = ({children, content, place, zipCode, addPlaces}) => 
     <CurrentPostContext.Consumer>
       {
         currentPost => {
-          return children ? <button onClick={event => handleFormSubmit(event, null, null, children)} className="form-submit-btn">{children}</button>
+          return children ? <button onClick={event => handleFormSubmit(event, null, null, children)} className={`form-submit-btn ${top20px ? 'top20px': null}`}>{children}</button>
             : <button onClick={event => handleFormSubmit(event, currentPost._id,user.user.firstName, children)} className="form-submit-btn">
                 <i className="material-icons">send</i>
               </button>

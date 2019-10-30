@@ -63,6 +63,7 @@ const PostContainer = () => {
       {
         currentPost => {
           const {user, zipCode, post,createdAt}= currentPost;
+          console.log(currentPost);
           let place;
           if(currentPost.place) place = JSON.parse(currentPost.place)
           const {firstName, photoUrl} = user;
@@ -79,7 +80,7 @@ const PostContainer = () => {
                 </div>
                 <h3 onClick={handleRedirect} className="post-user-firstname">{firstName}</h3> <p id="postedTime">{postedTime}</p>
                 {
-                  currentUser.user._id == currentPost.user._id ? 
+                  currentUser && currentUser.user._id == currentPost.user._id ? 
                     <p className="delete-btn" onClick={()=>deletePost(currentPost._id)}>x</p>
                   : null
                 }
@@ -101,7 +102,7 @@ const PostContainer = () => {
                             <span className="post-comment">{comment.comment}</span>
                           </p>
                           {
-                            comment.user._id == currentUser.user._id ? 
+                            currentUser && comment.user._id == currentUser.user._id ? 
                               <p className="delete-btn" onClick={()=>deleteComment(currentPost._id, comment._id)}>x</p>
                             : null
                           }

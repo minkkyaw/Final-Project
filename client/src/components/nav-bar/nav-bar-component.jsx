@@ -82,11 +82,7 @@ const NavBar = ({ addSearch, noOfNoti }) => {
                     <Link to="/" className="nav-link" onClick={handleSignOut}>SIGN OUT</Link>
                   </React.Fragment>
                 )
-                :
-                  <React.Fragment>
-                    <Link to="/login/signin" className="nav-link">SIGN IN</Link>
-                    <Link to="/login/signup" className="nav-link">SIGN UP</Link>
-                  </React.Fragment>
+                : null
               }
             </div>
           </div>

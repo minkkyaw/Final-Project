@@ -35,6 +35,7 @@ exports.getOne = (Model, populateObj, sort) =>
 
 exports.getAll = (Model, populateObj, sort) =>
   catchAsync(async (req, res, next) => {
+    console.log(req.query);
     let filter = {};
     if (req.query.search)
       filter = {

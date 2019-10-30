@@ -17,6 +17,8 @@ router
     notificationController.createNotification
   );
 
+router.route("/users/").get(postController.getAllPosts);
+
 router
   .route("/")
   .get(
