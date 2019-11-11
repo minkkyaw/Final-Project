@@ -12,62 +12,64 @@
         border: grey 2px;
       }
       .place-container {
-          padding: 1%;}
-
-          .place-container:hover{
-              transform: scale(1.2);
-          }
-      
-      .name{
-          color: grey;
+        padding: 1%;
       }
-      .address{
-          color: grey;
+
+      .place-container:hover {
+        transform: scale(1.2);
+      }
+
+      .name {
+        color: grey;
+      }
+      .address {
+        color: grey;
       }
     </style>
   </head>
   <body>
-    <div class="places-container">
-      <div class="place-container">
-        <div class="place-name">
-          <span class="name">Name:</span>
-          <span>Lexie Gerson Basketball, LLC.</span>
-        </div>
-        <div class="place-address">
-          <span class="address">Address:</span>
-          <span>750 Montgomery Ave, Bryn Mawr, PA 19010, United States</span>
-        </div>
-      </div>
-      <div class="place-container">
-        <div class="place-name">
-          <span class="name">Name:</span>
-          <span>Lexie Gerson Basketball, LLC.</span>
-        </div>
-        <div class="place-address">
-          <span class="address">Address:</span>
-          <span>750 Montgomery Ave, Bryn Mawr, PA 19010, United States</span>
-        </div>
-      </div>
-      <div class="place-container">
-        <div class="place-name">
-          <span class="name">Name:</span>
-          <span>Lexie Gerson Basketball, LLC.</span>
-        </div>
-        <div class="place-address">
-          <span class="address">Address:</span>
-          <span>750 Montgomery Ave, Bryn Mawr, PA 19010, United States</span>
-        </div>
-      </div>
-      <div class="place-container">
-        <div class="place-name">
-          <span class="name">Name:</span>
-          <span>Lexie Gerson Basketball, LLC.</span>
-        </div>
-        <div class="place-address">
-          <span class="address">Address:</span>
-          <span>750 Montgomery Ave, Bryn Mawr, PA 19010, United States</span>
-        </div>
-      </div>
-    </div>
+    <form action="">
+      <input class="file-input" type="file" />
+      <input class="photo-upload-btn" type="submit" value="Submit" />
+    </form>
   </body>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <!-- <script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-app.js"></script> -->
+  <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyDs-rUpadv-5w_AzmdDUb5e8PDYws8osjQ",
+      authDomain: "test-6444f.firebaseapp.com",
+      databaseURL: "https://test-6444f.firebaseio.com",
+      projectId: "test-6444f",
+      storageBucket: "test-6444f.appspot.com",
+      messagingSenderId: "642414957945",
+      appId: "1:642414957945:web:57edc4853403300c184ba8"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    var metadata = {
+      contentType: "image"
+    };
+    document.querySelector(".photo-upload-btn").addEventListener("click", e => {
+      e.preventDefault();
+      const photo = document.querySelector(".file-input").files[0];
+      const fileName = photo.name;
+      const storageRef = firebase.storage().ref("/profiles/" + fileName);
+      const uploadTask = storageRef.put(photo, metadata);
+      uploadTask.on("state_changed", function(snapshot) {}),
+        function(error) {},
+        function() {
+          alert("success!");
+        };
+      uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+        console.log("File available at", downloadURL);
+      });
+    });
+  </script>
 </html>

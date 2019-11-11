@@ -24,7 +24,6 @@ exports.getOne = (Model, populateObj, sort) =>
         });
       }
     }
-
     res.status(200).json({
       status: "success",
       data: {
@@ -51,7 +50,13 @@ exports.getAll = (Model, populateObj, sort) =>
           firstName: req.query.firstName
         }
       };
-      if (req.query.photoUrl) filter.user.photoUrl = req.query.photoUrl;
+      if (req.query.photoUrl) {
+        filter.user.photoUrl = req.query.photoUrl + "&token=" + req.query.token;
+        filter.user.photoUrl = filter.user.photoUrl.replace(
+          "profiles/",
+          "profiles%2F"
+        );
+      }
     }
     if (req.body.postId) filter = { postId: req.body.postId };
     if (req.body.userId) filter = { userId: req.body.userId };
@@ -67,7 +72,6 @@ exports.getAll = (Model, populateObj, sort) =>
       )
         data.userLiked = true;
       if (req.user && data.competitors) {
-        console.log(data.competitors.length < data.maxNumberOfParticipants);
         data.fullCompetitors =
           data.competitors.length > data.maxNumberOfParticipants;
         data.enrolled = data.competitors.some(
@@ -168,7 +172,7 @@ exports.updateOne = Model =>
       }
     };
 
-    if (req.file) {
+    if (req.body.photoUrl || req.body.firstName) {
       await Post.updateMany(filter, {
         user: {
           _id: req.user._id,
@@ -182,7 +186,6 @@ exports.updateOne = Model =>
       new: true,
       runValidators: true
     });
-    console.log(doc);
 
     if (!doc) return next(new AppError("No doc is found with that ID!", 404));
     res.status(200).json({

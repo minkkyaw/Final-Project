@@ -23,6 +23,8 @@ const Tournament = () => {
     description: ""
   });
 
+  
+
   useEffect(() => {
     API.getTournaments()
       .then(response => setTournaments(response.data.data.data));
