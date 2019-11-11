@@ -1,8 +1,44 @@
 import axios from "axios";
+import firebase from "firebase";
+import "firebase/storage";
 
 import { objToQueryString } from "../utils/utilsFunc";
 
 const transport = axios.create({ withCredentials: true });
+const firebasePhotoUpload = (userId, file) => {
+  var firebaseConfig = {
+    apiKey: "AIzaSyDs-rUpadv-5w_AzmdDUb5e8PDYws8osjQ",
+    authDomain: "test-6444f.firebaseapp.com",
+    databaseURL: "https://test-6444f.firebaseio.com",
+    projectId: "test-6444f",
+    storageBucket: "test-6444f.appspot.com",
+    messagingSenderId: "642414957945",
+    appId: "1:642414957945:web:57edc4853403300c184ba8"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  var metadata = {
+    contentType: "image"
+  };
+
+  const fileName = `user-${userId}.jpeg`;
+  const storageRef = firebase.storage().ref("/profiles/" + fileName);
+  const uploadTask = storageRef.put(file, metadata);
+  let photoUrl = "";
+  return uploadTask.on(
+    "state_changed",
+    function(snapshot) {},
+    function(error) {
+      return error;
+    },
+    function() {
+      uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+        photoUrl = downloadURL;
+        transport.patch(`/api/users/${userId}`, { photoUrl });
+      });
+    }
+  );
+};
 
 const signIn = (email, password) => {
   return axios.post("/api/users/signin", {
@@ -108,7 +144,6 @@ const updateNotifications = () => {
 };
 
 const postTournament = data => {
-  console.log(data);
   return transport.post(`/api/tournaments/`, data);
 };
 
@@ -117,7 +152,6 @@ const getTournaments = () => {
 };
 
 const enrollTournament = tmtId => {
-  console.log(tmtId);
   return transport.patch(`/api/tournaments/${tmtId}?competitor=1`);
 };
 
@@ -126,7 +160,7 @@ const getPlaces = (zip, keyword) => {
 };
 
 const uploadPhoto = (userId, data) => {
-  return transport.patch(`/api/users/${userId}/photoupload`, data);
+  return firebasePhotoUpload(userId, data);
 };
 
 export default {

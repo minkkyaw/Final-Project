@@ -45,9 +45,10 @@ const UserProfileContainer = props => {
   }
 
   const uploadPhoto = async () => {
-    const form = new FormData();
-    form.append('photo', document.querySelector('.image-data').files[0]);
-    await API.uploadPhoto(currentUser.user._id, form);
+    // const form = new FormData();
+    // form.append('photo', document.querySelector('.image-data').files[0]);
+    const photo = document.querySelector('.image-data').files[0];
+    await API.uploadPhoto(currentUser.user._id, photo);
     reloadPost();
     setEditCheck(!editCheck);
   }

@@ -14,11 +14,7 @@ router.use(authController.isLoggedIn);
 router
   .route("/:id")
   .get(userController.getUser)
-  .patch(
-    userController.uploadUserPhoto,
-    userController.resizeUserPhoto,
-    userController.updateUser
-  );
+  .patch(userController.updateUser);
 router
   .route("/:id/photoupload")
   .patch(
